@@ -1,3 +1,19 @@
 {
-  "extends": "next/core-web-vitals"
+    "plugins": ["@typescript-eslint", "simple-import-sort", "prettier"],
+    "extends": [
+        "next/core-web-vitals",
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "plugin:prettier/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": { "project": ["./tsconfig.json"] },
+    "rules": {
+        "quotes": ["error", "single"],
+        "no-console": ["error", { "allow": ["error", "debug"] }],
+        "simple-import-sort/imports": "warn",
+        "simple-import-sort/exports": "warn",
+        "max-len": ["warn", { "code": 80, "ignoreUrls": true }]
+    }
 }
