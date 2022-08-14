@@ -1,13 +1,13 @@
+import * as dotenv from 'dotenv'
+import * as path from 'path'
+
 import FAQService from '../services/FAQService'
 import RecipeService from '../services/RecipeService'
 import { logger } from '../utils/logger'
-import * as path from 'path'
 
-require('dotenv').config({
-    path: path.resolve(process.cwd(), '.env.local')
+dotenv.config({
+    path: path.resolve(process.cwd(), '.env.local'),
 })
-
-
 
 export async function downloadData() {
     logger.info('Downloading Data for first time')
@@ -20,9 +20,11 @@ export async function downloadData() {
     await recipeService.getAllCuisines()
     await recipeService.getAllRecipePosts()
 
-    faqService.getAllFAQREST()
+    await faqService.getAllFAQREST()
 
     logger.info('Downloading Data Complete')
 }
 
 downloadData()
+    .then(() => logger.info('Success'))
+    .catch(console.error)

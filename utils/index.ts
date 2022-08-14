@@ -1,5 +1,6 @@
 import FAQService from '../services/FAQService'
 import RecipeService from '../services/RecipeService'
+import { logger } from './logger'
 import {
     getFAQs,
     getYoutubeVideoId,
@@ -24,8 +25,8 @@ export const getAllRecipeObj = async (
 export const arrToObj = <T extends Record<string, unknown>>(
     arr: Array<T>,
     key: string
-): Record<any, T> => {
-    const result: Record<any, T> = {}
+): Record<string | number, T> => {
+    const result: Record<string | number, T> = {}
     arr.forEach((item) => {
         if (!(key in item)) {
             throw Error(`Invalid key : ${key}`)
@@ -44,7 +45,7 @@ export const getAllFAQObj = async () => {
     allFAQs.forEach((faq) => {
         allFAQObject[faq.id] = faq
     })
-    console.log(`Found ${allFAQs.length} FAQs`)
+    logger.info(`Found ${allFAQs.length} FAQs`)
     return allFAQObject
 }
 export const processRecipeData = async (
@@ -56,7 +57,7 @@ export const processRecipeData = async (
     const allRecipesPosts = await recipeService.getAllRecipePosts()
 
     const completeRecipeObj: ICompleteRecipeObj = {}
-    console.log(`Found ${allRecipesPosts.length} recipe post`)
+    logger.info(`Found ${allRecipesPosts.length} recipe post`)
 
     if (allRecipesPosts.length === 0) {
         throw Error('No Recipes found')
@@ -79,7 +80,7 @@ export const processRecipeData = async (
 
     const allRecipesData = await recipeService.getAllRecipesData()
 
-    console.log(`Found ${allRecipesData.data.length} recipe data`)
+    logger.info(`Found ${allRecipesData.data.length} recipe data`)
 
     allRecipesData.data.forEach((recipeData) => {
         if (recipeData.id in completeRecipeObj) {
@@ -91,8 +92,9 @@ export const processRecipeData = async (
         const recipeContent = completeRecipeObj[key]
 
         if (!('content' in recipeContent)) {
-            //if any of the recipe does not have recipeData, remove do not create corresponding page.
-            console.log(`No Recipe Data found for recipe Id : ${key}`)
+            // if any of the recipe does not have recipeData,
+            // remove do not create corresponding page.
+            logger.info(`No Recipe Data found for recipe Id : ${key}`)
         }
 
         completeRecipeObj[key].post.content = preProcessRecipeContent(

@@ -1,10 +1,15 @@
+/* eslint-disable */
+
+
 export const GEN_GET_RECIPE_POSTS_DETAIL_QUERY = (
     first = 100,
     endCursor: string | null = null,
     startCursor: string | null = null
 ) => `
       query GET_RECIPE_POSTS {
-          recipes(first:${first}, after:"${endCursor}", before:"${startCursor}") {
+          recipes(first:${first},\
+                  after:"${endCursor}", \
+                  before:"${startCursor}") {
             pageInfo {
               endCursor
               startCursor

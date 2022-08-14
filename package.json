@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "npm run pre-build && next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint",
     "pre-build": "ts-node ./scripts/downloadData.ts"
   },
   "dependencies": {
@@ -36,6 +36,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.30.1",
     "eslint-plugin-simple-import-sort": "^7.0.0",
+    "lefthook": "^1.1.0",
     "prettier": "^2.7.1",
     "regenerator-runtime": "^0.13.9",
     "ts-node": "^10.9.1",

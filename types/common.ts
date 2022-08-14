@@ -1,24 +1,21 @@
 export interface IDuration {
-  hours: number;
-  minutes: number
+    hours: number
+    minutes: number
 }
 
-
 export type ThemeType = {
-  colors: {
-    text: string | null ;
-    bgPrimary: string | null;
-    bgSecondary: string;
-    brand: string;
-    accent: string 
-  },
+    colors: {
+        text: string | null
+        bgPrimary: string | null
+        bgSecondary: string
+        brand: string
+        accent: string
+    }
 
-  font: {
-    normal: string;
-    cursive: string;
-  }
+    font: {
+        normal: string
+        cursive: string
+    }
 
-  fontSize: {
-    
-  }
+    fontSize: Record<string, unknown>
 }

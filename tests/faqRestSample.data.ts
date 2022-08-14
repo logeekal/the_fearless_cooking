@@ -1,3 +1,4 @@
+/* eslint-disable */
 export const FAQ_REST_DATA = {
     id: 855,
     date: '2021-05-29T09:35:48',

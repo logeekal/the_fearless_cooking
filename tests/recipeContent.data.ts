@@ -1,3 +1,4 @@
+/* eslint-disable */
 export const RECIPE_SAMPLE_CONTENT = {
     success: true,
     message: 'Recipes Found.',

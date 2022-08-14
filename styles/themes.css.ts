@@ -2,9 +2,9 @@ import {
     createTheme,
     createThemeContract,
     fontFace,
-} from '@vanilla-extract/css';
+} from '@vanilla-extract/css'
 
-import { ThemeType } from '../types/common';
+import { ThemeType } from '../types/common'
 
 export const vars = createThemeContract<ThemeType>({
     colors: {
@@ -19,7 +19,7 @@ export const vars = createThemeContract<ThemeType>({
         cursive: 'bilbo',
     },
     fontSize: {},
-});
+})
 
 export const light = createTheme<typeof vars>(
     vars,
@@ -39,7 +39,7 @@ export const light = createTheme<typeof vars>(
         fontSize: {},
     },
     'light'
-);
+)
 
 export const dark = createTheme<typeof vars>(
     vars,
@@ -59,4 +59,4 @@ export const dark = createTheme<typeof vars>(
         fontSize: {},
     },
     'dark'
-);
+)
