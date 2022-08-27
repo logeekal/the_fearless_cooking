@@ -7,9 +7,10 @@ export type ThemeType = {
     colors: {
         text: string | null
         bgPrimary: string | null
-        bgSecondary: string
+        card: string
         brand: string
-        accent: string
+        greenLight: string
+        yellowLight: string
     }
 
     font: {
@@ -17,5 +18,25 @@ export type ThemeType = {
         cursive: string
     }
 
-    fontSize: Record<string, unknown>
+    fontSize: {
+        para: string
+        heading: string
+        subHeading: string
+        subText: string
+    }
+    space: {
+        xs: string
+        s: string
+        normal: string
+        l: string
+        xl: string
+        none: string
+    }
+    border: {
+        circular: string
+    }
+    zIndex: {
+        highest: string
+        high: string
+    }
 }

@@ -8,8 +8,6 @@ import RecipeService from '../services/RecipeService'
 import { styleClass } from '../styles/home.css'
 import { dark, light } from '../styles/themes.css'
 import { Recipe, RecipeCourse, RecipeCuisine } from '../types/wp-graphql.types'
-import { devLogger } from '../utils/logger'
-import { getTheme, themes } from '../utils/themes'
 import { NextPageWithLayout } from './_app'
 
 type HomeProps = {
@@ -74,6 +72,9 @@ const Home: NextPageWithLayout<HomeProps> = (props) => {
         </div>
     )
 }
+
+Home.displayName = 'Home'
+
 Home.getLayout = getLayout
 
 export async function getStaticProps(
@@ -86,8 +87,14 @@ export async function getStaticProps(
     const allCourses = await recipeService.getAllCourses()
     const allCuisines = await recipeService.getAllCuisines()
 
-    const courseSummary = await recipeService.getAllCourses('SUMMARY')
-    const cuisineSummary = await recipeService.getAllCuisines('SUMMARY')
+    const courseSummary = (await recipeService.getAllCourses('SUMMARY')).sort(
+        (a, b) =>
+            (b.recipes?.nodes?.length ?? 0) - (a.recipes?.nodes?.length ?? 0)
+    )
+    const cuisineSummary = (await recipeService.getAllCuisines('SUMMARY')).sort(
+        (a, b) =>
+            (b.recipes?.nodes?.length ?? 0) - (a.recipes?.nodes?.length ?? 0)
+    )
 
     return {
         props: {

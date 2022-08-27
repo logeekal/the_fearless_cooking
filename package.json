@@ -7,12 +7,15 @@
     "build": "npm run pre-build && next build",
     "start": "next start",
     "lint": "eslint",
+    "lint:fix": "eslint . --fix",
     "pre-build": "ts-node ./scripts/downloadData.ts"
   },
   "dependencies": {
     "@vanilla-extract/babel-plugin": "^1.1.7",
     "@vanilla-extract/css": "^1.7.2",
+    "@vanilla-extract/css-utils": "^0.1.2",
     "@vanilla-extract/next-plugin": "^2.0.2",
+    "@vanilla-extract/sprinkles": "^1.4.1",
     "axios": "^0.27.2",
     "next": "12.2.3",
     "pino": "^8.4.1",

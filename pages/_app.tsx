@@ -18,6 +18,7 @@ type AppPropsWithLayout<P> = AppProps<P> & {
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout<unknown>) {
     const getLayout = Component.getLayout ?? ((page) => page)
+    console.error(`Generating ${Component.displayName ?? ''}`)
 
     if ('layoutProps' in pageProps) {
         /* eslint-disable-next-line */

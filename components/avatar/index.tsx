@@ -5,6 +5,5 @@ type Props = {
 }
 
 export default function Avatar(props: Props) {
-    const { image } = props
     return <div></div>
 }

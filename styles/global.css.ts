@@ -1,4 +1,6 @@
-import { globalFontFace, globalStyle } from '@vanilla-extract/css'
+import { createVar, globalFontFace, globalStyle } from '@vanilla-extract/css'
+
+import { vars } from './themes.css'
 
 globalFontFace('quicksand', {
     src: 'url(/fonts/_quicksand/Quicksand-Bold.woff2) format("woff2")',
@@ -38,4 +40,47 @@ globalFontFace('bilbo', {
 
 globalStyle('html', {
     fontFamily: 'quicksand',
+})
+
+// css RESET
+globalStyle('*', {
+    margin: 0,
+    padding: 0,
+    boxSizing: 'border-box',
+    border: 0,
+    outline: 0,
+    background: 'transparent',
+    position: 'relative',
+})
+
+globalStyle(':root', {
+    fontSize: '62.5%',
+})
+
+globalStyle('body', {
+    fontSize: '1.6rem',
+})
+
+globalStyle('li', {
+    listStyle: 'none',
+})
+
+globalStyle('h2', {
+    fontSize: vars.fontSize.heading,
+})
+
+globalStyle('.upper', {
+    textTransform: 'uppercase',
+})
+
+globalStyle('a', {
+    textDecoration: 'none',
+})
+
+globalStyle('btn', {
+    cursor: 'pointer',
+})
+
+globalStyle('p', {
+    fontSize: vars.fontSize.para,
 })

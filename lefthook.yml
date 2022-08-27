@@ -16,4 +16,5 @@ pre-commit:
  parallel: true
  commands:
    linting:
+     glob: "*.{js,ts,jsx,tsx}"
      run: yarn lint {staged_files}
