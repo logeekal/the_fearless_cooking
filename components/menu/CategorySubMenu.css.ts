@@ -18,3 +18,7 @@ export const categoryMenuText = style({
     color: vars.colors.bgPrimary,
     marginBlock: vars.space.xs,
 })
+
+export const categoryContainer = style({
+    paddingTop: vars.space.l,
+})

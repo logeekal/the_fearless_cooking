@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "clean": "rm -rf /tmp/.cache/",
     "dev": "next dev",
     "build": "npm run pre-build && next build",
     "start": "next start",
     "lint": "eslint",
     "lint:fix": "eslint . --fix",
-    "pre-build": "ts-node ./scripts/downloadData.ts"
+    "pre-build": "ts-node ./scripts/downloadData.ts",
+    "codegen": "graphql-codegen -c ./codegen.yml"
   },
   "dependencies": {
     "@vanilla-extract/babel-plugin": "^1.1.7",
@@ -21,14 +23,19 @@
     "pino": "^8.4.1",
     "pino-pretty": "^9.0.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-helmet": "^6.1.0"
   },
   "devDependencies": {
+    "@graphql-cli/codegen": "^2.4.0",
+    "@graphql-codegen/cli": "^2.12.0",
+    "@graphql-codegen/typescript": "^2.7.3",
     "@swc/core": "^1.2.231",
     "@swc/helpers": "^0.4.6",
     "@types/node": "18.0.6",
     "@types/react": "18.0.15",
     "@types/react-dom": "18.0.6",
+    "@types/react-helmet": "^6.1.5",
     "@typescript-eslint/eslint-plugin": "^5.33.0",
     "@typescript-eslint/parser": "^5.33.0",
     "cheerio": "^1.0.0-rc.12",
@@ -39,6 +46,8 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.30.1",
     "eslint-plugin-simple-import-sort": "^7.0.0",
+    "graphql": "^16.6.0",
+    "graphql-cli": "^4.1.0",
     "lefthook": "^1.1.0",
     "prettier": "^2.7.1",
     "regenerator-runtime": "^0.13.9",

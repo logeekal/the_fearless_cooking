@@ -45,11 +45,11 @@ ${navMenuIconContainer} ${isMobileMenuOpen ? 'open' : 'closed'}`}
                 </div>
                 <div className="nav__logo">
                     <Image
-                        width="30px"
-                        height="30px"
+                        height="40px"
+                        width={'100px'}
                         className="img nav__logo--img"
                         alt="TFC logo"
-                        src="/images/search.svg"
+                        src="/images/logo_complete_green.svg"
                     ></Image>
                 </div>
             </div>

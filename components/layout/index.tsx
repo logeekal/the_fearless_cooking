@@ -3,7 +3,9 @@ import { FC, PropsWithChildren, ReactElement, useState } from 'react'
 
 import { dark, light } from '../../styles/themes.css'
 import { RecipeCourse, RecipeCuisine } from '../../types/wp-graphql.types'
-import { layoutClass } from './layout.css'
+import CategoryBar from '../category_bar'
+import Footer from './footer'
+import { footerBy, layoutClass } from './layout.css'
 import Navbar from './navbar'
 
 export type LayoutProps = {
@@ -24,7 +26,14 @@ const Layout: FC<PropsWithChildren<LayoutProps>> = (props) => {
                 courseSummary={props.courseSummary}
                 cuisineSummary={props.cuisineSummary}
             />
+            <CategoryBar
+                categories={[...props.courseSummary, ...props.cuisineSummary]}
+            />
             {props.children}
+            <Footer />
+            <div className={`footer__by text_center ${footerBy}`}>
+                <i> Happy Cooking </i>👩🏽‍🍳
+            </div>
         </div>
     )
 }

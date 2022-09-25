@@ -1,12 +1,17 @@
+import { Post, Recipe } from './wp-graphql.types'
+
 export interface IDuration {
     hours: number
     minutes: number
 }
 
+export type PossiblePostType = Post | Recipe
+
 export type ThemeType = {
     colors: {
-        text: string | null
-        bgPrimary: string | null
+        text: string
+        textSecondary: string
+        bgPrimary: string
         card: string
         brand: string
         greenLight: string
@@ -21,6 +26,7 @@ export type ThemeType = {
     fontSize: {
         para: string
         heading: string
+        cursiveHeading: string
         subHeading: string
         subText: string
     }

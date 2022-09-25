@@ -1,8 +1,11 @@
 import { GetStaticPropsResult, NextPageContext } from 'next'
+import Head from 'next/head'
 import NextLink from 'next/link'
-import { FC, useMemo, useState } from 'react'
+import { useState } from 'react'
 
 import { getLayout, LayoutProps } from '../components/layout'
+import { SEO } from '../components/SEO'
+import Home from '../screens/home'
 import FAQService from '../services/FAQService'
 import RecipeService from '../services/RecipeService'
 import { styleClass } from '../styles/home.css'
@@ -16,11 +19,8 @@ type HomeProps = {
     recipes: Recipe[]
 }
 
-const Home: NextPageWithLayout<HomeProps> = (props) => {
+const Root: NextPageWithLayout<HomeProps> = (props) => {
     const [currTheme, setCurrTheme] = useState(light)
-
-    //console.log({ props })
-    const { courses, cuisines, recipes } = props
 
     const toggleTheme = () => {
         //console.log('toggling currTheme')
@@ -29,61 +29,26 @@ const Home: NextPageWithLayout<HomeProps> = (props) => {
 
     return (
         <div className={`${currTheme} ${styleClass}`}>
-            <button onClick={() => toggleTheme()}> Switch Theme</button>
-            <h1> Courses </h1>
-            {courses.map((course) => {
-                return (
-                    <>
-                        <NextLink key={course.databaseId} href={course.uri}>
-                            {course.name}
-                        </NextLink>
-
-                        <br />
-                    </>
-                )
-            })}
-            <br />
-            <h1> Cuisines </h1>
-            {cuisines.map((cuisine) => {
-                return (
-                    <>
-                        <NextLink key={cuisine.databaseId} href={cuisine.uri}>
-                            {cuisine.name}
-                        </NextLink>
-
-                        <br />
-                    </>
-                )
-            })}
-
-            <br />
-            <h1> Recipes </h1>
-            {recipes.map((recipe) => {
-                return (
-                    <>
-                        <NextLink key={recipe.databaseId} href={recipe.uri}>
-                            {recipe.title}
-                        </NextLink>
-
-                        <br />
-                    </>
-                )
-            })}
+            <SEO isArticle={false} />
+            <Home {...props} />
+            <button style={{ display: 'none' }} onClick={() => toggleTheme()}>
+                Switch Theme
+            </button>
         </div>
     )
 }
 
-Home.displayName = 'Home'
+Root.displayName = 'Home'
 
-Home.getLayout = getLayout
+Root.getLayout = getLayout
 
 export async function getStaticProps(
     context: NextPageContext
 ): Promise<GetStaticPropsResult<HomeProps & LayoutProps>> {
     const recipeService = new RecipeService()
 
-    const allFAQs = await new FAQService().getAllFAQREST()
-    const allRecipes = await recipeService.getAllRecipePosts()
+    //const allFAQs = await new FAQService().getAllFAQREST()
+    const allRecipes = (await recipeService.getAllRecipePosts()).slice(0, 10)
     const allCourses = await recipeService.getAllCourses()
     const allCuisines = await recipeService.getAllCuisines()
 
@@ -109,4 +74,4 @@ export async function getStaticProps(
     }
 }
 
-export default Home
+export default Root

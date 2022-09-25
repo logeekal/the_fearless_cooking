@@ -1,4 +1,4 @@
-import { createVar, globalFontFace, globalStyle } from '@vanilla-extract/css'
+import { globalFontFace, globalStyle } from '@vanilla-extract/css'
 
 import { vars } from './themes.css'
 
@@ -50,7 +50,6 @@ globalStyle('*', {
     border: 0,
     outline: 0,
     background: 'transparent',
-    position: 'relative',
 })
 
 globalStyle(':root', {
@@ -75,6 +74,7 @@ globalStyle('.upper', {
 
 globalStyle('a', {
     textDecoration: 'none',
+    color: vars.colors.brand,
 })
 
 globalStyle('btn', {
@@ -83,4 +83,27 @@ globalStyle('btn', {
 
 globalStyle('p', {
     fontSize: vars.fontSize.para,
+})
+
+globalStyle('.cursive', {
+    fontFamily: vars.font.cursive,
+})
+
+globalStyle('.cursive.heading', {
+    fontFamily: vars.font.cursive,
+    fontSize: vars.fontSize.cursiveHeading,
+    color: vars.colors.textSecondary,
+})
+
+globalStyle('.text_center', {
+    textAlign: 'center',
+})
+
+globalStyle('.grid_center', {
+    display: 'grid',
+    placeItems: 'center',
+})
+
+globalStyle('section', {
+    paddingBlock: vars.space.l,
 })

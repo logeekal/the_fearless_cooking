@@ -73,6 +73,7 @@ export const GET_COURSES = `
         databaseId
         uri
         slug
+        thumbnail
         description
         recipes {
           nodes {
@@ -111,6 +112,7 @@ export const GET_CUISINES = `
                 databaseId
                 uri
                 slug
+                thumbnail
                 description
                 recipes {
                     nodes {
@@ -148,6 +150,7 @@ export const GET_CUISINES_SUMMARY = `
                 name
                 databaseId
                 uri
+                thumbnail
                 recipes {
                     nodes {
                         databaseId
@@ -165,6 +168,7 @@ export const GET_COURSES_SUMMARY = `
                 name
                 databaseId
                 uri
+                thumbnail
                 recipes {
                     nodes {
                         databaseId

@@ -114,3 +114,20 @@ export const preProcessRecipeContent = (
     )
     return newPostContent
 }
+
+export const getMandatoryProp = <T, K extends keyof T>(
+    obj: T,
+    key: Extract<K, string>
+): T[K] => {
+    if (key in obj) {
+        if (obj[key] ?? -1 === -1) {
+            throw new Error(
+                `Mandatory Prop ${key} missing in obj - ${String(obj)}`
+            )
+        }
+
+        return obj[key]
+    } else {
+        throw new Error(`Mandatory Prop ${key} missing in obj - ${String(obj)}`)
+    }
+}

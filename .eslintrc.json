@@ -3,12 +3,14 @@
     "extends": [
         "next/core-web-vitals",
         "eslint:recommended",
-        "plugin:prettier/recommended"
+        "plugin:prettier/recommended",
+        "plugin:@typescript-eslint/eslint-recommended"
     ],
     "overrides": [
         {
             "files": ["*.ts", "*.tsx"],
             "extends": [
+                "plugin:@typescript-eslint/eslint-recommended",
                 "plugin:@typescript-eslint/recommended",
                 "plugin:@typescript-eslint/recommended-requiring-type-checking"
             ],
@@ -21,6 +23,7 @@
         "no-console": ["error", { "allow": ["error", "debug"] }],
         "simple-import-sort/imports": "warn",
         "simple-import-sort/exports": "warn",
-        "max-len": ["warn", { "code": 80, "ignoreUrls": true }]
+        "max-len": ["warn", { "code": 80, "ignoreUrls": true }],
+        "@next/next/no-img-element": 0
     }
 }

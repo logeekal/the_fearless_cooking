@@ -2,6 +2,7 @@ import NextLink from 'next/link'
 import React, { Fragment, ReactElement } from 'react'
 
 import {
+    categoryContainer,
     categoryMenuItems,
     categoryMenuText,
     categoryTitle,
@@ -20,7 +21,9 @@ interface CategorySubMenuProps {
 function CategorySubMenu(props: CategorySubMenuProps) {
     const { title, items } = props
     return (
-        <ul className={`category__submenu category__${title}`}>
+        <ul
+            className={`category__submenu category__${title} ${categoryContainer}`}
+        >
             <h2 className={`upper ${categoryTitle}`}> {title} </h2>
             {items.map((item) => {
                 return (

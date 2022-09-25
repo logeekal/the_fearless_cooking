@@ -19,7 +19,6 @@ export const navClass = style({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    border: '1px solid red',
     width: '100%',
     justifyContent: 'space-between',
     //position: 'sticky',

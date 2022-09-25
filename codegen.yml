@@ -1,0 +1,5 @@
+schema: https://wp-backend.thefearlesscooking.com/graphql
+generates:
+  ./types/wp-graphql.types.ts:
+    plugins:
+      - typescript
