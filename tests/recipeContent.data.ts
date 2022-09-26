@@ -21,6 +21,10 @@ export const RECIPE_SAMPLE_CONTENT = {
                 restTimeUnit: 'min',
                 totalDuration: '',
                 totalDurationUnit: 'min',
+                totalDurationCalculated: {
+                    hours: 2,
+                    minutes: 2
+                },
                 bestSeason: 'summer',
                 recipeCalories: '240 kcal',
                 noOfServings: '8',

@@ -1,9 +1,9 @@
 import React from 'react'
 
 type Props = {
-    image: string
+  image: string
 }
 
 export default function Avatar(props: Props) {
-    return <div></div>
+  return <div></div>
 }

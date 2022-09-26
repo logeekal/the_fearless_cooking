@@ -1,15 +1,15 @@
 import { dark, light } from '../styles/themes.css'
 
 export const themes = {
-    light: {
-        name: light,
-    },
+  light: {
+    name: light,
+  },
 
-    dark: {
-        name: dark,
-    },
+  dark: {
+    name: dark,
+  },
 }
 
 export const getTheme = (themeName: keyof typeof themes) => {
-    return themes[themeName].name
+  return themes[themeName].name
 }

@@ -13,18 +13,24 @@
     "codegen": "graphql-codegen -c ./codegen.yml"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.6",
     "@vanilla-extract/babel-plugin": "^1.1.7",
     "@vanilla-extract/css": "^1.7.2",
     "@vanilla-extract/css-utils": "^0.1.2",
     "@vanilla-extract/next-plugin": "^2.0.2",
     "@vanilla-extract/sprinkles": "^1.4.1",
     "axios": "^0.27.2",
+    "copy-to-clipboard": "^3.3.2",
     "next": "12.2.4",
     "pino": "^8.4.1",
     "pino-pretty": "^9.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-helmet": "^6.1.0"
+    "react-helmet": "^6.1.0",
+    "react-icons": "^4.4.0",
+    "react-popper": "^2.3.0",
+    "ssr-window": "^4.0.2",
+    "striptags": "^3.2.0"
   },
   "devDependencies": {
     "@graphql-cli/codegen": "^2.4.0",
@@ -51,6 +57,7 @@
     "lefthook": "^1.1.0",
     "prettier": "^2.7.1",
     "regenerator-runtime": "^0.13.9",
+    "sass": "^1.55.0",
     "ts-node": "^10.9.1",
     "typescript": "4.7.4"
   }

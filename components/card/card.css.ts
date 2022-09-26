@@ -5,70 +5,70 @@ import { breakPoints } from '../../styles/breakpoints.css'
 import { vars } from '../../styles/themes.css'
 
 export const cardContainer = style({
-    maxWidth: '170px',
-    display: 'flex',
-    flexDirection: 'column',
-    borderRadius: '10px',
-    //boxShadow: '1px 2px 3px 5px rgba(0,0,0,0.1)',
-    background: vars.colors.card,
-    position: 'relative',
-    paddingBottom: calc.multiply(vars.space.s, 2),
+  maxWidth: '170px',
+  display: 'flex',
+  flexDirection: 'column',
+  borderRadius: '10px',
+  //boxShadow: '1px 2px 3px 5px rgba(0,0,0,0.1)',
+  background: vars.colors.card,
+  position: 'relative',
+  paddingBottom: calc.multiply(vars.space.s, 2),
 })
 
 export const cardArticle = style({
-    display: 'flex',
-    flexDirection: 'column',
-    gap: vars.space.s,
-    padding: vars.space.s,
+  display: 'flex',
+  flexDirection: 'column',
+  gap: vars.space.s,
+  padding: vars.space.s,
 })
 
 export const cardImage = style({
-    aspectRatio: '3 / 2',
-    width: '100%',
-    objectFit: 'cover',
-    objectPosition: 'center',
-    borderRadius: '10px',
+  aspectRatio: '3 / 2',
+  width: '100%',
+  objectFit: 'cover',
+  objectPosition: 'center',
+  borderRadius: '10px',
 })
 
 export const cardExcerpt = style({
-    display: 'none',
-    '@media': {
-        [breakPoints.desktop]: {
-            display: 'block',
-        },
+  display: 'none',
+  '@media': {
+    [breakPoints.desktop]: {
+      display: 'block',
     },
+  },
 })
 
 export const footer = style({
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: calc.subtract('100%', calc.multiply(vars.space.s, 2)),
-    fontSize: vars.fontSize.subText,
-    color: vars.colors.brand,
-    position: 'absolute',
-    bottom: vars.space.s,
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  width: calc.subtract('100%', calc.multiply(vars.space.s, 2)),
+  fontSize: vars.fontSize.subText,
+  color: vars.colors.brand,
+  position: 'absolute',
+  bottom: vars.space.s,
 })
 
 export const footerLeft = style({
-    display: 'inline-flex',
-    flexDirection: 'row',
-    gap: calc.divide(vars.space.xs, 2),
+  display: 'inline-flex',
+  flexDirection: 'row',
+  gap: calc.divide(vars.space.xs, 2),
 })
 
 export const footerRight = style({
-    display: 'inline-flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+  display: 'inline-flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'center',
 })
 
 export const cardTitle = style({
-    fontSize: vars.fontSize.subHeading,
-    cursor: 'pointer',
+  fontSize: vars.fontSize.subHeading,
+  cursor: 'pointer',
 })
 
 export const cardCategory = style({
-    color: vars.colors.brand,
+  color: vars.colors.brand,
 })

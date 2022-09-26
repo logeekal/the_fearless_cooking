@@ -6,33 +6,33 @@ export type IRecipeContent = typeof RECIPE_SAMPLE_CONTENT
 export type IFAQRestContent = typeof FAQ_REST_DATA
 
 export interface IWPGraphQL<T> {
-    data: T
+  data: T
 }
 
 export interface ICompleteRecipeObj {
-    [k: number]: {
-        post: Recipe
-        content: IRecipeContent['data'][number]['recipe_metas']
-        faqs: IFAQRestContent[]
-        YTId: string | null | undefined
-    }
-}
-
-export interface ICompleteRecipe {
+  [k: number]: {
     post: Recipe
     content: IRecipeContent['data'][number]['recipe_metas']
     faqs: IFAQRestContent[]
     YTId: string | null | undefined
+  }
+}
+
+export interface ICompleteRecipe {
+  post: Recipe
+  content: IRecipeContent['data'][number]['recipe_metas']
+  faqs: IFAQRestContent[]
+  YTId: string | null | undefined
 }
 
 export interface IFAQObj {
-    [k: number]: IFAQRestContent
+  [k: number]: IFAQRestContent
 }
 
 export interface IRecipeObject {
-    [k: number | string]: Recipe
+  [k: number | string]: Recipe
 }
 
 export interface IPostObject {
-    [k: number]: Post
+  [k: number]: Post
 }
