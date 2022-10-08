@@ -3,6 +3,7 @@ import { calc } from '@vanilla-extract/css-utils'
 
 import { breakPoints, sprinkles } from '../../styles/breakpoints.css'
 import { vars } from '../../styles/themes.css'
+import { checkboxInput } from '../checkbox/index.css'
 
 export const recipeCard = style({
   color: vars.colors.text,
@@ -226,4 +227,13 @@ export const recipeListDetail = style({
 
 export const recipeInstructionListItem = style({
   whiteSpace: 'normal',
+})
+
+export const recipeInstructionNotes = style({
+  color: vars.colors.brand,
+  selectors: {
+    [`${checkboxInput}:checked + label &`]: {
+      color: vars.colors.lightgray,
+    },
+  },
 })

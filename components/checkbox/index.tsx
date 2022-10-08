@@ -1,15 +1,15 @@
-import React, { FC } from 'react'
+import React, { FC, PropsWithChildren } from 'react'
 
 import { checkboxContainer, checkboxInput, label } from './index.css'
 
-type Props = { id: string; label: string }
+type Props = { id: string }
 
-const Checkbox: FC<Props> = (props) => {
+const Checkbox: FC<PropsWithChildren<Props>> = (props) => {
   return (
     <li className={`${checkboxContainer}`}>
       <input id={props.id} className={`${checkboxInput}`} type="checkbox" />
       <label htmlFor={props.id} className={`${label}`}>
-        <span> {props.label}</span>
+        {props.children}
       </label>
     </li>
   )

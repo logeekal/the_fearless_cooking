@@ -24,6 +24,7 @@ import {
   recipeCategories,
   recipeIngredientSectionTitle,
   recipeInstructionListItem,
+  recipeInstructionNotes,
 } from './index.css'
 
 interface RecipeCardProps {
@@ -201,11 +202,17 @@ const RecipeCard = forwardRef<HTMLDivElement, RecipeCardProps>(
                   >
                     {ingredientSection.ingredients.map((ingredient, index) => {
                       return (
-                        <Checkbox
-                          key={index}
-                          id={ingredient.ingredient}
-                          label={ingredient.ingredient}
-                        />
+                        <Checkbox key={index} id={ingredient.ingredient}>
+                          <span>{`${ingredient.quantity} ${ingredient.unit} ${ingredient.ingredient}`}</span>
+                          {ingredient.notes ? (
+                            <span>
+                              <span>,&nbsp;</span>
+                              <span
+                                className={`${recipeInstructionNotes}`}
+                              >{` ${ingredient.notes}`}</span>
+                            </span>
+                          ) : null}
+                        </Checkbox>
                       )
                     })}
                   </ul>

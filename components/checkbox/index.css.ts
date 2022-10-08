@@ -18,6 +18,7 @@ export const checkboxInput = style({
   WebkitAppearance: 'none',
   width: '20px',
   height: '20px',
+  minWidth: '20px',
   borderRadius: '4px',
   border: ` 1px solid ${checkboxColor}`,
   position: 'relative',
@@ -60,7 +61,7 @@ export const label = style({
       textDecoration: 'line-through',
       textDecorationThickness: '2px',
       textDecorationColor: vars.colors.textSecondary,
-      color: vars.colors.textSecondary,
+      color: `${vars.colors.lightgray}`,
     },
   },
 })

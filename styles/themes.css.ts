@@ -11,6 +11,7 @@ const baseTheme: ThemeType = {
     card: 'white',
     greenLight: 'rgba(151, 186, 168, 0.15)',
     yellowLight: 'rgba(255, 212, 34, .28)',
+    lightgray: 'rgba(0,0,0,0.3)',
   },
   font: {
     normal: 'quickSand',

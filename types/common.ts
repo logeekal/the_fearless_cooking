@@ -16,6 +16,7 @@ export type ThemeType = {
     brand: string
     greenLight: string
     yellowLight: string
+    lightgray: string
   }
 
   font: {
