@@ -84,11 +84,10 @@ export const navMenuIconContainer = style([
       '&.open': {
         transform: 'rotate(180deg)',
         position: 'fixed',
-
         //top: '1.5rem',
         left: calc.add(vars.space.normal, '.5rem'),
         '@media': {
-          [breakPoints.large]: {
+          'screen and (min-width: 1200px)': {
             transform: 'rotate(270deg)',
             left: calc.subtract('50vw', '600px'),
           },
@@ -170,9 +169,9 @@ export const navMenu = style([
     display: 'flex',
     gap: '15px',
     zIndex: vars.zIndex.high,
-    transition: 'transform 0.5s ease-in-out',
     transform: 'translate(0,0)',
     opacity: 1,
+    transition: 'transform 0.5s ease-in-out',
     selectors: {
       '&.closed': {
         transform: 'translate(-100%,0)',
@@ -185,7 +184,7 @@ export const navMenu = style([
     left: '0px',
     width: '80%',
     '@media': {
-      [breakPoints.large]: {
+      'screen and (min-width: 1200px)': {
         width: '100%',
         maxWidth: '100%',
         selectors: {
