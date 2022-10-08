@@ -1,12 +1,9 @@
-import { GetStaticPropsResult, NextPageContext } from 'next'
-import Head from 'next/head'
-import NextLink from 'next/link'
+import { GetStaticPropsResult } from 'next'
 import { useState } from 'react'
 
 import { getLayout, LayoutProps } from '../components/layout'
 import { SEO } from '../components/SEO'
 import Home from '../screens/home'
-import FAQService from '../services/FAQService'
 import RecipeService from '../services/RecipeService'
 import { styleClass } from '../styles/home.css'
 import { dark, light } from '../styles/themes.css'
@@ -30,7 +27,7 @@ const Root: NextPageWithLayout<HomeProps> = (props) => {
   return (
     <div className={`${currTheme} ${styleClass}`}>
       <SEO isArticle={false} />
-      <Home {...props} />
+      <Home recipes={props.recipes} />
       <button style={{ display: 'none' }} onClick={() => toggleTheme()}>
         Switch Theme
       </button>
@@ -42,9 +39,9 @@ Root.displayName = 'Home'
 
 Root.getLayout = getLayout
 
-export async function getStaticProps(
-  context: NextPageContext
-): Promise<GetStaticPropsResult<HomeProps & LayoutProps>> {
+export async function getStaticProps(): Promise<
+  GetStaticPropsResult<HomeProps & { layoutProps: LayoutProps }>
+> {
   const recipeService = new RecipeService()
 
   //const allFAQs = await new FAQService().getAllFAQREST()
@@ -59,10 +56,15 @@ export async function getStaticProps(
     (a, b) => (b.recipes?.nodes?.length ?? 0) - (a.recipes?.nodes?.length ?? 0)
   )
 
+  const recipeSummary = allRecipes.map((recipe) => {
+    delete recipe['content']
+    return recipe
+  })
+
   return {
     props: {
       courses: allCourses,
-      recipes: allRecipes,
+      recipes: recipeSummary,
       cuisines: allCuisines,
       layoutProps: {
         courseSummary,

@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import Image from 'next/image'
 import React from 'react'
 
 import { Post, Recipe } from '../../types/wp-graphql.types'
@@ -101,7 +100,7 @@ const ArticleGrid: React.FC<ArticleGridProps> = (props) => {
         })}
       </div>
       <div className={`grid__footer ${gridFooter}`}>
-        <Image
+        <img
           alt={'Load more posts'}
           className={`${footerImg}`}
           src="/images/chevron-down-double.svg"

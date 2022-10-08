@@ -1,7 +1,7 @@
 import React, { forwardRef, HTMLProps } from 'react'
 
 import { SOCIALS } from '../../utils/config'
-import { icon, iconImage, socialIcons, youtube } from './index.css'
+import { icon, iconImage, socialIcons } from './index.css'
 
 //type Props = {}
 type IconProps = {

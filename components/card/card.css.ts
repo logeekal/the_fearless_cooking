@@ -4,8 +4,10 @@ import { calc } from '@vanilla-extract/css-utils'
 import { breakPoints } from '../../styles/breakpoints.css'
 import { vars } from '../../styles/themes.css'
 
+const gridGapMobile = vars.space.s
+
 export const cardContainer = style({
-  maxWidth: '170px',
+  maxWidth: calc.divide(calc.subtract('100%', gridGapMobile), 2),
   display: 'flex',
   flexDirection: 'column',
   borderRadius: '10px',
@@ -20,6 +22,7 @@ export const cardArticle = style({
   flexDirection: 'column',
   gap: vars.space.s,
   padding: vars.space.s,
+  marginBottom: vars.space.s,
 })
 
 export const cardImage = style({
@@ -67,6 +70,17 @@ export const footerRight = style({
 export const cardTitle = style({
   fontSize: vars.fontSize.subHeading,
   cursor: 'pointer',
+  lineHeight: '1.65rem',
+  '@media': {
+    [breakPoints.tablet]: {
+      fontSize: vars.fontSize.para,
+      lineHeight: '2rem',
+    },
+    [breakPoints.desktop]: {
+      fontSize: vars.fontSize.para,
+      lineHeight: '2rem',
+    },
+  },
 })
 
 export const cardCategory = style({

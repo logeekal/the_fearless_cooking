@@ -4,23 +4,25 @@
   "private": true,
   "scripts": {
     "clean": "rm -rf /tmp/.cache/",
-    "dev": "next dev",
+    "dev": "DEBUG=true next dev",
     "build": "npm run pre-build && next build",
     "start": "next start",
     "lint": "eslint",
     "lint:fix": "eslint . --fix",
     "pre-build": "ts-node ./scripts/downloadData.ts",
-    "codegen": "graphql-codegen -c ./codegen.yml"
+    "codegen": "graphql-codegen -c ./codegen.yml",
+    "export": "npm run build && next export"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.6",
     "@vanilla-extract/babel-plugin": "^1.1.7",
     "@vanilla-extract/css": "^1.7.2",
     "@vanilla-extract/css-utils": "^0.1.2",
-    "@vanilla-extract/next-plugin": "^2.0.2",
+    "@vanilla-extract/next-plugin": "^2.1.1",
     "@vanilla-extract/sprinkles": "^1.4.1",
     "axios": "^0.27.2",
     "copy-to-clipboard": "^3.3.2",
+    "eslint-plugin-unused-imports": "^2.0.0",
     "next": "12.2.4",
     "pino": "^8.4.1",
     "pino-pretty": "^9.0.0",
@@ -29,6 +31,7 @@
     "react-helmet": "^6.1.0",
     "react-icons": "^4.4.0",
     "react-popper": "^2.3.0",
+    "serve": "^14.0.1",
     "ssr-window": "^4.0.2",
     "striptags": "^3.2.0"
   },

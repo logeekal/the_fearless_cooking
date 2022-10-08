@@ -1,14 +1,17 @@
 import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles'
 
 import { vars } from './themes.css'
+import { BREAKPOINTS } from './vars.css'
 
 export const breakPoints = {
-  tablet: 'screen and (max-width: 1024px)',
-  desktop: 'screen and (min-width: 1024px)',
+  tablet: `screen and (max-width: ${BREAKPOINTS.tablet.max}px)`,
+  desktop: `screen and (min-width: ${BREAKPOINTS.desktop.min}px)`,
+  large: `screen and (min-width: ${BREAKPOINTS.large.min}px)`,
 }
 
-/* eslint-disable-next-line */
 const responsiveProperties = defineProperties({
+  /* eslint-disable-next-line */
+  /* @ts-ignore */
   conditions: {
     mobile: {},
     tablet: { '@media': breakPoints.tablet },
@@ -33,14 +36,6 @@ const responsiveProperties = defineProperties({
   },
   shorthands: {
     padding: ['paddingTop', 'paddingBottom', 'paddingLeft', 'paddingRight'],
-    paddingLeft: ['paddingLeft'],
-    paddingRight: ['paddingRight'],
-    paddingTop: ['paddingTop'],
-    paddingBottom: ['paddingBottom'],
-    marginLeft: ['marginLeft'],
-    marginRight: ['marginRight'],
-    marginTop: ['marginTop'],
-    marginBottom: ['marginBottom'],
     paddingX: ['paddingLeft', 'paddingRight'],
     paddingY: ['paddingTop', 'paddingBottom'],
     marginX: ['marginLeft', 'marginRight'],

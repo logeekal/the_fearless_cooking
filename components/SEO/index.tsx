@@ -12,7 +12,7 @@ export interface SEOQueryProps {
   isArticle: boolean
   schemas?: Array<{
     type: 'recipe' | 'articles' | 'list'
-    schema: unknown
+    schema: string
   }>
 }
 
@@ -70,8 +70,8 @@ export function SEO({
         <meta name="twitter:image" content={image || siteMetadata.image} />
         {schemas &&
           schemas.map((schemaObj, index) => (
-            <script key={index} type="application/ld+json">
-              {JSON.stringify(schemaObj.schema, null, 2)}
+            <script key={index} type="application/ld+json" async>
+              {schemaObj.schema}
             </script>
           ))}
       </Helmet>

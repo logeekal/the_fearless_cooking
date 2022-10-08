@@ -1,6 +1,6 @@
 import '../styles/globals.css'
 import '../styles/global.css'
-import '../styles/globals/recipe.scss'
+import '../styles/globals/index.scss'
 
 import { NextPage } from 'next'
 import type { AppProps } from 'next/app'
@@ -19,7 +19,6 @@ type AppPropsWithLayout<P> = AppProps<P> & {
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout<unknown>) {
   const getLayout = Component.getLayout ?? ((page) => page)
-  console.error(`Generating ${Component.displayName ?? ''}`)
 
   if ('layoutProps' in pageProps) {
     /* eslint-disable-next-line */
@@ -28,7 +27,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout<unknown>) {
     return getLayout(<Component {...rest} />, layoutProps as LayoutProps)
   }
 
-  return getLayout(<Component {...pageProps} />, {})
+  return getLayout(<Component {...pageProps} />, {} as LayoutProps)
 }
 
 export default MyApp

@@ -3,19 +3,26 @@ import { calc } from '@vanilla-extract/css-utils'
 
 import { breakPoints, sprinkles } from '../../styles/breakpoints.css'
 import { vars } from '../../styles/themes.css'
-import { globalVars } from '../../styles/vars.css'
+import { bodyWidthRule, globalVars } from '../../styles/vars.css'
 
 export const navMenuCloseAnimation = keyframes({
   '0%': {
     transform: 'translate(0,0)',
   },
+  '99%': {
+    transform: 'translate(-100%,0)',
+    display: 'none',
+  },
   '100%': {
     transform: 'translate(-100%,0)',
+    display: 'none',
   },
 })
 
 export const navClass = style({
   height: globalVars.height.header,
+  paddingBottom: calc.multiply(vars.space.normal, 2),
+  paddingTop: calc.multiply(vars.space.normal, 3),
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
@@ -27,7 +34,7 @@ export const navClass = style({
 
 export const navMenuIconContainer = style([
   sprinkles({
-    display: ['flex', 'flex', 'none'],
+    display: ['flex', 'flex', 'flex'],
   }),
   {
     width: '3rem',
@@ -63,6 +70,11 @@ export const navMenuIconContainer = style([
         transform: 'translate(8px,3px) rotate(45deg)',
         borderColor: vars.colors.bgPrimary,
         width: '60%',
+        '@media': {
+          [breakPoints.large]: {
+            transform: 'translate(8px,3px) rotate(45deg)',
+          },
+        },
       },
       '&.open::after': {
         transform: 'translate(8px,-3px) rotate(-45deg)',
@@ -71,6 +83,16 @@ export const navMenuIconContainer = style([
       },
       '&.open': {
         transform: 'rotate(180deg)',
+        position: 'fixed',
+
+        //top: '1.5rem',
+        left: calc.add(vars.space.normal, '.5rem'),
+        '@media': {
+          [breakPoints.large]: {
+            transform: 'rotate(270deg)',
+            left: calc.subtract('50vw', '600px'),
+          },
+        },
       },
     },
   },
@@ -78,7 +100,7 @@ export const navMenuIconContainer = style([
 export const navMenuIconClass = style([
   {
     borderBottom: `2px solid ${vars.colors.brand}`,
-    width: '100%',
+    width: '100vw',
     height: '0px',
     selectors: {
       '&.open': {
@@ -99,13 +121,16 @@ export const navLeft = style({
   display: 'flex',
   flexDirection: 'row',
   gap: '5px',
+  justifyContent: 'center',
+  alignItems: 'center',
+  position: 'relative',
 })
 
 export const navMenuList = style([
   sprinkles({
-    flexDirection: ['column', 'column', 'row'],
+    flexDirection: ['column', 'column', 'column'],
     position: ['fixed', 'fixed', 'relative'],
-    background: ['brand', 'brand', 'transparent'],
+    background: ['brand', 'brand', 'brand'],
   }),
   {
     display: 'flex',
@@ -121,14 +146,21 @@ export const navMenuList = style([
         display: 'none',
       },
     },
+
+    '@media': {
+      [breakPoints.large]: {
+        ...bodyWidthRule,
+        paddingInline: calc.multiply(vars.space.l, 3),
+      },
+    },
   },
 ])
 
 export const navMenu = style([
   sprinkles({
-    flexDirection: ['column', 'column', 'row'],
-    position: ['fixed', 'fixed', 'relative'],
-    background: ['brand', 'brand', 'transparent'],
+    flexDirection: ['column', 'column', 'column'],
+    position: ['fixed', 'fixed', 'fixed'],
+    background: ['brand', 'brand', 'brand'],
   }),
   {
     paddingTop: calc.multiply(globalVars.height.header, 2),
@@ -151,16 +183,12 @@ export const navMenu = style([
     left: '0px',
     width: '80%',
     '@media': {
-      [breakPoints.desktop]: {
-        height: 'auto',
-        padding: 0,
-        fontWeight: 300,
-        maxWidth: 'fit-content',
+      [breakPoints.large]: {
+        width: '100%',
+        maxWidth: '100%',
         selectors: {
           '&.closed': {
-            display: 'flex',
-
-            transform: 'translate(0%,0)',
+            transform: 'translate(0,-100%)',
           },
         },
       },
@@ -181,13 +209,10 @@ export const navMenuItem = style({
   },
   '@media': {
     [breakPoints.desktop]: {
-      color: vars.colors.text,
       selectors: {
-        '&.mobile': {
-          display: 'none',
-        },
         '&.desktop': {
-          display: 'block',
+          // currently making menu on mobile and desktop as same.
+          display: 'none',
         },
       },
     },
@@ -196,4 +221,26 @@ export const navMenuItem = style({
 
 export const navMenuItemTitle = style({
   color: vars.colors.card,
+})
+
+export const navLogo = style({
+  selectors: {
+    '&.mobile': {
+      '@media': {
+        [breakPoints.large]: {
+          display: 'none',
+        },
+      },
+    },
+
+    '&.desktop': {
+      display: 'none',
+      '@media': {
+        [breakPoints.large]: {
+          display: 'block',
+          position: 'relative',
+        },
+      },
+    },
+  },
 })

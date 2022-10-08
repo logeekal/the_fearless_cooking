@@ -1,11 +1,11 @@
-import Image from 'next/image'
 import { FC, PropsWithChildren, ReactElement, useState } from 'react'
 
 import { dark, light } from '../../styles/themes.css'
 import { RecipeCourse, RecipeCuisine } from '../../types/wp-graphql.types'
 import CategoryBar from '../category_bar'
+import Sidebar from '../sidebar'
 import Footer from './footer'
-import { footerBy, layoutClass } from './layout.css'
+import { footerBy, layoutClass, mainContent } from './layout.css'
 import Navbar from './navbar'
 
 export type LayoutProps = {
@@ -22,18 +22,25 @@ const Layout: FC<PropsWithChildren<LayoutProps>> = (props) => {
   }
   return (
     <div className={`${currTheme} ${layoutClass}`}>
-      <Navbar
-        courseSummary={props.courseSummary}
-        cuisineSummary={props.cuisineSummary}
-      />
+      <header className="body-width">
+        <Navbar
+          courseSummary={props.courseSummary}
+          cuisineSummary={props.cuisineSummary}
+        />
+      </header>
       <CategoryBar
         categories={[...props.courseSummary, ...props.cuisineSummary]}
       />
-      {props.children}
-      <Footer />
-      <div className={`footer__by text_center ${footerBy}`}>
-        <i> Happy Cooking </i>👩🏽‍🍳
-      </div>
+      <main className={`${mainContent}`}>
+        {props.children}
+        <Sidebar />
+      </main>
+      <footer>
+        <Footer />
+        <div className={`footer__by text_center ${footerBy}`}>
+          <i> Happy Cooking </i>👩🏽‍🍳
+        </div>
+      </footer>
     </div>
   )
 }

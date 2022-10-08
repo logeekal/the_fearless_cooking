@@ -4,7 +4,6 @@ import React, {
   HTMLProps,
   PropsWithChildren,
   useContext,
-  useState,
 } from 'react'
 
 import { menuClass, menuCloseIcon, menuTitleClass } from './menu.css'

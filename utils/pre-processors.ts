@@ -1,7 +1,6 @@
 import * as Cheerio from 'cheerio'
 
-import { devLogger, logger } from './logger'
-import { log } from './utils'
+import { devLogger } from './logger'
 
 export function getFAQs(htmlString: string): number[] {
   const $ = Cheerio.load(htmlString)
@@ -63,13 +62,12 @@ export function replaceYTwithLiteTY(htmlString: string, title: string) {
 
 export function getYoutubeVideoId(htmlString: string) {
   if (!htmlString) return null
-  log('Getting video id')
+  devLogger.info('Getting video id')
 
   const $ = Cheerio.load(htmlString)
 
   const ytIframe = $('iframe.youtube-player').toArray()
 
-  devLogger.info(htmlString)
   if (!ytIframe) {
     return null
   }

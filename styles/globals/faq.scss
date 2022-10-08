@@ -1,0 +1,11 @@
+div#faq {
+  li {
+    list-style: none;
+    margin-block: 7px;
+    &::before {
+      content: '👉🏽';
+      margin-right: 7px;
+    }
+  }
+
+}

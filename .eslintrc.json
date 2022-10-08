@@ -1,29 +1,41 @@
 {
-    "plugins": ["@typescript-eslint", "simple-import-sort", "prettier"],
-    "extends": [
-        "next/core-web-vitals",
-        "eslint:recommended",
-        "plugin:prettier/recommended",
-        "plugin:@typescript-eslint/eslint-recommended"
-    ],
-    "overrides": [
-        {
-            "files": ["*.ts", "*.tsx"],
-            "extends": [
-                "plugin:@typescript-eslint/eslint-recommended",
-                "plugin:@typescript-eslint/recommended",
-                "plugin:@typescript-eslint/recommended-requiring-type-checking"
-            ],
-            "parserOptions": { "project": ["./tsconfig.json"] }
-        }
-    ],
-    "parser": "@typescript-eslint/parser",
-    "rules": {
-        "quotes": ["error", "single"],
-        "no-console": ["error", { "allow": ["error", "debug"] }],
-        "simple-import-sort/imports": "warn",
-        "simple-import-sort/exports": "warn",
-        "max-len": ["warn", { "code": 80, "ignoreUrls": true }],
-        "@next/next/no-img-element": 0
+  "plugins": ["@typescript-eslint", "simple-import-sort", "prettier","unused-imports"],
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:prettier/recommended",
+    "plugin:@typescript-eslint/eslint-recommended"
+  ],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "extends": [
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking"
+      ],
+      "parserOptions": { "project": ["./tsconfig.json"] }
     }
+  ],
+  "parser": "@typescript-eslint/parser",
+  "rules": {
+    "quotes": ["error", "single"],
+    "no-console": ["error", { "allow": ["error", "debug"] }],
+    "simple-import-sort/imports": "warn",
+    "simple-import-sort/exports": "warn",
+    "max-len": ["warn", { "code": 80, "ignoreUrls": true }],
+    "@next/next/no-img-element": 0,
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "unused-imports/no-unused-imports": "error",
+    "unused-imports/no-unused-vars": [
+      "warn",
+      {
+        "vars": "all",
+        "varsIgnorePattern": "^_",
+        "args": "after-used",
+        "argsIgnorePattern": "^_"
+      }
+    ]
+  }
 }

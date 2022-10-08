@@ -40,6 +40,7 @@ export type ThemeType = {
   }
   border: {
     circular: string
+    normal: string
   }
   zIndex: {
     highest: string

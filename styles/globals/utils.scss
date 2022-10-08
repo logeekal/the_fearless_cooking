@@ -1,0 +1,11 @@
+.nav {
+
+  .icon__ghost {
+    display: none;
+  }
+  &__menu__container--icon.open + .icon__ghost {
+    width: 30px;
+    height: 40px;
+    display: block;
+  }
+}

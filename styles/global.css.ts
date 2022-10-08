@@ -1,6 +1,7 @@
 import { globalFontFace, globalStyle } from '@vanilla-extract/css'
 
 import { vars } from './themes.css'
+import { bodyWidthRule } from './vars.css'
 
 globalFontFace('quicksand', {
   src: 'url(/fonts/_quicksand/Quicksand-Bold.woff2) format("woff2")',
@@ -50,6 +51,7 @@ globalStyle('*', {
   border: 0,
   outline: 0,
   background: 'transparent',
+  lineHeight: '2.5rem',
 })
 
 globalStyle(':root', {
@@ -57,7 +59,9 @@ globalStyle(':root', {
 })
 
 globalStyle('body', {
+  color: vars.colors.text,
   fontSize: '1.6rem',
+  lineHeight: '3rem',
 })
 
 globalStyle('li', {
@@ -81,12 +85,37 @@ globalStyle('a', {
   color: vars.colors.brand,
 })
 
-globalStyle('btn', {
+globalStyle('.btn', {
   cursor: 'pointer',
 })
 
 globalStyle('p', {
   fontSize: vars.fontSize.para,
+  lineHeight: '2rem',
+})
+
+globalStyle('p.subtext', {
+  fontSize: vars.fontSize.subText,
+})
+
+globalStyle('p.heading', {
+  fontSize: vars.fontSize.heading,
+})
+
+globalStyle('p.subheading', {
+  fontSize: vars.fontSize.subHeading,
+})
+
+globalStyle('.bold', {
+  fontWeight: 500,
+})
+
+globalStyle('.heavy-bold', {
+  fontWeight: 700,
+})
+
+globalStyle('.brand', {
+  color: vars.colors.brand,
 })
 
 globalStyle('.cursive', {
@@ -110,4 +139,47 @@ globalStyle('.grid_center', {
 
 globalStyle('section', {
   paddingBlock: vars.space.l,
+})
+
+globalStyle('hr.saperator', {
+  width: '100%',
+  border: `0.2px solid ${vars.colors.brand}`,
+  marginBlock: vars.space.l,
+})
+
+globalStyle('blockquote', {
+  marginBlock: vars.space.s,
+  border: `1px solid ${vars.colors.brand}`,
+  padding: vars.space.s,
+  borderRadius: '5px',
+  position: 'relative',
+  color: vars.colors.textSecondary,
+})
+
+globalStyle('blockquote:after', {
+  content: '',
+  position: 'absolute',
+  display: 'block',
+  height: '100%',
+  top: 0,
+  left: 0,
+  width: '5px',
+  background: vars.colors.brand,
+  borderTopLeftRadius: '2px',
+  borderBottomLeftRadius: '2px',
+})
+
+globalStyle('.link', {
+  cursor: 'pointer',
+})
+
+globalStyle('.body-width', bodyWidthRule)
+
+globalStyle('.sidebar-content-width', {
+  maxWidth: '500px',
+  margin: '0 auto',
+})
+
+globalStyle('.full-width', {
+  width: '100%',
 })

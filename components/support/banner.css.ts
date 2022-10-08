@@ -10,3 +10,10 @@ export const support = style({
   gap: vars.space.normal,
   background: vars.colors.yellowLight,
 })
+
+export const supportContentContainer = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: vars.space.normal,
+  background: vars.colors.yellowLight,
+})

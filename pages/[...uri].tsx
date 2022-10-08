@@ -1,13 +1,10 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
-import Script from 'next/script'
-import { useEffect } from 'react'
 
 import { getLayout, LayoutProps } from '../components/layout'
-import Category from '../screens/Category'
+import Category from '../screens/category'
 import RecipePage from '../screens/recipe'
 import FAQService from '../services/FAQService'
 import RecipeService from '../services/RecipeService'
-import { IDuration } from '../types/common'
 import { Recipe, RecipeCourse, RecipeCuisine } from '../types/wp-graphql.types'
 import { arrToObj } from '../utils'
 import { devLogger, logger } from '../utils/logger'
@@ -15,15 +12,11 @@ import {
   getFAQs,
   getYoutubeVideoId,
   makeVideoIframeLazy,
-  replaceYTwithLiteTY,
   replaceYTWithNoCookie,
   stripFAQSection,
 } from '../utils/pre-processors'
-import {
-  addDurations,
-  calculateTotalDuration,
-  getTimeUnitName,
-} from '../utils/time_utils'
+import genRecipeSchema from '../utils/schema/recipe'
+import { calculateTotalDuration } from '../utils/time_utils'
 import {
   ICompleteRecipe,
   IFAQRestContent,
@@ -31,17 +24,21 @@ import {
 } from '../utils/types'
 import { NextPageWithLayout } from './_app'
 
-type CoursePageProps = {
+type CommonProps = {
+  pageType: 'COURSE' | 'CUISINE' | 'RECIPE'
+}
+
+type CoursePageProps = CommonProps & {
   pageType: 'COURSE'
   course: RecipeCourse
 }
 
-type CuisinePageProps = {
+type CuisinePageProps = CommonProps & {
   pageType: 'CUISINE'
   cuisine: RecipeCuisine
 }
 
-type RecipePageProps = {
+type RecipePageProps = CommonProps & {
   pageType: 'RECIPE'
   recipe: ICompleteRecipe
 }
@@ -49,8 +46,7 @@ type RecipePageProps = {
 type CatchAllPageProps = CoursePageProps | CuisinePageProps | RecipePageProps
 
 const CatchAll: NextPageWithLayout<CatchAllPageProps> = (props) => {
-  console.error({ catchAllProps: Object.keys(props) })
-
+  /* eslint-disable-next-line */
   /*
    *
    * Article Page - 2nd Release
@@ -66,23 +62,17 @@ const CatchAll: NextPageWithLayout<CatchAllPageProps> = (props) => {
    *
    * */
 
+  /* eslint-disable-next-line */
   if (props.pageType === 'RECIPE') {
-    return (
-      <>
-        <RecipePage recipe={props.recipe} />
-      </>
-    )
+    return <RecipePage recipe={props.recipe} />
   }
 
   if (props.pageType === 'CUISINE') {
     return <Category category={props.cuisine} />
   }
 
-  if (props.pageType === 'COURSE') {
-    return <Category category={props.course} />
-  }
-
-  return <></>
+  // default course
+  return <Category category={props.course} />
 }
 
 CatchAll.getLayout = getLayout
@@ -123,7 +113,9 @@ export const getStaticPaths: GetStaticPaths<{
 }
 
 export const getStaticProps: GetStaticProps<
-  CatchAllPageProps & LayoutProps,
+  CatchAllPageProps & {
+    layoutProps: LayoutProps
+  },
   { uri: Array<string> }
 > = async ({ params }) => {
   const recipeService = new RecipeService()
@@ -145,6 +137,10 @@ export const getStaticProps: GetStaticProps<
       props: {
         pageType: 'COURSE',
         course: coursesObjByURI[uri],
+        layoutProps: {
+          courseSummary: coursesSummary,
+          cuisineSummary: cuisineSummary,
+        },
       },
     }
   }
@@ -159,8 +155,8 @@ export const getStaticProps: GetStaticProps<
         pageType: 'CUISINE',
         cuisine: cuisineObjByURI[uri],
         layoutProps: {
-          courseSummary: courses,
-          cuisineSummary: cuisines,
+          courseSummary: coursesSummary,
+          cuisineSummary: cuisineSummary,
         },
       },
     }
@@ -226,10 +222,19 @@ export const getStaticProps: GetStaticProps<
     )
 
     devLogger.info('Calculating durations')
-    selectedRecipeContent.recipe_metas['totalDurationCalculated'] =
+    selectedRecipeContent.recipe_metas['calculatedDurations'] =
       calculateTotalDuration(selectedRecipeContent.recipe_metas)
-
     devLogger.info('Succesfully calculated duration')
+
+    devLogger.info('Generating Schema')
+
+    const selectedRecipeSchema = genRecipeSchema(
+      selectedRecipePost,
+      selectedRecipeContent['recipe_metas'],
+      relatedYoutubeVideoID ?? undefined
+    )
+
+    devLogger.info('Generated Schema')
 
     devLogger.info(`Succesfully Generated Recipe : ${uri}`)
 
@@ -241,6 +246,7 @@ export const getStaticProps: GetStaticProps<
           content: selectedRecipeContent['recipe_metas'],
           faqs: recipeRelatedFAQs,
           YTId: relatedYoutubeVideoID ?? null,
+          recipeSchema: selectedRecipeSchema,
         },
         layoutProps: {
           courseSummary: coursesSummary,

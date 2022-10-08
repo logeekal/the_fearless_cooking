@@ -32,15 +32,21 @@ function CategorySubMenu(props: CategorySubMenuProps) {
           >
             {item.img ? (
               <div
-                className={`icon category__item--img category__item--${item.name}`}
+                className={`icon category__item--img \
+                            category__item--${item.name}`}
               >
                 {item.img}
               </div>
             ) : (
               <></>
             )}
-            <NextLink className="category__item--link" href={item.uri}>
-              <p className={`${categoryMenuText}`}>{item.name}</p>
+            <NextLink
+              soft={true}
+              prefetch={false}
+              className="category__item--link"
+              href={item.uri}
+            >
+              <p className={`link ${categoryMenuText}`}>{item.name}</p>
             </NextLink>
           </li>
         )

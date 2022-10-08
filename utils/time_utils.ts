@@ -70,18 +70,22 @@ export const calculateTotalDuration = (
     console.warn('Prep time or cook time is missing')
   }
 
-  const totalDuration = addDurations([
-    {
-      ...defaultDuration,
-      [getTimeUnitName(recipeContent.cookTimeUnit) as string]:
-        parseInt(recipeContent.cookTime) || 2,
-    },
-    {
-      ...defaultDuration,
-      [getTimeUnitName(recipeContent.prepTimeUnit) as string]:
-        parseInt(recipeContent.prepTime) || 5,
-    },
-  ])
+  const prepTimeInDurations = {
+    ...defaultDuration,
+    [getTimeUnitName(recipeContent.prepTimeUnit) as string]:
+      parseInt(recipeContent.prepTime) || 5,
+  }
 
-  return totalDuration
+  const cookTimeInDurations = {
+    ...defaultDuration,
+    [getTimeUnitName(recipeContent.cookTimeUnit) as string]:
+      parseInt(recipeContent.cookTime) || 2,
+  }
+  const totalDuration = addDurations([prepTimeInDurations, cookTimeInDurations])
+
+  return {
+    prepTimeInDurations,
+    cookTimeInDurations,
+    totalDuration,
+  }
 }

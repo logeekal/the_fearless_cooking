@@ -1,6 +1,5 @@
-import Image from 'next/image'
 import NextLink from 'next/link'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 
 import { RecipeCourse, RecipeCuisine } from '../../types/wp-graphql.types'
 import Accordion from '../accordion'
@@ -9,13 +8,15 @@ import {
   navAddendumClass,
   navClass,
   navLeft,
+  navLogo,
   navMenu,
   navMenuIconClass,
   navMenuIconContainer,
   navMenuItem,
-  navMenuItemTitle,
   navMenuList,
 } from './navbar.css'
+
+const SUPPORT_LINK = 'https://ko-fi.com/X8X2FFB20'
 
 type NavbarProps = {
   courseSummary: Array<RecipeCourse>
@@ -24,6 +25,18 @@ type NavbarProps = {
 
 const Navbar: FC<NavbarProps> = ({ courseSummary, cuisineSummary }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isSupportPopupOpen, setIsSupportPopupOpen] = useState(false)
+
+  useEffect(() => {
+    if (!isSupportPopupOpen) return
+    window.open(
+      SUPPORT_LINK,
+      '_blank',
+      'popup=yes,width=600,height=600,scrollbars=no,resizable=no'
+    )
+
+    setIsSupportPopupOpen(false)
+  }, [isSupportPopupOpen])
 
   const toggleMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen)
@@ -43,20 +56,29 @@ ${navMenuIconContainer} ${isMobileMenuOpen ? 'open' : 'closed'}`}
             } ${navMenuIconClass}`}
           ></div>
         </div>
-        <div className="nav__logo">
-          <Image
-            height="40px"
-            width={'100px'}
-            className="img nav__logo--img"
-            alt="TFC logo"
-            src="/images/logo_complete_green.svg"
-          ></Image>
+
+        <div className={'icon__ghost'}></div>
+        <div className={`nav__logo mobile ${navLogo}`}>
+          <NextLink href="/" prefetch={false}>
+            <img
+              height="80px"
+              width={'200px'}
+              className="link img nav__logo--img"
+              alt="TFC logo"
+              src="/images/logo_complete_green.svg"
+            ></img>
+          </NextLink>
         </div>
       </div>
       <div
         className={`nav__menu ${navMenu} ${isMobileMenuOpen ? '' : 'closed'}`}
       >
         <ul className={`${navMenuList}`}>
+          <li className={`nav__menu--item ${navMenuItem}`} onClick={toggleMenu}>
+            <NextLink href={'/'} prefetch={false}>
+              <h2 className="link">Home</h2>
+            </NextLink>
+          </li>
           <li className={`nav__menu--item mobile ${navMenuItem}`}>
             <Accordion title={<h2 className={`${navMenuItem}`}>Cook</h2>}>
               <CategorySubMenu
@@ -66,9 +88,9 @@ ${navMenuIconContainer} ${isMobileMenuOpen ? 'open' : 'closed'}`}
                   courseSummary
                     ? courseSummary.map((course) => {
                         return {
-                          name: course.name,
+                          name: course.name as string,
                           uri: course.uri,
-                          onClick: toggleMenu,
+                          onClick: toggleMenu as () => void,
                         }
                       })
                     : []
@@ -81,9 +103,9 @@ ${navMenuIconContainer} ${isMobileMenuOpen ? 'open' : 'closed'}`}
                   cuisineSummary
                     ? cuisineSummary.map((cuisine) => {
                         return {
-                          name: cuisine.name,
+                          name: cuisine.name as string,
                           uri: cuisine.uri,
-                          onClick: toggleMenu,
+                          onClick: toggleMenu as () => void,
                         }
                       })
                     : []
@@ -107,52 +129,74 @@ ${navMenuIconContainer} ${isMobileMenuOpen ? 'open' : 'closed'}`}
             className={`nav__menu--item ${navMenuItem} disabled`}
             onClick={toggleMenu}
           >
-            <NextLink href="/shop">
+            <NextLink prefetch={false} href="/shop">
               <h2>Shop</h2>
             </NextLink>
           </li>
-          <li className={`nav__menu--item ${navMenuItem}`} onClick={toggleMenu}>
-            <NextLink href="/about">
+          <li
+            className={`nav__menu--item ${navMenuItem} disabled`}
+            onClick={toggleMenu}
+          >
+            <NextLink prefetch={false} href="/about">
               <h2>About</h2>
             </NextLink>
           </li>
-          <li className={`nav__menu--item ${navMenuItem}`} onClick={toggleMenu}>
-            <NextLink href="/support">
-              <h2>Support</h2>
-            </NextLink>
+          <li
+            className={`nav__menu--item ${navMenuItem}`}
+            onClick={() => {
+              toggleMenu()
+              setIsSupportPopupOpen(true)
+            }}
+          >
+            <h2>Support</h2>
           </li>
-          <li className={`nav__menu--item ${navMenuItem}`} onClick={toggleMenu}>
-            <NextLink href="/subscribe">
+          <li
+            className={`nav__menu--item ${navMenuItem} disabled`}
+            onClick={toggleMenu}
+          >
+            <NextLink prefetch={false} href="/subscribe">
               <h2>Subscribe</h2>
             </NextLink>
           </li>
         </ul>
       </div>
+      <div className={`nav__logo desktop ${navLogo}`}>
+        <NextLink href="/" prefetch={false}>
+          <img
+            height="80px"
+            width={'200px'}
+            className="link img nav__logo--img"
+            alt="TFC logo"
+            src="/images/logo_complete_green.svg"
+          ></img>
+        </NextLink>
+      </div>
+
       <div className={`nav__addend ${navAddendumClass}`}>
-        <Image
+        <img
           width="30px"
           height="30px"
           className="img img__search"
           src="/images/search-green.svg"
           alt="search"
-          layout="fixed"
-        ></Image>
-        <Image
+          style={{ display: 'none' }}
+        />
+        <img
           width="30px"
           height="30px"
-          className="img img__shop"
+          className="link img img__shop"
           src="/images/shop.svg"
           alt="shop"
-          layout="fixed"
-        ></Image>
-        <Image
+          style={{ display: 'none' }}
+        />
+        <img
           width="30px"
           height="30px"
-          className="img img__support"
+          className="link img img__support"
           src="/images/support-light.svg"
+          onClick={() => setIsSupportPopupOpen(true)}
           alt="support"
-          layout="fixed"
-        ></Image>
+        />
       </div>
     </nav>
   )

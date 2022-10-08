@@ -19,8 +19,9 @@ const upDown = keyframes({
 export const grid = style({
   display: 'flex',
   flexDirection: 'row',
+  justifyContent: 'stretch',
+  alignItems: 'stretch',
   flexWrap: 'wrap',
-  maxWidth: '50%',
   minWidth: '350px',
   gap: vars.space.s,
 })

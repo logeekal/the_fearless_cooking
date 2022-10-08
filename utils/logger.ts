@@ -16,7 +16,7 @@ const prodDestination = pino.destination(
 export const devLogger = pino(
   {
     name: 'dev',
-    enabled: process.env.NODE_ENV !== 'production',
+    enabled: Boolean(process.env.DEBUG),
     transport: {
       target: 'pino-pretty',
       options: {

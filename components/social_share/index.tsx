@@ -1,7 +1,7 @@
 /* eslint-disable */
 import Copy from 'copy-to-clipboard'
 import Link from 'next/link'
-import React, { CSSProperties, useEffect, useState } from 'react'
+import React, { CSSProperties, LegacyRef, useEffect, useState } from 'react'
 import {
   FaCopy,
   FaFacebookSquare,
@@ -10,7 +10,8 @@ import {
 } from 'react-icons/fa'
 import { MdShare } from 'react-icons/md'
 import { usePopper } from 'react-popper'
-import { window as SSRWindow } from 'ssr-window'
+import { ssrWindow } from 'ssr-window'
+
 
 import { SiteMeta } from '../../utils/config'
 import useWindowClick from '../hooks/use_window_clicks'
@@ -28,7 +29,7 @@ interface SocialShareProps {
   pageURI: string
 }
 
-const window: Window = SSRWindow as Window
+const window: Window = ssrWindow as unknown as Window
 
 const SocialShare: React.FC<SocialShareProps> = ({ pageTitle, pageURI }) => {
   const clickTarget: Element | null = useWindowClick()
@@ -98,16 +99,12 @@ const SocialShare: React.FC<SocialShareProps> = ({ pageTitle, pageURI }) => {
     }, 4000)
   }
 
-  const getWindow = () => {
-    if (ifWindow()) return window
-  }
   const handleShare = async () => {
     if (typeof window === 'undefined') {
       return
     }
 
     if (
-      navigator.share &&
       navigator.userAgent.toLowerCase().match(/mobile/i) &&
       !navigator.userAgent.toLowerCase().match(/windows/i)
     ) {
@@ -123,7 +120,7 @@ const SocialShare: React.FC<SocialShareProps> = ({ pageTitle, pageURI }) => {
     } else {
       console.log('native sharing not available, using in build option')
       setIsShareDialogVisible(!isShareDialogVisible)
-      await update()
+      update && await update()
     }
   }
 
@@ -131,66 +128,22 @@ const SocialShare: React.FC<SocialShareProps> = ({ pageTitle, pageURI }) => {
     <>
       <div
         id="social-share"
-        sx={{
-          cursor: 'pointer',
-        }}
-        ref={setShareButtonEl}
+        ref={setShareButtonEl as LegacyRef<HTMLDivElement>}
       >
         <MdShare onClick={handleShare} />
       </div>
       <div
         id="tooltip"
         className={`tooltip ${socialShareTooltip}`}
-        ref={setPopperEl}
+        ref={setPopperEl as LegacyRef<HTMLDivElement>}
         style={{
           ...styles.popper,
           display: isShareDialogVisible ? 'block' : 'none',
         }}
-        style={
-          {
-            '&[data-popper-placement^=\'top\'] > #arrow': {
-              bottom: '-4px',
-            },
-            '&[data-popper-placement^=\'bottom\'] > #arrow': {
-              top: '-4px',
-            },
-            '&[data-popper-placement^=\'left\'] > #arrow': {
-              right: '-4px',
-            },
-            '&[data-popper-placement^=\'right\'] > #arrow': {
-              left: '-4px',
-            },
-          } as CSSProperties
-        }
         {...attributes.popper}
       >
         <ul
           className={`${socialListContainer}`}
-          sx={{
-            li: {
-              'a,div': {
-                color: 'secondary',
-                display: 'flex',
-                alignItems: 'center',
-                '&:hover': {
-                  color: 'primary',
-                },
-              },
-              div: {
-                cursor: 'pointer',
-              },
-              'a > svg': {
-                width: '20px',
-                height: '20px',
-                marginRight: '5px',
-              },
-              'div > svg': {
-                width: '20px',
-                height: '20px',
-                marginRight: '5px',
-              },
-            },
-          }}
         >
           <li className={`${socialListEl}`}>
             <Link
@@ -258,7 +211,7 @@ const SocialShare: React.FC<SocialShareProps> = ({ pageTitle, pageURI }) => {
         <div
           id="arrow"
           className={`arrow ${socialSharePopup}`}
-          ref={setArrowEl}
+          ref={setArrowEl as LegacyRef<HTMLDivElement>}
           style={styles.arrow}
           {...attributes.arrow}
         />
@@ -267,4 +220,3 @@ const SocialShare: React.FC<SocialShareProps> = ({ pageTitle, pageURI }) => {
   )
 }
 
-export default SocialShare

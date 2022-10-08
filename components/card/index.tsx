@@ -52,21 +52,24 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
     categories.push(post.categories.nodes[0] as Category)
   }
 
+  const thumbnailUrl = post.featuredImage?.node?.mediaDetails?.sizes?.filter(
+    (size) => size?.name === 'medium'
+  )[0]?.sourceUrl
+
+  if (!thumbnailUrl) return <></>
   return (
     <NextLink prefetch={false} href={post.uri}>
-      <div className={`card ${cardContainer}`} {...restProps}>
+      <div className={`link card ${cardContainer}`} {...restProps}>
         <div>
           <img
             className={`${cardImage}`}
-            srcSet={post?.featuredImage?.node?.srcSet as string}
-            src={post?.featuredImage?.node?.sourceUrl as string}
-            sizes="(max-width : 800px) 400px, 20vw"
+            src={thumbnailUrl}
             alt={`image of ${post.title as string}`}
             loading="lazy"
           />
         </div>
         <div className={`card__article ${cardArticle}`}>
-          <NextLink href={post.uri}>
+          <NextLink prefetch={false} href={post.uri}>
             <h2
               className={`${cardTitle}`}
               itemProp="name"
@@ -95,7 +98,9 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
                       className={`card__category ${cardCategory}`}
                       key={cat.uri}
                     >
-                      <NextLink href={cat.uri}>{cat.name}</NextLink>
+                      <NextLink prefetch={false} href={cat.uri}>
+                        <span className="link">{cat.name}</span>
+                      </NextLink>
                     </span>
                   </>
                 )

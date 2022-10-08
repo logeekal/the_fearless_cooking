@@ -33,6 +33,7 @@ const baseTheme: ThemeType = {
   },
   border: {
     circular: '999999px',
+    normal: '10px',
   },
   zIndex: {
     highest: '100',
@@ -56,15 +57,17 @@ export const dark = createTheme<typeof vars>(
   vars,
   {
     ...baseTheme,
-    colors: {
-      text: 'white',
-      textSecondary: 'white',
-      bgPrimary: 'blue',
-      brand: 'blue',
-      card: 'yellow',
-      greenLight: 'rgba(151, 186, 168, 0.15)',
-      yellowLight: 'rgba(255, 212, 34, .28)',
-    },
+    /* Currently Keeping both dark and light themes as same
+     *colors: {
+     *  text: 'white',
+     *  textSecondary: 'white',
+     *  bgPrimary: 'blue',
+     *  brand: 'blue',
+     *  card: 'yellow',
+     *  greenLight: 'rgba(151, 186, 168, 0.15)',
+     *  yellowLight: 'rgba(255, 212, 34, .28)',
+     *},
+     */
   },
   'dark'
 )
