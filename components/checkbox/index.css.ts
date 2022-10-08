@@ -60,7 +60,7 @@ export const label = style({
     [`${checkboxInput}:checked + &`]: {
       textDecoration: 'line-through',
       textDecorationThickness: '2px',
-      textDecorationColor: vars.colors.textSecondary,
+      textDecorationColor: vars.colors.lightgray,
       color: `${vars.colors.lightgray}`,
     },
   },
