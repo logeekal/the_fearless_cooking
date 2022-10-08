@@ -84,6 +84,11 @@ export const categories = style({
   //justifyContent: 'space-between',
   gap: vars.space.l,
   paddingInline: vars.space.normal,
+  selectors: {
+    '&::-webkit-scrollbar': {
+      display: 'none',
+    },
+  },
   '@media': {
     [breakPoints.tablet]: {
       justifyContent: 'space-between',
