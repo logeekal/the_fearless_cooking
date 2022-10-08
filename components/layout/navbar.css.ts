@@ -170,11 +170,13 @@ export const navMenu = style([
     display: 'flex',
     gap: '15px',
     zIndex: vars.zIndex.high,
-    transition: '0.5s ease-in-out',
+    transition: 'transform 0.5s ease-in-out',
     transform: 'translate(0,0)',
+    opacity: 1,
     selectors: {
       '&.closed': {
         transform: 'translate(-100%,0)',
+        opacity: 0,
       },
     },
     height: '100vh',

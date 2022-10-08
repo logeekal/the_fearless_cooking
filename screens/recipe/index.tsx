@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import React from 'react'
+import React, { Fragment } from 'react'
 import striptags from 'striptags'
 
 import { cardCategory } from '../../components/card/card.css'
@@ -53,7 +53,7 @@ function RecipePage(props: RecipePageProps) {
           <div className={`recipe__categories ${recipeCategories}`}>
             {categories.map((cat, idx) => {
               return (
-                <>
+                <Fragment key={cat?.slug}>
                   {idx > 0 ? (
                     <span className="card__category--saperator">/</span>
                   ) : null}
@@ -65,7 +65,7 @@ function RecipePage(props: RecipePageProps) {
                       {cat?.name}
                     </Link>
                   </span>
-                </>
+                </Fragment>
               )
             })}
           </div>

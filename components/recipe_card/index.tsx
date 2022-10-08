@@ -1,4 +1,4 @@
-import React, { forwardRef, useMemo } from 'react'
+import React, { forwardRef, Fragment, useMemo } from 'react'
 import striptags from 'striptags'
 
 import { IDuration } from '../../types/common'
@@ -240,7 +240,7 @@ const RecipeCard = forwardRef<HTMLDivElement, RecipeCardProps>(
                       )
                       .map((instruction, index) => {
                         return (
-                          <>
+                          <Fragment key={instruction.instruction}>
                             <li
                               className={`${recipeInstructionListItem}`}
                               id={getStepURL(
@@ -269,7 +269,7 @@ const RecipeCard = forwardRef<HTMLDivElement, RecipeCardProps>(
                                 {striptags(instruction.instructionNotes)}
                               </blockquote>
                             )}
-                          </>
+                          </Fragment>
                         )
                       })}
                   </ol>

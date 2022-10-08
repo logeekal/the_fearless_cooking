@@ -90,7 +90,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
             <span className={`footer-left  ${footerLeft}`}>
               {categories.map((cat, idx) => {
                 return (
-                  <>
+                  <React.Fragment key={cat.slug}>
                     {idx > 0 ? (
                       <span className="card__category--saperator">/</span>
                     ) : null}
@@ -102,7 +102,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
                         <span className="link">{cat.name}</span>
                       </NextLink>
                     </span>
-                  </>
+                  </React.Fragment>
                 )
               })}
             </span>
