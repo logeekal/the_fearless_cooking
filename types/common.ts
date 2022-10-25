@@ -52,3 +52,5 @@ export interface IDuration {
   hours: number
   minutes: number
 }
+
+export type GraphQLNextPageHandler<T> = (after: string) => T

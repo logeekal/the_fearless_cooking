@@ -3,9 +3,50 @@ import React from 'react'
 import { genericContent } from '../sidebar/index.css'
 import { banner, bannerText } from './banner.css'
 
-type Props = Record<string, never>
+const SubscribeBanner = () => {
+  //const { values, handleChange, handleSubmission, errFields } = useForm(
+  //submitHandler as FormEventHandler<HTMLFormElement>
+  //)
 
-const SubscribeBanner = (props: Props) => {
+  //const [submitRequestState, setSubmitReqState] = useState<
+  //'IDLE' | 'SUBMITTING' | 'ERROR' | 'SUCCESS' | 'EXIST'
+  //>('IDLE')
+
+  //async function submitHandler(): Promise<void> {
+  //if (typeof window === 'undefined') return
+
+  //setSubmitReqState('SUBMITTING')
+
+  //if ('email' in values) {
+  //const { email } = values
+  //const response = await fetch('/.netlify/functions/subscribe', {
+  //method: 'POST',
+  //body: JSON.stringify({
+  //email: email,
+  //tags: [
+  //process.env.NODE_ENV,
+  //typeof window === 'undefined'
+  //? 'backend'
+  //: window.location.pathname,
+  //],
+  //}),
+  //})
+
+  //const resJSON = await response.json()
+  //if (response.status === 200) {
+  //setSubmitReqState('SUCCESS')
+  //return
+  //} else {
+  //if (resJSON.title === 'Member Exists') {
+  //setSubmitReqState('EXIST')
+  //return
+  //}
+  //console.error('Some error while subscribing')
+  //console.error(resJSON)
+  //setSubmitReqState('ERROR')
+  //}
+  //}
+  //}
   return (
     <section className={`subscribe__banner ${banner}`}>
       <div className={`sidebar-content-width ${genericContent}`}>

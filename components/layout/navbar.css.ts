@@ -11,11 +11,9 @@ export const navMenuCloseAnimation = keyframes({
   },
   '99%': {
     transform: 'translate(-100%,0)',
-    display: 'none',
   },
   '100%': {
     transform: 'translate(-100%,0)',
-    display: 'none',
   },
 })
 
@@ -147,7 +145,7 @@ export const navMenuList = style([
     },
 
     '@media': {
-      [breakPoints.large]: {
+      'screen and (min-width: 1200px)': {
         ...bodyWidthRule,
         paddingInline: calc.multiply(vars.space.l, 3),
       },
@@ -175,7 +173,6 @@ export const navMenu = style([
     selectors: {
       '&.closed': {
         transform: 'translate(-100%,0)',
-        opacity: 0,
       },
     },
     height: '100vh',

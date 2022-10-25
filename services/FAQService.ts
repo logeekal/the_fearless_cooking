@@ -2,7 +2,7 @@ import axios from 'axios'
 
 import { devLogger, logger } from '../utils/logger'
 import { IFAQRestContent } from '../utils/types'
-import DiskCacheService, { ICacheService } from './CacheService'
+import { ICacheService } from './CacheService'
 
 const pagesHeaderName = 'x-wp-totalpages'
 
@@ -10,8 +10,8 @@ export default class FAQService {
   host: string
 
   constructor(
-    private clean: boolean = false,
-    private cacheService: ICacheService = new DiskCacheService()
+    private cacheService: ICacheService | undefined,
+    private clean: boolean = false
   ) {
     this.host = process.env.MF_HOST as string
     if (!this.host) {
@@ -63,7 +63,7 @@ export default class FAQService {
       }
     }
 
-    this.cacheService.set(ENTITY, JSON.stringify(faqs))
+    this.cacheService && this.cacheService.set(ENTITY, JSON.stringify(faqs))
 
     return faqs
   }

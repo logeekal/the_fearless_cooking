@@ -2,6 +2,7 @@ import { pino } from 'pino'
 
 export const logger = pino({
   name: 'SSR',
+  level: process.env.DEBUG ? 'debug' : 'info',
   transport: {
     target: 'pino-pretty',
     options: {

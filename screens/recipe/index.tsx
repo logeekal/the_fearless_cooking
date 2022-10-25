@@ -88,9 +88,11 @@ function RecipePage(props: RecipePageProps) {
           <RecipeCard recipe={recipe.content} recipePost={recipe.post} />
         </div>
       </div>
-      <div className={`${FAQSection}`}>
-        <FAQs faqs={recipe.faqs} />
-      </div>
+      {recipe.faqs.length > 1 ? (
+        <div className={`${FAQSection}`}>
+          <FAQs faqs={recipe.faqs} />
+        </div>
+      ) : null}
     </div>
   )
 }

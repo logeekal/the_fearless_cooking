@@ -5,14 +5,24 @@ import {
   RecipeCourse,
   RecipeCuisine,
 } from '../../types/wp-graphql.types'
+import { LocalPageInfo } from '../../utils/types'
 import Home from '../home'
 
-type CategoryPageProps = {
+type CategoryPageProps = LocalPageInfo & {
   category: RecipeCuisine | RecipeCourse
 }
 
 function Category(props: CategoryPageProps) {
-  return <Home recipes={props.category.recipes?.nodes as Recipe[]} />
+  //console.log(
+  //`Category ${props.category.name as string} : `,
+  //props.category.recipes?.nodes?.length
+  //)
+  return (
+    <Home
+      recipes={props.category.recipes?.nodes as Recipe[]}
+      pageInfo={props.pageInfo}
+    />
+  )
 }
 
 export default Category

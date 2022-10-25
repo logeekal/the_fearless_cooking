@@ -38,3 +38,11 @@ export interface IRecipeObject {
 export interface IPostObject {
   [k: number]: Post
 }
+
+export type LocalPageInfo = {
+  pageInfo: {
+    total: number
+    current: number
+    uri: string
+  }
+}

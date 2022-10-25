@@ -1,10 +1,9 @@
 /* eslint-disable */
 
-
 export const GEN_GET_RECIPE_POSTS_DETAIL_QUERY = (
-    first = 100,
-    endCursor: string | null = null,
-    startCursor: string | null = null
+  first = 100,
+  endCursor: string | null = null,
+  startCursor: string | null = null
 ) => `
       query GET_RECIPE_POSTS {
           recipes(first:${first},\
@@ -65,7 +64,10 @@ export const GEN_GET_RECIPE_POSTS_DETAIL_QUERY = (
         }
     `
 
-export const GET_COURSES = `
+export const GET_COURSES = (
+  first: number = 10,
+  after: string | null = null
+) => `
   query GET_COURSES {
     recipeCourses {
       nodes {
@@ -75,7 +77,7 @@ export const GET_COURSES = `
         slug
         thumbnail
         description
-        recipes {
+        recipes(first: ${first}, after: ${after}) {
           nodes {
             databaseId
             uri
@@ -98,13 +100,23 @@ export const GET_COURSES = `
               }
             }
           }
+
+        pageInfo {
+          endCursor
+          startCursor
+          hasNextPage
+          hasPreviousPage
+        }
         }
       }
     }
   }
 `
 
-export const GET_CUISINES = `
+export const GET_CUISINES = (
+  first: number = 10,
+  after: string | null = null
+) => `
     query GET_CUISINES {
         recipeCuisines {
             nodes {
@@ -114,7 +126,7 @@ export const GET_CUISINES = `
                 slug
                 thumbnail
                 description
-                recipes {
+                recipes(first: ${first}, after: ${after}) {
                     nodes {
                         databaseId
                         uri
@@ -137,23 +149,12 @@ export const GET_CUISINES = `
                             }
                         }
                     }
-                }
-            }
-        }
-    }
-`
 
-export const GET_CUISINES_SUMMARY = `
-    query GET_CUISINES_SUMMARY {
-        recipeCuisines {
-            nodes {
-                name
-                databaseId
-                uri
-                thumbnail
-                recipes {
-                    nodes {
-                        databaseId
+                    pageInfo {
+                      endCursor
+                      startCursor
+                      hasNextPage
+                      hasPreviousPage
                     }
                 }
             }
@@ -161,7 +162,37 @@ export const GET_CUISINES_SUMMARY = `
     }
 `
 
-export const GET_COURSES_SUMMARY = `
+export const GET_CUISINES_SUMMARY = (
+  first: number = 10,
+  after: string | null = null
+) => `
+    query GET_CUISINES_SUMMARY {
+        recipeCuisines(first: 100) {
+            nodes {
+                name
+                databaseId
+                uri
+                thumbnail
+                recipes(first: ${first}, after: ${after}) {
+                    nodes {
+                        databaseId
+                    }
+                    pageInfo {
+                      endCursor
+                      startCursor
+                      hasNextPage
+                      hasPreviousPage
+                    }
+                }
+            }
+        }
+    }
+`
+
+export const GET_COURSES_SUMMARY = (
+  first: number = 10,
+  after: string | null = null
+) => `
     query GET_COURSES_SUMMARY {
         recipeCourses {
             nodes {
@@ -169,12 +200,64 @@ export const GET_COURSES_SUMMARY = `
                 databaseId
                 uri
                 thumbnail
-                recipes {
+                recipes(first:${first}, after: ${after}) {
                     nodes {
                         databaseId
+                    }
+                    pageInfo {
+                      endCursor
+                      startCursor
+                      hasNextPage
+                      hasPreviousPage
                     }
                 }
             }
         }
     }
 `
+
+export const GET_COURSE = (id: number, after: string | null, first: number) => `
+     query GET_COURSE {
+        recipeCourse(id: ${id}, idType: DATABASE_ID) {
+                name
+                databaseId
+                uri
+                thumbnail
+                recipes(first: ${first}, after: ${after}) {
+                    nodes {
+                        databaseId
+                    }
+                    pageInfo {
+                      endCursor
+                      startCursor
+                      hasNextPage
+                      hasPreviousPage
+                    }
+                }
+            }
+    }`
+
+export const GET_CUISINE = (
+  id: number,
+  after: string | null,
+  first: number
+) => `
+      query GET_CUISINE {
+        recipeCuisine(id: ${id}, idType: DATABASE_ID) {
+                name
+                databaseId
+                uri
+                thumbnail
+                recipes(first: ${first}, after: ${after}) {
+                    nodes {
+                        databaseId
+                    }
+                    pageInfo {
+                      endCursor
+                      startCursor
+                      hasNextPage
+                      hasPreviousPage
+                    }
+                }
+        }
+  }`

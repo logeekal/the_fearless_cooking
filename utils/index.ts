@@ -1,3 +1,4 @@
+import DiskCacheService from '../services/diskCache'
 import FAQService from '../services/FAQService'
 import RecipeService from '../services/RecipeService'
 import { logger } from './logger'
@@ -39,7 +40,7 @@ export const arrToObj = <T extends Record<string, unknown>>(
 
 export const getAllFAQObj = async () => {
   log('Getting all FAQs')
-  const faqService = new FAQService()
+  const faqService = new FAQService(new DiskCacheService())
   const allFAQs = await faqService.getAllFAQREST()
   const allFAQObject: IFAQObj = {}
   allFAQs.forEach((faq) => {

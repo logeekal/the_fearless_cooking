@@ -1,6 +1,7 @@
 import * as dotenv from 'dotenv'
 import * as path from 'path'
 
+import DiskCacheService from '../services/diskCache'
 import FAQService from '../services/FAQService'
 import RecipeService from '../services/RecipeService'
 import { logger } from '../utils/logger'
@@ -12,8 +13,9 @@ dotenv.config({
 export async function downloadData() {
   logger.info('Downloading Data for first time')
 
-  const recipeService = new RecipeService()
-  const faqService = new FAQService()
+  const diskService = new DiskCacheService()
+  const recipeService = new RecipeService(diskService)
+  const faqService = new FAQService(diskService)
 
   await recipeService.getAllRecipesData()
   await recipeService.getAllCourses()

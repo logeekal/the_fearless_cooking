@@ -1,7 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import React from 'react'
+import Link from 'next/link'
+import React, { useEffect, useMemo, useState } from 'react'
 
-import { Post, Recipe } from '../../types/wp-graphql.types'
+import { Recipe } from '../../types/wp-graphql.types'
+import { LocalPageInfo } from '../../utils/types'
 import Card from '../card'
 import {
   footerImg,
@@ -11,14 +13,20 @@ import {
   gridHeading,
 } from './grid.css'
 
-interface ArticleGridProps {
-  posts: Post[] | Recipe[]
+export interface ArticleGridProps extends LocalPageInfo {
+  recipes: Recipe[]
 }
 
 const ArticleGrid: React.FC<ArticleGridProps> = (props) => {
-  const { posts } = props
+  const { recipes: posts, pageInfo } = props
 
-  const relevantArticles: Post[] | Recipe[] = posts
+  const [currentURL, setCurrentURL] = useState('')
+
+  useEffect(() => {
+    setCurrentURL(window.location.pathname)
+  }, [])
+
+  const relevantArticles = posts
 
   //const [maxCardHeight, setMaxCardHeight] = React.useState(0)
   //const [articleHeights, setArticleHeights] = React.useState<Array<number>>(
@@ -88,6 +96,30 @@ const ArticleGrid: React.FC<ArticleGridProps> = (props) => {
   //}
   //)
   //}, [articleHeights, gridHeight])
+  //
+  //
+  const isNextAvailable = useMemo(() => {
+    return pageInfo.current < pageInfo.total
+  }, [pageInfo])
+
+  const nextPageTarget = useMemo(
+    () =>
+      isNextAvailable
+        ? `${currentURL}?page=${pageInfo.current + 1}`
+        : currentURL,
+    [isNextAvailable, currentURL, pageInfo]
+  )
+
+  //const handleClick = useCallback(
+  //() => Router.push(`?page=${pageInfo.current + 1}`),
+  //[pageInfo]
+  //)
+  //
+
+  const shouldLoadMore = useMemo(
+    () => pageInfo.current < pageInfo.total,
+    [pageInfo]
+  )
 
   return (
     <div className={`article-grid-container ${gridContainer}`}>
@@ -95,18 +127,28 @@ const ArticleGrid: React.FC<ArticleGridProps> = (props) => {
         The Latest
       </div>
       <div className={`grid ${grid}`}>
-        {relevantArticles.map((article, index) => {
+        {relevantArticles?.map((article, index) => {
           return <Card key={index} post={article} itemProp="itemListElement" />
         })}
       </div>
-      <div className={`grid__footer ${gridFooter}`}>
-        <img
-          alt={'Load more posts'}
-          className={`${footerImg}`}
-          src="/images/chevron-down-double.svg"
-          width="50px"
-          height={'50px'}
-        />
+      <div
+        style={{
+          display: shouldLoadMore ? 'block' : 'none',
+        }}
+      >
+        <Link
+          scroll={false}
+          className={`grid__footer ${gridFooter}`}
+          href={nextPageTarget}
+        >
+          <img
+            alt={'Load more posts'}
+            className={`btn ${footerImg}`}
+            src="/images/chevron-down-double.svg"
+            width="50px"
+            height={'50px'}
+          />
+        </Link>
       </div>
     </div>
   )

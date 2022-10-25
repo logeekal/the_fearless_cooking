@@ -22,3 +22,5 @@ export const SiteMeta = {
         world food more tastier and more healthy. \
         Healthy food will have never have to taste bad.',
 }
+
+export const PAGE_LENGTH = 6

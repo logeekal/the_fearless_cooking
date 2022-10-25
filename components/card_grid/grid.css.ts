@@ -41,7 +41,7 @@ export const gridHeading = style({
 })
 
 export const gridFooter = style({
-  display: 'none',
+  display: 'block',
 })
 
 export const footerImg = style({

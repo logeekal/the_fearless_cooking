@@ -6,3 +6,9 @@
 [[plugins]]
   package = '@netlify/plugin-lighthouse'
 
+[functions]
+  directory = 'functions/'
+  node_bundler = 'esbuild'
+
+[dev]
+  functionPort = 7200
