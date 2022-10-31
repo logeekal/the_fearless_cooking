@@ -12,6 +12,17 @@ const nextConfig = {
     includePaths: [path.join(__dirname, 'styles')],
   },
   async rewrites() {
+    const functionsRewrite =
+      process.env.NODE_ENV === 'development'
+        ? {
+            source: '/.netlify/functions/:function',
+            destination: 'http://localhost:9999/.netlify/functions/:function',
+          }
+        : {
+            source: '/.netlify/functions/:function',
+            destination: '/.netlify/functions/:function',
+          }
+
     const rewrite = [
       {
         source: '/:slug*',
@@ -27,6 +38,9 @@ const nextConfig = {
       {
         source: '/',
         destination: '/page/1',
+      },
+      {
+        ...functionsRewrite,
       },
     ]
 

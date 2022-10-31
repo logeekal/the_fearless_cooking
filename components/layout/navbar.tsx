@@ -15,6 +15,7 @@ import {
   navMenuItem,
   navMenuList,
 } from './navbar.css'
+import { useLayout } from './use_layout'
 
 const SUPPORT_LINK = 'https://ko-fi.com/X8X2FFB20'
 
@@ -26,6 +27,8 @@ type NavbarProps = {
 const Navbar: FC<NavbarProps> = ({ courseSummary, cuisineSummary }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isSupportPopupOpen, setIsSupportPopupOpen] = useState(false)
+
+  const { openSearch } = useLayout()
 
   useEffect(() => {
     if (!isSupportPopupOpen) return
@@ -176,10 +179,10 @@ ${navMenuIconContainer} ${isMobileMenuOpen ? 'open' : 'closed'}`}
         <img
           width="30px"
           height="30px"
-          className="img img__search"
+          className="link img img__search"
           src="/images/search-green.svg"
           alt="search"
-          style={{ display: 'none' }}
+          onClick={openSearch}
         />
         <img
           width="30px"

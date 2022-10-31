@@ -26,13 +26,13 @@ const CategoryBar = forwardRef<HTMLDivElement, Props>(
               return (
                 <div
                   className={`avatar__container ${avatarContainer}`}
-                  key={cat.slug}
+                  key={cat.id}
                 >
                   <div
                     className={`link category__avatar ${categoryAvatar}`}
-                    key={cat.uri}
+                    key={cat.id}
                   >
-                    <Link prefetch={false} href={cat.uri}>
+                    <Link prefetch={false} href={cat.uri} key={cat.id}>
                       <img
                         className={`${categoryAvatarImg}`}
                         src={

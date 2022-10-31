@@ -4,27 +4,14 @@ import { getLayout, LayoutProps } from '../components/layout'
 import Category from '../screens/category'
 import RecipePage from '../screens/recipe'
 import DiskCacheService from '../services/diskCache'
-import FAQService from '../services/FAQService'
 import RecipeService from '../services/RecipeService'
 import { Recipe, RecipeCourse, RecipeCuisine } from '../types/wp-graphql.types'
 import { arrToObj } from '../utils'
 import { PAGE_LENGTH } from '../utils/config'
 import { logger } from '../utils/logger'
-import {
-  getFAQs,
-  getYoutubeVideoId,
-  makeVideoIframeLazy,
-  replaceYTWithNoCookie,
-  stripFAQSection,
-} from '../utils/pre-processors'
+import { genCompleteRecipeObject } from '../utils/recipe'
 import genRecipeSchema from '../utils/schema/recipe'
-import { calculateTotalDuration } from '../utils/time_utils'
-import {
-  ICompleteRecipe,
-  IFAQRestContent,
-  IRecipeContent,
-  LocalPageInfo,
-} from '../utils/types'
+import { ICompleteRecipe, LocalPageInfo } from '../utils/types'
 import { NextPageWithLayout } from './_app'
 
 type CommonProps = LocalPageInfo & {
@@ -275,73 +262,27 @@ export const getStaticProps: GetStaticProps<
   ///////////////////////////
 
   if (uri in allRecipesObjByURI) {
-    logger.info(`Genenrating Recipe : ${uri}`)
-    const allRecipesObjById = arrToObj<Recipe>(allRecipes, 'databaseId')
+    logger.debug(`Generating Recipe : ${uri}`)
+    const completeRecipeObj = await genCompleteRecipeObject()
+    const selectedRecipeId = String(allRecipesObjByURI[uri]['databaseId'])
 
-    const allRecipeContent = await recipeService.getAllRecipesData()
-    const allRecipeContentById = arrToObj<IRecipeContent['data'][0]>(
-      allRecipeContent.data,
-      'id'
-    )
+    const almostCompleteRecipe = completeRecipeObj[selectedRecipeId]
+    const selectedRecipePost = almostCompleteRecipe['post']
+    const selectedRecipeContent = almostCompleteRecipe['content']
+    const relatedYTId = almostCompleteRecipe['YTId']
+    const FAQs = almostCompleteRecipe['faqs']
 
-    const faqService = new FAQService(new DiskCacheService())
-    const allFAQs = await faqService.getAllFAQREST()
-    const allFAQsById = arrToObj<IFAQRestContent>(allFAQs, 'id')
-
-    const selectedRecipeId = allRecipesObjByURI[uri]['databaseId']
-
-    const selectedRecipePost = allRecipesObjById[selectedRecipeId]
-    if (!(selectedRecipeId in allRecipeContentById)) {
-      logger.warn(
-        `Not generating ${uri} because corresponding recipe \
-                content not found for id: ${selectedRecipeId} `
-      )
-      return {
-        notFound: true,
-      }
-    }
-    const selectedRecipeContent = allRecipeContentById[selectedRecipeId]
-
-    const recipeRelatedFAQIds = getFAQs(selectedRecipePost.content as string)
-
-    const recipeRelatedFAQs = recipeRelatedFAQIds.map(
-      (faqId) => allFAQsById[faqId]
-    )
-    let relatedYoutubeVideoID = null
-    try {
-      relatedYoutubeVideoID = getYoutubeVideoId(
-        selectedRecipePost.content as string
-      )
-    } catch (error) {
-      logger.error(
-        `Error white processing - ${
-          selectedRecipePost.title ?? '<Empty Title>'
-        }`
-      )
-    }
-
-    selectedRecipePost.content = makeVideoIframeLazy(
-      stripFAQSection(
-        replaceYTWithNoCookie(selectedRecipePost.content as string)
-      )
-    )
-
-    logger.info('Calculating durations')
-    selectedRecipeContent.recipe_metas['calculatedDurations'] =
-      calculateTotalDuration(selectedRecipeContent.recipe_metas)
-    logger.info('Succesfully calculated duration')
-
-    logger.info('Generating Schema')
+    logger.debug('Generating Schema')
 
     const selectedRecipeSchema = genRecipeSchema(
       selectedRecipePost,
-      selectedRecipeContent['recipe_metas'],
-      relatedYoutubeVideoID ?? undefined
+      selectedRecipeContent,
+      relatedYTId ?? undefined
     )
 
-    logger.info('Generated Schema')
+    logger.debug('Generated Schema')
 
-    logger.info(`Succesfully Generated Recipe : ${uri}`)
+    logger.debug(`Succesfully Generated Recipe : ${uri}`)
 
     return {
       props: {
@@ -353,9 +294,9 @@ export const getStaticProps: GetStaticProps<
         },
         recipe: {
           post: selectedRecipePost,
-          content: selectedRecipeContent['recipe_metas'],
-          faqs: recipeRelatedFAQs,
-          YTId: relatedYoutubeVideoID ?? null,
+          content: selectedRecipeContent,
+          faqs: FAQs,
+          YTId: relatedYTId ?? null,
           recipeSchema: selectedRecipeSchema,
         },
         layoutProps: {

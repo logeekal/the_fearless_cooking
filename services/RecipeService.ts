@@ -148,7 +148,7 @@ export default class RecipeService {
     count = 10,
     after: string | null = null
   ): Promise<Array<RecipeCuisine>> => {
-    const ENTITY = 'CUISINE'
+    const ENTITY = `CUISINE-${mode}`
     const cuisinesFromCache = this.getFromCache<Array<RecipeCuisine>>(ENTITY)
 
     if (cuisinesFromCache) {

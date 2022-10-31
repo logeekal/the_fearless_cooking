@@ -5,6 +5,18 @@ export interface IDuration {
   minutes: number
 }
 
+export interface IRecipeSearchObj {
+  id: string
+  title: string
+  content?: string
+  instructions?: string
+  ingredients?: string
+  excerpt?: string
+  uri: string
+}
+
+export type IndexableRecipeObj = Record<string, IRecipeSearchObj>
+
 export type PossiblePostType = Post | Recipe
 
 export type ThemeType = {
@@ -54,3 +66,10 @@ export interface IDuration {
 }
 
 export type GraphQLNextPageHandler<T> = (after: string) => T
+
+export type SearchResultType = {
+  id: string
+  score: number
+  title: string
+  uri: string
+}

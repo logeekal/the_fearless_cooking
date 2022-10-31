@@ -183,3 +183,11 @@ globalStyle('.sidebar-content-width', {
 globalStyle('.full-width', {
   width: '100%',
 })
+
+globalStyle('p em.marked', {
+  backgroundColor: vars.colors.brand,
+  color: vars.colors.bgPrimary,
+  textDecoration: 'none',
+  textTransform: 'none',
+  fontStyle: 'normal',
+})

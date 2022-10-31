@@ -1,4 +1,4 @@
-import MailchimpClient from './services/MailChimpClient'
+import MailchimpClient from '../services/MailChimpClient'
 
 const handler = async (event) => {
   const subscribeService = new MailchimpClient()

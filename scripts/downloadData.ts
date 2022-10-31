@@ -26,7 +26,3 @@ export async function downloadData() {
 
   logger.info('Downloading Data Complete')
 }
-
-downloadData()
-  .then(() => logger.info('Success'))
-  .catch(console.error)

@@ -90,7 +90,7 @@ export const getStaticProps: GetStaticProps<
   const startIdx = 0
   const endIdx = PAGE_LENGTH * page
 
-  return {
+  const result = {
     props: {
       recipes: allRecipeSummary.slice(startIdx, endIdx),
       pageInfo: {
@@ -104,6 +104,8 @@ export const getStaticProps: GetStaticProps<
       },
     },
   }
+
+  return result
 }
 
 export default PaginatedHomePage

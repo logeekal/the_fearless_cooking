@@ -18,7 +18,7 @@ export default class DiskCacheService implements ICacheService {
   set(name: string, value: string): void {
     const fileHandler = path.join(this.cacheDir, name)
     if (!fs.existsSync(fileHandler)) {
-      logger.debug(`Setting cache for ${name}`)
+      logger.trace(`Setting cache for ${name}`)
       fs.writeFileSync(fileHandler, value, {})
     }
   }
@@ -27,7 +27,7 @@ export default class DiskCacheService implements ICacheService {
     try {
       const fileHandler = path.join(this.cacheDir, name)
       const result = fs.readFileSync(fileHandler)
-      logger.debug(`Returning ${name} from cache`)
+      logger.trace(`Returning ${name} from cache`)
       return result
     } catch (e) {
       return undefined
