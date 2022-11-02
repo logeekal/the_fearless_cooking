@@ -53,11 +53,20 @@ const Layout: FC<PropsWithChildren<LayoutProps>> = (props) => {
   const openSearch = useCallback(() => {
     if (isSearchOpen) return
     if (router.isReady) {
+      const currentSearchParams = new URLSearchParams(window.location.search)
+      const searchParams: Record<string, string[] | string> = {}
+      for (const key of currentSearchParams.keys()) {
+        searchParams[key] = currentSearchParams.getAll(key)
+      }
+
       router
         .push(
           {
-            pathname: router.asPath,
-            query: { q: '' },
+            pathname: window.location.pathname,
+            query: {
+              ...searchParams,
+              q: '',
+            },
           },
           undefined,
           { shallow: true }
@@ -75,11 +84,20 @@ const Layout: FC<PropsWithChildren<LayoutProps>> = (props) => {
     if (!isSearchOpen) return
 
     const currentURL = new URL(window.location.href)
+    const currentSearchParams = new URLSearchParams(window.location.search)
+    const searchParams: Record<string, string[] | string> = {}
+    for (const key of currentSearchParams.keys()) {
+      searchParams[key] = currentSearchParams.getAll(key)
+    }
+    delete searchParams['q']
     if (router.isReady) {
       router
         .push(
           {
             pathname: currentURL.pathname,
+            query: {
+              ...searchParams,
+            },
           },
           undefined,
           { shallow: true }

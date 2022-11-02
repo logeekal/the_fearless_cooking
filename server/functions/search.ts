@@ -1,5 +1,5 @@
 import { Handler } from '@netlify/functions'
-import * as lunr from 'lunr'
+import lunr from 'lunr'
 
 import { IndexableRecipeObj } from '../../types/common'
 import recipeIndex from '../assets/recipe_index.json'
@@ -17,19 +17,19 @@ export const handler: Handler = async (event) => {
     if (event.httpMethod === 'GET') {
       const query = event.queryStringParameters
 
-      if (!('term' in query)) {
+      if (!query || !('term' in query)) {
         return Promise.resolve({
           statusCode: 402,
           message: 'Bad Request',
         })
       }
 
-      const originalSearchQuery = query['term']
+      const originalSearchQuery = query['term'] as string
 
       if (originalSearchQuery === '')
         return Promise.resolve({
           statusCode: 200,
-          message: JSON.stringify([]),
+          body: JSON.stringify([]),
         })
 
       const terms = originalSearchQuery.split(' ')
@@ -82,7 +82,7 @@ export const handler: Handler = async (event) => {
     console.error(err)
     return Promise.resolve({
       statusCode: 500,
-      body: err,
+      body: String(err),
     })
   }
 }

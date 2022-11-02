@@ -18,7 +18,7 @@ export default function useKeyPress(
     }
 
     const keyCodeListener = (e: KeyboardEvent) => {
-      if (e.key.toLowerCase() === key.toLowerCase()) {
+      if (e.key && e.key.toLowerCase() === key.toLowerCase()) {
         e.preventDefault()
         setKeyPressed(true)
       } else if (key.toLowerCase() === 'ctrl' && e.ctrlKey) {

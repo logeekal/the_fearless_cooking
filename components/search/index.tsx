@@ -17,14 +17,20 @@ import Combobox, {
   ComboboxOption,
   ComboboxOptionList,
 } from '../Combobox'
+import useKeyPress from '../hooks/use_key_press'
 import { useOutsideClickDetector } from '../hooks/use_outside_click_detector'
 import { useLayout } from '../layout/use_layout'
+import Loader from '../loading'
 import {
   comboboxOption,
   comboboxOptionList,
   searchContainer,
   searchInput,
   searchInputContainer,
+  searchInputLabel,
+  searchLoader,
+  searchResultImage,
+  searchStartCTA,
 } from './search.css'
 
 const window = getWindow()
@@ -34,11 +40,19 @@ const window = getWindow()
 const Search = () => {
   const [apiService] = useState(() => new ApiService())
   const router = useRouter()
+  const [loading, setLoading] = useState(false)
 
   const inputRef = useRef<HTMLInputElement>(null)
   const { ref, outSideClick } = useOutsideClickDetector<HTMLDivElement>()
 
   const { closeSearch } = useLayout()
+
+  const [escapePressed] = useKeyPress('escape')
+
+  useEffect(() => {
+    if (!escapePressed) return
+    closeSearch()
+  }, [escapePressed, closeSearch])
 
   useEffect(() => {
     if (outSideClick) {
@@ -77,6 +91,7 @@ const Search = () => {
           } else {
             setResults([])
           }
+          setLoading(false)
         })
         .catch(() => console.error('Nothing found'))
     },
@@ -98,6 +113,7 @@ const Search = () => {
         const term = e.target.value
         urlQueryChangeHandler(term)
         debouncedSearch(term)
+        setLoading(true)
       },
       [debouncedSearch, urlQueryChangeHandler]
     )
@@ -125,11 +141,91 @@ const Search = () => {
     }
   }, [inputRef, debouncedSearch])
 
+  const getStartSearchRender = useCallback(() => {
+    return (
+      <div className="search__starter">
+        <p className={`${searchStartCTA}`}>
+          Search the kitchen of The Fearless Cooking
+        </p>
+        <img
+          className={`${searchResultImage}`}
+          src={'/images/search_start.png'}
+          alt={'please start searching'}
+          width={'100%'}
+        />
+      </div>
+    )
+  }, [])
+
+  const genNothingFoundRender = useCallback(() => {
+    return (
+      <div className="search__empty">
+        <p className={`${searchStartCTA}`}>
+          Oops! looks like we forgot to prepare this dish.
+        </p>
+        <img
+          className={`${searchResultImage}`}
+          src={'/images/empty_plate.svg'}
+          alt={'Oops! nothing found.'}
+          width={'100%'}
+        />
+      </div>
+    )
+  }, [])
+
+  const getLoadingRender = useCallback(() => {
+    return (
+      <div className={`search__loader ${searchLoader}`}>
+        <Loader />
+      </div>
+    )
+  }, [])
+
+  const getResultsRender = useCallback(() => {
+    if (!inputRef.current) return
+    if (results.length === 0) {
+      if (inputRef.current.value === '') {
+        return getStartSearchRender()
+      } else {
+        if (loading) {
+          return getLoadingRender()
+        }
+        return genNothingFoundRender()
+      }
+    } else {
+      return (
+        <ComboboxOptionList className={`${comboboxOptionList}`}>
+          {results.map((result, idx) => {
+            const selected = idx === currentSelected ? 'selected' : ''
+            return (
+              <ComboboxOption
+                className={`${selected} ${comboboxOption}`}
+                key={result.id}
+                data-key={result.id}
+                data-index={idx}
+              >
+                <p dangerouslySetInnerHTML={{ __html: result.title }} />
+              </ComboboxOption>
+            )
+          })}
+        </ComboboxOptionList>
+      )
+    }
+  }, [results, currentSelected, loading])
+
   return (
     <div className={`${searchContainer}`} ref={ref}>
       <Combobox onSelectionChange={onSelectionChange} onSelect={onSelect}>
         <div className={`search__input--container ${searchInputContainer}`}>
-          <label id="search_input">🔎</label>
+          <label id="search_input" className={`${searchInputLabel}`}>
+            <img
+              width="25px"
+              height="25px"
+              className={'link img img__search'}
+              src="/images/search-green.svg"
+              alt="search"
+            />
+          </label>
           <ComboboxInput
             id={'search_input'}
             placeholder={'Search The Fearless Cooking'}
@@ -141,24 +237,7 @@ const Search = () => {
           />
         </div>
         <hr />
-        <div className={'search__results'}>
-          <ComboboxOptionList className={`${comboboxOptionList}`}>
-            {results.map((result, idx) => {
-              const selected = idx === currentSelected ? 'selected' : ''
-              return (
-                <ComboboxOption
-                  className={`${selected} ${comboboxOption}`}
-                  key={result.id}
-                  data-key={result.id}
-                  data-index={idx}
-                >
-                  <p>#</p>
-                  <p dangerouslySetInnerHTML={{ __html: result.title }} />
-                </ComboboxOption>
-              )
-            })}
-          </ComboboxOptionList>
-        </div>
+        <div className={'search__results'}>{getResultsRender()}</div>
       </Combobox>
     </div>
   )

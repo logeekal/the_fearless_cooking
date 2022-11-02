@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 
 export function useOutsideClickDetector<T extends HTMLElement>() {
   const ref = useRef<T>(null)
-  const [isClickOnRef, setIsClickOnRef] = useState(true)
+  const [isClickOnRef, setIsClickOnRef] = useState<boolean>(true)
 
   useEffect(() => {
     const clickHandler = (event: MouseEvent) => {

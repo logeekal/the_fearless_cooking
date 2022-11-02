@@ -30,6 +30,10 @@ export const searchContainer = style({
   },
 })
 
+export const searchInputLabel = style({
+  transform: 'rotateY(180deg)',
+})
+
 export const searchInputContainer = style({
   marginBlock: vars.space.normal,
   height: '6rem',
@@ -86,7 +90,30 @@ export const comboboxOption = style({
     },
     '&.selected': {
       background: vars.colors.brand,
+      color: vars.colors.text,
       filter: 'brightness(120%)',
     },
   },
+})
+
+export const searchResultImage = style({
+  margin: '0 auto',
+  display: 'block',
+  width: '100%',
+  maxWidth: '300px',
+})
+
+export const searchStartCTA = style({
+  fontFamily: vars.font.cursive,
+  fontSize: vars.fontSize.cursiveHeading,
+  color: vars.colors.brand,
+  margin: '0 auto',
+  textAlign: 'center',
+  padding: vars.space.s,
+})
+
+export const searchLoader = style({
+  height: '50px',
+  width: '100%',
+  padding: vars.space.normal,
 })

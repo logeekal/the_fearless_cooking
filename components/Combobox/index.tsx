@@ -96,8 +96,9 @@ const Combobox = (props: ComboboxProps) => {
 
   const handleEnter = useCallback(() => {
     if (!enterPressed) return
+    if (resultCount === 0) return
     onSelectHandler()
-  }, [enterPressed, onSelectHandler])
+  }, [enterPressed, onSelectHandler, resultCount])
 
   useEffect(() => {
     handleUpArrow()
@@ -168,6 +169,10 @@ export const ComboboxOptionList = forwardRef<
 
   const { setResultCount, autoSelectFirstOption, setCurrentSelection } =
     useContext(ComboboxContext)
+
+  useEffect(() => {
+    return () => setResultCount(0)
+  }, [setResultCount])
 
   const uniqueKeys = useMemo(() => {
     return Children.toArray(children).map((child) => {
