@@ -1,7 +1,6 @@
 [build]
-  base = './'
-  publish = 'out'
-  command = 'yarn export'
+  publish = '.next'
+  command = 'yarn build'
 
 [[plugins]]
   package = '@netlify/plugin-lighthouse'
