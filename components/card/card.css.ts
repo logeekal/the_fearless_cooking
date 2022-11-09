@@ -65,6 +65,7 @@ export const footerRight = style({
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'center',
+  gap: '2px',
 })
 
 export const cardTitle = style({

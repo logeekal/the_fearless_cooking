@@ -12,7 +12,7 @@ export interface IWPGraphQL<T> {
 export interface ICompleteRecipeObj {
   [k: string]: {
     post: Recipe
-    content: IRecipeContent['data'][number]['recipe_metas']
+    content: IRecipeContent['data'][number]['recipe_metas'] | null
     faqs: IFAQRestContent[]
     YTId: string | null | undefined
   }

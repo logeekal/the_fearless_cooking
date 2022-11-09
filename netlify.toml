@@ -1,6 +1,6 @@
 [build]
-  publish = '.next'
-  command = 'yarn build'
+  publish = 'out'
+  command = 'yarn export'
 
 [[plugins]]
   package = '@netlify/plugin-lighthouse'
@@ -11,3 +11,14 @@
 
 [dev]
   functionsPort = 9999
+
+[[redirects]]
+  from = '/'
+  to = '/page/1'
+  status = 200
+
+[[redirects]]
+  from = '/'
+  query = { page = ":page" }
+  to = '/page/:page'
+  status = 200

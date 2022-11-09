@@ -94,6 +94,7 @@ export const categories = style({
       justifyContent: 'space-between',
     },
     [breakPoints.desktop]: {
+      display: 'none',
       justifyContent: 'space-evenly',
     },
   },

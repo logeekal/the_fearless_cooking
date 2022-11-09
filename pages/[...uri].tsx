@@ -274,11 +274,13 @@ export const getStaticProps: GetStaticProps<
 
     logger.debug('Generating Schema')
 
-    const selectedRecipeSchema = genRecipeSchema(
-      selectedRecipePost,
-      selectedRecipeContent,
-      relatedYTId ?? undefined
-    )
+    const selectedRecipeSchema = selectedRecipeContent
+      ? genRecipeSchema(
+          selectedRecipePost,
+          selectedRecipeContent,
+          relatedYTId ?? undefined
+        )
+      : null
 
     logger.debug('Generated Schema')
 

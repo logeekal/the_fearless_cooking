@@ -51,9 +51,15 @@ export const genCompleteRecipeObject = async () => {
       return
     }
 
-    const selectedRecipeContent = allRecipeContentById[recipeId]
+    const selectedRecipeContent =
+      recipeId in allRecipeContentById &&
+      allRecipeContentById[recipeId].recipe_metas.recipeInstructions.length > 0
+        ? allRecipeContentById[recipeId]
+        : null
 
-    result[recipeId]['content'] = selectedRecipeContent['recipe_metas']
+    result[recipeId]['content'] = selectedRecipeContent
+      ? selectedRecipeContent['recipe_metas']
+      : null
 
     const recipeRelatedFAQIds = getFAQs(recipe.content as string)
 
@@ -74,8 +80,9 @@ export const genCompleteRecipeObject = async () => {
     )
 
     logger.info('Calculating durations')
-    selectedRecipeContent.recipe_metas['calculatedDurations'] =
-      calculateTotalDuration(selectedRecipeContent.recipe_metas)
+    if (selectedRecipeContent)
+      selectedRecipeContent.recipe_metas['calculatedDurations'] =
+        calculateTotalDuration(selectedRecipeContent.recipe_metas)
     logger.info('Succesfully calculated duration')
 
     logger.info('Generating Schema')

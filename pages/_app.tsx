@@ -14,7 +14,9 @@ export type NextPageWithLayout<P> = NextPage<P> & {
 
 type AppPropsWithLayout<P> = AppProps<P> & {
   Component: NextPageWithLayout<P>
-  pageProps: P & LayoutProps
+  pageProps: P & {
+    layoutProps: LayoutProps
+  }
 }
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout<unknown>) {
@@ -24,7 +26,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout<unknown>) {
     /* eslint-disable-next-line */
         const { layoutProps, ...rest } = pageProps
 
-    return getLayout(<Component {...rest} />, layoutProps as LayoutProps)
+    return getLayout(<Component {...rest} />, layoutProps)
   }
 
   return getLayout(<Component {...pageProps} />, {} as LayoutProps)

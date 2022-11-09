@@ -41,7 +41,6 @@ function CategorySubMenu(props: CategorySubMenuProps) {
               <></>
             )}
             <NextLink
-              soft={true}
               prefetch={false}
               className="category__item--link"
               href={item.uri}

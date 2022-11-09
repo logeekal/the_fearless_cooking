@@ -25,6 +25,17 @@ const nextConfig = {
 
     const rewrite = [
       {
+        source: '/:slug(^$)',
+        has: [
+          {
+            type: 'query',
+            key: 'page',
+            value: '(?<pageno>.*)',
+          },
+        ],
+        destination: '/page/:pageno',
+      },
+      {
         source: '/:slug*',
         has: [
           {
@@ -43,10 +54,7 @@ const nextConfig = {
         ...functionsRewrite,
       },
     ]
-
-    return {
-      beforeFiles: rewrite,
-    }
+    return rewrite
   },
 }
 

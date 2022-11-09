@@ -105,16 +105,10 @@ const ArticleGrid: React.FC<ArticleGridProps> = (props) => {
   const nextPageTarget = useMemo(
     () =>
       isNextAvailable
-        ? `${currentURL}?page=${pageInfo.current + 1}`
+        ? `${currentURL === '/' ? '' : currentURL}?page=${pageInfo.current + 1}`
         : currentURL,
     [isNextAvailable, currentURL, pageInfo]
   )
-
-  //const handleClick = useCallback(
-  //() => Router.push(`?page=${pageInfo.current + 1}`),
-  //[pageInfo]
-  //)
-  //
 
   const shouldLoadMore = useMemo(
     () => pageInfo.current < pageInfo.total,
@@ -138,6 +132,7 @@ const ArticleGrid: React.FC<ArticleGridProps> = (props) => {
       >
         <Link
           scroll={false}
+          replace={true}
           className={`grid__footer ${gridFooter}`}
           href={nextPageTarget}
         >

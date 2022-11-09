@@ -80,7 +80,6 @@ export default class RecipeService {
           }
         )
 
-      logger.debug(response.data)
       const { nodes: recipeNodes, pageInfo } = response.data.data.recipes
       logger.info(
         `Found ${recipeNodes.length} recipes on page : ${pageCounter}`
