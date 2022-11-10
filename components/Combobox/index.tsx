@@ -249,6 +249,8 @@ export const ComboboxOption = forwardRef<HTMLDivElement, OptionProps>(
         className={`combobox__option ${className ?? ''}`}
         ref={combinedRef}
         onClick={onSelectHandler}
+        onTouchStart={() => setCurrentSelection(dataIndex)}
+        onTouchEnd={onSelectHandler}
         {...rest}
       >
         {children}

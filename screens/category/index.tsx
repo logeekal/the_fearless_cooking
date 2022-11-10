@@ -18,10 +18,12 @@ function Category(props: CategoryPageProps) {
   //props.category.recipes?.nodes?.length
   //)
   return (
-    <Home
-      recipes={props.category.recipes?.nodes as Recipe[]}
-      pageInfo={props.pageInfo}
-    />
+    <>
+      <Home
+        recipes={props.category.recipes?.nodes as Recipe[]}
+        pageInfo={props.pageInfo}
+      />
+    </>
   )
 }
 
