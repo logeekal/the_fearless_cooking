@@ -1,7 +1,8 @@
 import Link from 'next/link'
-import React, { Fragment } from 'react'
+import React, { Fragment, useMemo } from 'react'
 import striptags from 'striptags'
 
+import BottomBar from '../../components/bottom_bar'
 import { cardCategory } from '../../components/card/card.css'
 import FAQs from '../../components/faq'
 import RecipeCard from '../../components/recipe_card'
@@ -26,6 +27,12 @@ function RecipePage(props: RecipePageProps) {
     ...(recipe.post.recipeCuisines?.nodes ?? []),
     ...(recipe.post.recipeCourses?.nodes ?? []),
   ]
+
+  const recipeExists = useMemo(
+    () => (recipe.content ? true : false),
+    [recipe.content]
+  )
+  const faqExists = useMemo(() => recipe.faqs.length > 0, [recipe.faqs])
 
   return (
     <div id={`recipe ${recipeContainer}`}>
@@ -84,17 +91,19 @@ function RecipePage(props: RecipePageProps) {
             __html: recipe.post.content as string,
           }}
         ></article>
-        {recipe.content ? (
+        {recipeExists ? (
           <div id="recipe-card" className="recipe__card">
             <RecipeCard recipe={recipe.content} recipePost={recipe.post} />
           </div>
         ) : null}
       </div>
-      {recipe.faqs.length > 1 ? (
+      {faqExists ? (
         <div className={`${FAQSection}`}>
           <FAQs faqs={recipe.faqs} />
         </div>
       ) : null}
+
+      <BottomBar recipe={recipeExists} faq={faqExists} />
     </div>
   )
 }

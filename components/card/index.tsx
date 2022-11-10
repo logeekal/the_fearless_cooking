@@ -1,5 +1,6 @@
 import NextLink from 'next/link'
 import React from 'react'
+import { FaStar } from 'react-icons/fa'
 
 import {
   Category,
@@ -109,7 +110,9 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
 
             <span className={`footer-right ${footerRight}`}>
               <span className="rating">5</span>
-              <span className="star">★</span>
+              <span className="star">
+                <FaStar style={{ transform: 'translateY(1px)' }} />
+              </span>
             </span>
           </div>
         </div>

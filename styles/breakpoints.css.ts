@@ -4,6 +4,7 @@ import { vars } from './themes.css'
 import { BREAKPOINTS } from './vars.css'
 
 export const breakPoints = {
+  mobile: `screen and (max-width: ${BREAKPOINTS.mobile.max}px)`,
   tablet: `screen and (max-width: ${BREAKPOINTS.tablet.max}px)`,
   desktop: `screen and (min-width: ${BREAKPOINTS.desktop.min}px)`,
   large: `screen and (min-width: ${BREAKPOINTS.large.min}px)`,

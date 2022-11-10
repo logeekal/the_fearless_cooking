@@ -52,6 +52,7 @@ globalStyle('*', {
   outline: 0,
   background: 'transparent',
   lineHeight: '2.5rem',
+  scrollBehavior: 'smooth',
 })
 
 globalStyle(':root', {
@@ -190,4 +191,9 @@ globalStyle('p em.marked', {
   textDecoration: 'none',
   textTransform: 'none',
   fontStyle: 'normal',
+})
+
+globalStyle('*::selection', {
+  color: vars.colors.card,
+  backgroundColor: vars.colors.brand,
 })

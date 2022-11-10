@@ -18,6 +18,9 @@ export const globalVars = {
 }
 
 export const BREAKPOINTS = {
+  mobile: {
+    max: 400,
+  },
   tablet: {
     max: 768,
   },
