@@ -72,6 +72,7 @@ const RecipeCard = forwardRef<HTMLDivElement, RecipeCardProps>(
       return courses ?? []
     }, [recipePost])
 
+    if (!recipe) return <> </>
     return (
       <div className={`recipe-card ${recipeCard}`} ref={ref}>
         <div className={`recipe-card__header ${recipeCardHeader}`}>

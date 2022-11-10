@@ -36,25 +36,6 @@ type RecipePageProps = CommonProps & {
 type CatchAllPageProps = CoursePageProps | CuisinePageProps | RecipePageProps
 
 const CatchAll: NextPageWithLayout<CatchAllPageProps> = (props) => {
-  //console.log({ props })
-  /* eslint-disable-next-line */
-  /*
-   *
-   * Article Page - 2nd Release
-   * Recipe Page
-   *  - Full Recipe  Object ( Recipe Article + Instruction )
-   *  - FaQ Object
-   *  - FAQIds
-   * Category Page
-   *   - Category Object with post references
-   *   - recipe Object
-   *   - Article Object
-   * Home Page
-   *
-   * */
-
-  /* eslint-disable-next-line */
-
   if (props.pageType === 'RECIPE') {
     return <RecipePage recipe={props.recipe} />
   }

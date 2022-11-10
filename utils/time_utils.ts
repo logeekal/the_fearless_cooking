@@ -1,5 +1,5 @@
 import { IDuration } from '../types/common'
-import { ICompleteRecipe } from './types'
+import { RecipeContent } from './types'
 
 export const addDurations = (durations: IDuration[]) => {
   const totalDuration: IDuration = {
@@ -56,9 +56,7 @@ export const getTimeUnitName = (unit: string) => {
   if (unit.toLowerCase().startsWith('h')) return 'hours'
 }
 
-export const calculateTotalDuration = (
-  recipeContent: ICompleteRecipe['content']
-) => {
+export const calculateTotalDuration = (recipeContent: RecipeContent) => {
   const defaultDuration: IDuration = { hours: 0, minutes: 0 }
 
   if (

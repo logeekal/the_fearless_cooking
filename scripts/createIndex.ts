@@ -6,7 +6,7 @@ import striptags from 'striptags'
 import { IndexableRecipeObj, IRecipeSearchObj } from '../types/common'
 import { logger } from '../utils/logger'
 import { genCompleteRecipeObject } from '../utils/recipe'
-import { ICompleteRecipeObj } from '../utils/types'
+import { IRecipeContent } from '../utils/types'
 
 const recipeIndexFileName = 'recipe_index.json'
 const recipeDetails = 'recipes.json'
@@ -58,21 +58,22 @@ function sanitizeTextsForSearch(text: string): string {
   return striptags(text)
 }
 
-function combineInstruction(
-  instruction: ICompleteRecipeObj['k']['content']['recipeInstructions']
+type RecipeContent = IRecipeContent['data'][0]['recipe_metas']
+
+export function combineInstruction(
+  instruction: RecipeContent['recipeInstructions']
 ) {
   return instruction.reduce<string>((prev, current) => {
     let result = ''
     current.instruction.forEach((item) => {
       result = result + sanitizeTextsForSearch(item.instruction) + '\n'
     })
-
     return prev + result
   }, '')
 }
 
-function combineIngredient(
-  ingredients: ICompleteRecipeObj['k']['content']['recipeIngredients']
+export function combineIngredient(
+  ingredients: RecipeContent['recipeIngredients']
 ) {
   return ingredients.reduce<string>((prev, current) => {
     let result = ''

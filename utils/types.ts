@@ -9,6 +9,8 @@ export interface IWPGraphQL<T> {
   data: T
 }
 
+export type RecipeContent = IRecipeContent['data'][0]['recipe_metas']
+
 export interface ICompleteRecipeObj {
   [k: string]: {
     post: Recipe
@@ -20,10 +22,10 @@ export interface ICompleteRecipeObj {
 
 export interface ICompleteRecipe {
   post: Recipe
-  content: IRecipeContent['data'][number]['recipe_metas']
+  content: IRecipeContent['data'][number]['recipe_metas'] | null
   faqs: IFAQRestContent[]
   YTId: string | null | undefined
-  recipeSchema?: string
+  recipeSchema?: string | null
   faqSchema?: string
 }
 

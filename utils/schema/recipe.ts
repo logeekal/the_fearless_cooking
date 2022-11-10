@@ -3,13 +3,14 @@ import striptags from 'striptags'
 import { IDuration } from '../../types/common'
 import { Recipe } from '../../types/wp-graphql.types'
 import { devLogger } from '../logger'
-import { ICompleteRecipe } from '../types'
+import { ICompleteRecipe, RecipeContent } from '../types'
 
 const genRecipeSchema = (
   post: Recipe,
   recipe: ICompleteRecipe['content'],
   recipeVideoId: string | undefined
 ) => {
+  if (!recipe) return null
   devLogger.info(`Generating Recipe Schema for  : ${post.title || '???????'} `)
   let videoId = null
   videoId = recipeVideoId
@@ -68,11 +69,7 @@ const genRecipeSchema = (
   return JSON.stringify(resultSchema)
 }
 
-function getVideoSegment(
-  videoId: string,
-  post: Recipe,
-  recipe: ICompleteRecipe['content']
-) {
+function getVideoSegment(videoId: string, post: Recipe, recipe: RecipeContent) {
   if (!videoId) {
     return {}
   }
@@ -91,7 +88,7 @@ function getVideoSegment(
 }
 
 const getRecipeIngredients = (
-  recipeIng: ICompleteRecipe['content']['recipeIngredients']
+  recipeIng: RecipeContent['recipeIngredients']
 ): string[] => {
   const totalIngredients: string[] = []
   //devLogger.info(recipeIng)
@@ -105,10 +102,7 @@ const getRecipeIngredients = (
   return totalIngredients
 }
 
-const getRecipeInstructions = (
-  recipe: ICompleteRecipe['content'],
-  post: Recipe
-) => {
+const getRecipeInstructions = (recipe: RecipeContent, post: Recipe) => {
   const instructions = recipe.recipeInstructions
   const result = []
   const recipeImage = post.featuredImage?.node?.mediaDetails?.sizes?.map(
