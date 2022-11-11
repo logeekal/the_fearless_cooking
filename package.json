@@ -14,7 +14,7 @@
     "pre-build": "ts-node ./scripts/prebuild.ts",
     "codegen": "graphql-codegen -c ./codegen.yml",
     "export": "npm run build && next export && npm run post-export",
-    "post-export": "ts-node ./scrips/postexport.ts",
+    "post-export": "ts-node ./scripts/postexport.ts",
     "deploy": "npm run export && netlify deploy",
     "test": "jest"
   },
