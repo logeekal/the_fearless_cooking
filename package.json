@@ -13,7 +13,8 @@
     "lint:fix": "eslint . --fix",
     "pre-build": "ts-node ./scripts/prebuild.ts",
     "codegen": "graphql-codegen -c ./codegen.yml",
-    "export": "npm run build && next export",
+    "export": "npm run build && next export && npm run post-export",
+    "post-export": "ts-node ./scrips/postexport.ts",
     "deploy": "npm run export && netlify deploy",
     "test": "jest"
   },
@@ -61,7 +62,7 @@
     "@typescript-eslint/eslint-plugin": "^5.33.0",
     "@typescript-eslint/parser": "^5.33.0",
     "cheerio": "^1.0.0-rc.12",
-    "dotenv": "^16.0.1",
+    "dotenv": "^16.0.3",
     "eslint": "^8.20.0",
     "eslint-config-next": "12.2.3",
     "eslint-config-prettier": "^8.5.0",
