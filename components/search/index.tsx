@@ -188,7 +188,8 @@ const Search = () => {
         return getStartSearchRender()
       } else {
         if (loading) {
-          return getLoadingRender()
+          //return getLoadingRender()
+          return <> </>
         }
         return genNothingFoundRender()
       }
@@ -211,7 +212,13 @@ const Search = () => {
         </ComboboxOptionList>
       )
     }
-  }, [results, currentSelected, loading])
+  }, [
+    results,
+    currentSelected,
+    loading,
+    genNothingFoundRender,
+    getStartSearchRender,
+  ])
 
   return (
     <div className={`${searchContainer}`} ref={ref}>

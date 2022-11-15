@@ -53,6 +53,7 @@ globalStyle('*', {
   background: 'transparent',
   lineHeight: '2.5rem',
   scrollBehavior: 'smooth',
+  scrollMarginTop: '100px',
 })
 
 globalStyle(':root', {

@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React, { useEffect, useMemo, useState } from 'react'
 
 import { Recipe } from '../../types/wp-graphql.types'
@@ -21,10 +22,13 @@ const ArticleGrid: React.FC<ArticleGridProps> = (props) => {
   const { recipes: posts, pageInfo } = props
 
   const [currentURL, setCurrentURL] = useState('')
+  const router = useRouter()
 
   useEffect(() => {
-    setCurrentURL(window.location.pathname)
-  }, [])
+    if (router.isReady) {
+      setCurrentURL(window.location.pathname)
+    }
+  }, [router])
 
   const relevantArticles = posts
 
@@ -96,6 +100,7 @@ const ArticleGrid: React.FC<ArticleGridProps> = (props) => {
   //}
   //)
   //}, [articleHeights, gridHeight])
+  //
   //
   //
   const isNextAvailable = useMemo(() => {

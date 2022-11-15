@@ -16,7 +16,7 @@ export const bottomBar = style({
   borderTopRightRadius: '10px',
   paddingInline: vars.space.l,
   borderTop: '2px solid green',
-  boxShadow: '0px -5px 15px 5px rgba(0,0,0,0.2)',
+  boxShadow: '0px -5px 15px 15px rgba(255,255,255,1)',
   '@media': {
     [breakPoints.mobile]: {
       ...rowFlex,
