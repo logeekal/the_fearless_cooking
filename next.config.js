@@ -25,28 +25,6 @@ const nextConfig = {
 
     const rewrite = [
       {
-        source: '/:slug(^$)',
-        has: [
-          {
-            type: 'query',
-            key: 'page',
-            value: '(?<pageno>.*)',
-          },
-        ],
-        destination: '/page/:pageno',
-      },
-      {
-        source: '/:slug*',
-        has: [
-          {
-            type: 'query',
-            key: 'page',
-            value: '(?<pageno>.*)',
-          },
-        ],
-        destination: '/:slug*/page/:pageno',
-      },
-      {
         source: '/',
         destination: '/page/1',
       },

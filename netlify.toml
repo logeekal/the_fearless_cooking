@@ -16,9 +16,3 @@
   from = '/'
   to = '/page/1'
   status = 200
-
-[[redirects]]
-  from = '/'
-  query = { page = ":page" }
-  to = '/page/:page'
-  status = 200
