@@ -29,14 +29,16 @@ const Sidebar = () => {
             />
           </div>
           <div className={`about__text  ${aboutText}`}>
+            <p className={'about__text--section'}>Hi There!</p>
             <p className={'about__text--section'}>
-              I am Richa - the human behind this lens. Welcome to my kitchen. I
-              hope you found something interesting to cook today.
+              Welcome to my kitchen. I am Richa - the human behind the lens. I
+              hope you found something interesting to cook today. If you are
+              still confused, then try my all time favourite kadhi chawal. You
+              will love it.
             </p>
             <p className={'about__text--section'}>
-              If you are still confused, then try my all time favourite kadhi
-              chawal. Then we can know more about each other. Everything feels
-              good after a happy meal :)
+              And then we can learn more about each other. Afterall, everything
+              feels good after a happy meal 😁
             </p>
           </div>
         </div>

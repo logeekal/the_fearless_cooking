@@ -198,3 +198,7 @@ globalStyle('*::selection', {
   color: vars.colors.card,
   backgroundColor: vars.colors.brand,
 })
+
+globalStyle('.disabled-feat', {
+  display: 'none',
+})

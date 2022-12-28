@@ -10,6 +10,7 @@ import { arrToObj } from '../utils'
 import { PAGE_LENGTH } from '../utils/config'
 import { logger } from '../utils/logger'
 import { genCompleteRecipeObject } from '../utils/recipe'
+import { genFAQSchema } from '../utils/schema/faqSchema'
 import genRecipeSchema from '../utils/schema/recipe'
 import { ICompleteRecipe, LocalPageInfo } from '../utils/types'
 import { NextPageWithLayout } from './_app'
@@ -263,6 +264,8 @@ export const getStaticProps: GetStaticProps<
         )
       : null
 
+    const faqSchema = FAQs && FAQs.length > 0 ? genFAQSchema(FAQs) : null
+
     logger.debug('Generated Schema')
 
     logger.debug(`Succesfully Generated Recipe : ${uri}`)
@@ -281,6 +284,7 @@ export const getStaticProps: GetStaticProps<
           faqs: FAQs,
           YTId: relatedYTId ?? null,
           recipeSchema: selectedRecipeSchema,
+          faqSchema: faqSchema,
         },
         layoutProps: {
           courseSummary: coursesSummary,

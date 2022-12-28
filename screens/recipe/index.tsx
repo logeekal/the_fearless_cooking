@@ -47,6 +47,10 @@ function RecipePage(props: RecipePageProps) {
             type: 'recipe',
             schema: recipe.recipeSchema || '',
           },
+          {
+            type: 'FAQ',
+            schema: recipe.faqSchema ?? '',
+          },
         ]}
       />
       <div id="recipe-post" className={`recipe-post ${recipePost}`}>

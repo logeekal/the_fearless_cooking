@@ -3,6 +3,7 @@ export const SOCIALS = {
   insta: 'https://www.instagram.com/thefearlesscooking',
   facebook: 'https://facebook.com/thefearlesscooking',
   email: 'mailto:richagupta@gmail.com',
+  kofi: 'https://ko-fi.com/richagupta',
 }
 
 export const SiteMeta = {
@@ -24,3 +25,7 @@ export const SiteMeta = {
 }
 
 export const PAGE_LENGTH = 6
+
+export const FEATURES = {
+  sub: false,
+}

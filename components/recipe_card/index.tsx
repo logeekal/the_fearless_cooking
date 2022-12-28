@@ -195,6 +195,7 @@ const RecipeCard = forwardRef<HTMLDivElement, RecipeCardProps>(
                     {ingredientSection.sectionTitle}
                   </p>
                   <ul
+                    id="ingredient list"
                     style={{
                       display: 'flex',
                       flexDirection: 'column',

@@ -248,7 +248,7 @@ export const GET_CUISINE = (
                 databaseId
                 uri
                 thumbnail
-                recipes(first: ${first}, after: ${after}) {
+                recipes(first: ${first}, after: "${after}") {
                     nodes {
                         databaseId
                     }

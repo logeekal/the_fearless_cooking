@@ -26,7 +26,7 @@ export interface ICompleteRecipe {
   faqs: IFAQRestContent[]
   YTId: string | null | undefined
   recipeSchema?: string | null
-  faqSchema?: string
+  faqSchema?: string | null
 }
 
 export interface IFAQObj {

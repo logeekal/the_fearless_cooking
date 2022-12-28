@@ -325,14 +325,16 @@ export default class RecipeService {
 
     while (hasNextPage) {
       logger.debug(`Fetching ${pageNo++}`)
+      const query = GET_CUISINE(id, afterCursor ?? null, count)
       const response: AxiosResponse<
         IWPGraphQL<{
           recipeCuisine: RecipeCuisine
-        }>
+          errors?: unknown
+        }> & { errors?: unknown }
       > = await axios.post(
         `${this.host}/graphql`,
         JSON.stringify({
-          query: GET_CUISINE(id, afterCursor ?? null, count),
+          query,
         }),
         {
           headers: {
@@ -343,6 +345,10 @@ export default class RecipeService {
 
       if (!response.data.data?.recipeCuisine) {
         logger.error(`No Cuisine found for id : ${id}`)
+        if ('errors' in response.data) {
+          // eslint-disable-next-line
+          logger.error(response.data.errors)
+        }
         return undefined
       }
 

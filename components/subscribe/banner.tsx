@@ -48,7 +48,7 @@ const SubscribeBanner = () => {
   //}
   //}
   return (
-    <section className={`subscribe__banner ${banner}`}>
+    <section className={`subscribe__banner ${banner} disabled-feat`}>
       <div className={`sidebar-content-width ${genericContent}`}>
         <div className="subscribe__banner--heading cursive heading grid_center">
           <div>

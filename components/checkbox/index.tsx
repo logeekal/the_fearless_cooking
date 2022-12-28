@@ -6,7 +6,7 @@ type Props = { id: string }
 
 const Checkbox: FC<PropsWithChildren<Props>> = (props) => {
   return (
-    <li className={`${checkboxContainer}`}>
+    <li id={props.id} className={`${checkboxContainer}`}>
       <input id={props.id} className={`${checkboxInput}`} type="checkbox" />
       <label htmlFor={props.id} className={`${label}`}>
         {props.children}
