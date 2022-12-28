@@ -26,6 +26,13 @@ const ArticleGrid: React.FC<ArticleGridProps> = (props) => {
 
   useEffect(() => {
     if (router.isReady) {
+      const thisPagePath = window.location.pathname
+      if (thisPagePath.includes('page')) {
+        const paths = thisPagePath.split('/')
+        const newPaths = paths.slice(0, paths.length - 2)
+        setCurrentURL(newPaths.join('/'))
+        return
+      }
       setCurrentURL(window.location.pathname)
     }
   }, [router])
