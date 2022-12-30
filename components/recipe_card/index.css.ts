@@ -106,16 +106,10 @@ export const recipeCardLogo = style({
 
 export const recipeCardDetail = style({
   width: '140px',
-  flexGrow: 1,
   backgroundColor: vars.colors.brand,
   color: vars.colors.card,
   paddingInline: vars.space.normal,
   paddingBlock: vars.space.l,
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-  gap: vars.space.normal,
   fontSize: vars.fontSize.heading,
   selectors: {
     '&:nth-child(1)': {
@@ -153,6 +147,7 @@ export const recipeCardDetailValue = style({
   fontSize: vars.fontSize.heading,
   textAlign: 'center',
   fontWeight: 300,
+  paddingBottom: vars.space.normal,
 })
 
 export const recipeCardDetailLabel = style({

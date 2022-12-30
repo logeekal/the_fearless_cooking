@@ -30,4 +30,5 @@ export const recipeCategories = style({
   flexDirection: 'row',
   gap: vars.space.xs,
   color: vars.colors.brand,
+  flexWrap: 'wrap',
 })

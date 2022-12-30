@@ -200,5 +200,5 @@ globalStyle('*::selection', {
 })
 
 globalStyle('.disabled-feat', {
-  display: 'none',
+  display: 'none !important',
 })
