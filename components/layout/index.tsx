@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import {
   FC,
@@ -116,6 +117,9 @@ const Layout: FC<PropsWithChildren<LayoutProps>> = (props) => {
 
   return (
     <LayoutContext.Provider value={contextValue}>
+      <Head>
+        <script src="/lib/lazysizes.min.js" async />
+      </Head>
       <div className={`${currTheme} ${layoutClass}`}>
         <header className="body-width">
           <Navbar

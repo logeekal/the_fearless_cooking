@@ -6,7 +6,7 @@ import { logger } from '../logger'
 import {
   getFAQs,
   getYoutubeVideoId,
-  makeVideoIframeLazy,
+  makeIframeLazy,
   replaceYTWithNoCookie,
   stripFAQSection,
 } from '../pre-processors'
@@ -75,8 +75,8 @@ export const genCompleteRecipeObject = async () => {
       )
     }
 
-    recipe.content = makeVideoIframeLazy(
-      stripFAQSection(replaceYTWithNoCookie(recipe.content as string))
+    recipe.content = stripFAQSection(
+      makeIframeLazy(replaceYTWithNoCookie(recipe.content as string))
     )
 
     logger.info('Calculating durations')

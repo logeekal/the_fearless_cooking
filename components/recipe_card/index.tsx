@@ -124,8 +124,9 @@ const RecipeCard = forwardRef<HTMLDivElement, RecipeCardProps>(
 
                 <div className={`recipe-card__logo ${recipeCardLogo}`}>
                   <img
+                    className="lazyload"
                     alt={'logo of the fearless cooking'}
-                    src="/images/logo_compact_green_small.png"
+                    data-src="/images/logo_compact_green_small.png"
                     width={'100%'}
                     height={'100%'}
                   />

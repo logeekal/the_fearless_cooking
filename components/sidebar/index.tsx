@@ -24,8 +24,8 @@ const Sidebar = () => {
           </div>
           <div className="about__avatar">
             <img
-              className={`${aboutImage}`}
-              src="https://i0.wp.com/wp-backend.thefearlesscooking.com/wp-content/uploads/2022/09/about_website.jpeg?resize=150%2C150&ssl=1"
+              className={`${aboutImage} lazyload`}
+              data-src="https://i0.wp.com/wp-backend.thefearlesscooking.com/wp-content/uploads/2022/09/about_website.jpeg?resize=150%2C150&ssl=1"
               alt="Image of Richa Gupta - Creator of The Fearless Cooking"
             />
           </div>
@@ -54,8 +54,8 @@ const Sidebar = () => {
         <div className={`sidebar-content-width ${genericContent}`}>
           <div className="cookbook__image grid_center">
             <img
-              className=""
-              src="/images/book-pages-preview.png"
+              className="lazyload"
+              data-src="/images/book-pages-preview.png"
               alt={'book preview for Fall in love with the salads'}
             />
           </div>

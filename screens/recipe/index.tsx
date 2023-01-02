@@ -83,8 +83,9 @@ function RecipePage(props: RecipePageProps) {
         </div>
         <img
           itemProp="image"
-          src={recipe.post?.featuredImage?.node?.mediaItemUrl as string}
-          srcSet={recipe.post?.featuredImage?.node?.srcSet as string}
+          className="lazyload"
+          data-src={recipe.post?.featuredImage?.node?.mediaItemUrl as string}
+          data-srcSet={recipe.post?.featuredImage?.node?.srcSet as string}
           sizes="(max-width: 600px) 80vw, 50vw"
           alt={`Image of ${recipe.post.title as string}`}
         />

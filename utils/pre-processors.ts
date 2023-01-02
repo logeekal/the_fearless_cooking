@@ -1,6 +1,6 @@
 import * as Cheerio from 'cheerio'
 
-import { devLogger } from './logger'
+import { devLogger, logger } from './logger'
 
 export function getFAQs(htmlString: string): number[] {
   const $ = Cheerio.load(htmlString)
@@ -92,6 +92,29 @@ export function replaceYTWithNoCookie(htmlString: string) {
   )
 }
 
+export function makeIframeLazy(html: string) {
+  logger.debug('Making IFrame Lazy')
+  const $ = Cheerio.load(html)
+
+  $('iframe.youtube-player').addClass('lazyload')
+  const src = $('iframe.youtube-player.lazyload').attr('src')
+  $('iframe.youtube-player.lazyload').removeAttr('src')
+  $('iframe.youtube-player.lazyload').attr('data-src', src)
+  return $.html()
+}
+
+export function makeImagesLazy(html: string) {
+  logger.debug('Making Images Lazy')
+  const $ = Cheerio.load(html)
+
+  $('img').each((i, el) => {
+    const src = el.attribs['src']
+    delete el.attribs['src']
+    el.attribs['data-src'] = src
+  })
+}
+
+// @deprecate
 export function makeVideoIframeLazy(htmlString: string) {
   const $ = Cheerio.load(htmlString)
 
