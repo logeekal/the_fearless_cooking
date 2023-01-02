@@ -2,6 +2,7 @@ import NextLink from 'next/link'
 import { FC, useEffect, useState } from 'react'
 
 import { RecipeCourse, RecipeCuisine } from '../../types/wp-graphql.types'
+import { SiteMeta } from '../../utils/config'
 import Accordion from '../accordion'
 import CategorySubMenu from '../menu/CategorySubMenu'
 import {
@@ -64,11 +65,11 @@ ${navMenuIconContainer} ${isMobileMenuOpen ? 'open' : 'closed'}`}
         <div className={`nav__logo mobile ${navLogo}`}>
           <NextLink href="/" prefetch={false}>
             <img
-              height="80px"
-              width={'200px'}
+              height="35px"
+              width={'140px'}
               className="link img nav__logo--img"
               alt="TFC logo"
-              src="/images/logo_complete_green.svg"
+              src={SiteMeta.logo}
             ></img>
           </NextLink>
         </div>
@@ -166,11 +167,11 @@ ${navMenuIconContainer} ${isMobileMenuOpen ? 'open' : 'closed'}`}
       <div className={`nav__logo desktop ${navLogo}`}>
         <NextLink href="/" prefetch={false}>
           <img
-            height="80px"
+            height="50px"
             width={'200px'}
             className="link img nav__logo--img"
             alt="TFC logo"
-            src="/images/logo_complete_green.svg"
+            src={SiteMeta.logo}
           ></img>
         </NextLink>
       </div>
@@ -196,7 +197,7 @@ ${navMenuIconContainer} ${isMobileMenuOpen ? 'open' : 'closed'}`}
           width="30px"
           height="30px"
           className="link img img__support"
-          src="/images/support-light.svg"
+          src="/images/support_light.png"
           onClick={() => setIsSupportPopupOpen(true)}
           alt="support"
         />

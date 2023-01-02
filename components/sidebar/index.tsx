@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 import SubscribeBanner from '../subscribe/banner'
@@ -33,8 +34,14 @@ const Sidebar = () => {
             <p className={'about__text--section'}>
               Welcome to my kitchen. I am Richa - the human behind the lens. I
               hope you found something interesting to cook today. If you are
-              still confused, then try my all time favourite kadhi chawal. You
-              will love it.
+              still confused, then try my all time favourite &nbsp;{' '}
+              <Link
+                prefetch={false}
+                href="/recipe/italian-basil-pesto-pasta-vegan"
+              >
+                pesto pasta
+              </Link>
+              . You will love it.
             </p>
             <p className={'about__text--section'}>
               And then we can learn more about each other. Afterall, everything

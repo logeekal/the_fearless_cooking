@@ -23,6 +23,10 @@ export const footer = style({
   },
 })
 
+export const footerLogo = style({
+  padding: vars.space.l,
+})
+
 export const footerCTA = style({
   display: 'flex',
   flexDirection: 'column',

@@ -1,8 +1,9 @@
 import React from 'react'
 
+import { SiteMeta } from '../../utils/config'
 import SocialIcons from '../social_icons'
 import YoutubeFeed from '../youtube/feed'
-import { footer, footerCTA } from './footer.css'
+import { footer, footerCTA, footerLogo } from './footer.css'
 
 const Footer = () => {
   return (
@@ -10,13 +11,13 @@ const Footer = () => {
       <YoutubeFeed />
 
       <div className={`footer__main ${footer}`}>
-        <div className="footer__logo">
+        <div className={`footer__logo ${footerLogo}`}>
           <img
-            height="80px"
+            height="50px"
             width={'200px'}
             className="img nav__logo--img"
             alt="TFC logo"
-            src="/images/logo_complete_green.svg"
+            src={SiteMeta.logo}
           />
         </div>
 

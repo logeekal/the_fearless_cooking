@@ -30,7 +30,7 @@ const SupportBanner = () => {
         </div>
         <div className="support__footer heading cursive text_center">
           <a href={SOCIALS.kofi} target="blank">
-            Support The Fearless Cooking
+            Support Now
           </a>
         </div>
       </div>

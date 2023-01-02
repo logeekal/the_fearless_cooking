@@ -7,7 +7,7 @@ export const SOCIALS = {
 }
 
 export const SiteMeta = {
-  logo: '/images/logo_complete_green.svg',
+  logo: 'https://wp-backend.thefearlesscooking.com/wp-content/uploads/2023/01/final_logo_transparent.png',
   title: 'Welcome to The Fearless Cooking',
   favicon: '/images/favicon.png',
   image: '',
