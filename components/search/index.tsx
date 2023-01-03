@@ -144,7 +144,7 @@ const Search = () => {
   const getStartSearchRender = useCallback(() => {
     return (
       <div className="search__starter">
-        <p className={`${searchStartCTA}`}>What do you want eat today?</p>
+        <p className={`${searchStartCTA}`}>What do you want to eat today?</p>
         <img
           className={`${searchResultImage}`}
           src={'/images/search_start.png'}
