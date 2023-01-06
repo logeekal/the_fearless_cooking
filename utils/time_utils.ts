@@ -56,7 +56,10 @@ export const getTimeUnitName = (unit: string) => {
   if (unit.toLowerCase().startsWith('h')) return 'hours'
 }
 
-export const calculateTotalDuration = (recipeContent: RecipeContent) => {
+export const calculateTotalDuration = (
+  recipeContent: RecipeContent,
+  recipeURL?: string
+) => {
   const defaultDuration: IDuration = { hours: 0, minutes: 0 }
 
   if (
@@ -65,7 +68,7 @@ export const calculateTotalDuration = (recipeContent: RecipeContent) => {
     !recipeContent.prepTime
   ) {
     /* eslint-disable-next-line */
-    console.warn('Prep time or cook time is missing')
+    console.warn('Prep time or cook time is missing for -> ', recipeURL)
   }
 
   const prepTimeInDurations = {

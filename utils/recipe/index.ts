@@ -6,7 +6,8 @@ import { logger } from '../logger'
 import {
   getFAQs,
   getYoutubeVideoId,
-  makeVideoIframeLazy,
+  makeIframeLazy,
+  makeImagesLazy,
   replaceYTWithNoCookie,
   stripFAQSection,
 } from '../pre-processors'
@@ -16,10 +17,10 @@ import { ICompleteRecipeObj, IFAQRestContent, IRecipeContent } from '../types'
 export const genCompleteRecipeObject = async () => {
   const cacheService = new DiskCacheService()
   const recipeService = new RecipeService(cacheService)
-  const ENTITY = 'ALL_COMPLETED_RECIPES'
+  //const ENTITY = 'ALL_COMPLETED_RECIPES'
 
-  const resultFromCache = recipeService.getFromCache<ICompleteRecipeObj>(ENTITY)
-  if (resultFromCache) return resultFromCache
+  //const resultFromCache = recipeService.getFromCache<ICompleteRecipeObj>(ENTITY)
+  //if (resultFromCache) return resultFromCache
 
   const allRecipes = await recipeService.getAllRecipePosts()
   const allRecipeContent = await recipeService.getAllRecipesData()
@@ -36,7 +37,7 @@ export const genCompleteRecipeObject = async () => {
   const result: ICompleteRecipeObj = {}
 
   allRecipes.forEach((recipe) => {
-    logger.info(`Processing ${recipe.databaseId} - ${recipe.title as string}`)
+    logger.debug(`Processing ${recipe.databaseId} - ${recipe.title as string}`)
     const recipeId = String(recipe.databaseId)
     if (!(recipeId in result)) {
       result[recipeId] = {} as ICompleteRecipeObj['k']
@@ -44,7 +45,7 @@ export const genCompleteRecipeObject = async () => {
     result[`${recipeId}`]['post'] = recipe
 
     if (!(recipeId in allRecipeContentById)) {
-      logger.info(
+      logger.debug(
         `Skipping recipe with Id: ${recipeId} because there is not content`
       )
       delete result[recipeId]
@@ -75,27 +76,29 @@ export const genCompleteRecipeObject = async () => {
       )
     }
 
-    recipe.content = makeVideoIframeLazy(
-      stripFAQSection(replaceYTWithNoCookie(recipe.content as string))
+    recipe.content = stripFAQSection(
+      makeImagesLazy(
+        makeIframeLazy(replaceYTWithNoCookie(recipe.content as string))
+      )
     )
 
-    logger.info('Calculating durations')
+    logger.debug('Calculating durations')
     if (selectedRecipeContent)
       selectedRecipeContent.recipe_metas['calculatedDurations'] =
-        calculateTotalDuration(selectedRecipeContent.recipe_metas)
-    logger.info('Succesfully calculated duration')
+        calculateTotalDuration(selectedRecipeContent.recipe_metas, recipe.uri)
+    logger.debug('Succesfully calculated duration')
 
-    logger.info('Generating Schema')
+    logger.debug('Generating Schema')
 
-    logger.info('Generated Schema')
+    logger.debug('Generated Schema')
 
-    logger.info(`Succesfully Generated Recipe : ${recipe.title as string}`)
+    logger.debug(`Succesfully Generated Recipe : ${recipe.title as string}`)
 
     result[recipeId]['faqs'] = recipeRelatedFAQs
     result[recipeId]['YTId'] = relatedYoutubeVideoID
   })
 
-  cacheService.set(ENTITY, JSON.stringify(result))
+  //cacheService.set(ENTITY, JSON.stringify(result))
 
   return result
 }

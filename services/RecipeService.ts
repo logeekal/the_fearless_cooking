@@ -81,7 +81,7 @@ export default class RecipeService {
         )
 
       const { nodes: recipeNodes, pageInfo } = response.data.data.recipes
-      logger.info(
+      logger.debug(
         `Found ${recipeNodes.length} recipes on page : ${pageCounter}`
       )
       result.push(...recipeNodes)
@@ -238,7 +238,7 @@ export default class RecipeService {
     id: number,
     count = 100
   ): Promise<RecipeCourse | undefined> => {
-    logger.info(`Fetching course with id : ${id}`)
+    logger.debug(`Fetching course with id : ${id}`)
     const ENTITY = `COURSE-${id}`
     let hasNextPage = true
     let afterCursor: string | null | undefined = null
@@ -297,7 +297,7 @@ export default class RecipeService {
     }
 
     /* eslint-disable-next-line max-len*/
-    logger.info(
+    logger.debug(
       `Fetched course with id: ${id} - ${result.recipes.nodes.length} recipes`
     )
 
@@ -310,7 +310,7 @@ export default class RecipeService {
     id: number,
     count = 100
   ): Promise<RecipeCuisine | undefined> => {
-    logger.info(`Fetching cuisine with id : ${id}`)
+    logger.debug(`Fetching cuisine with id : ${id}`)
     const ENTITY = `CUISINE${id}`
     let hasNextPage = true
     let afterCursor: string | null | undefined = null
@@ -376,7 +376,7 @@ export default class RecipeService {
     }
 
     /* eslint-disable-next-line max-len*/
-    logger.info(
+    logger.debug(
       `Fetched cuisine with id: ${id} - ${result.recipes.nodes.length} recipes`
     )
 

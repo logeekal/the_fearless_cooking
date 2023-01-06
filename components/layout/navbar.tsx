@@ -180,24 +180,24 @@ ${navMenuIconContainer} ${isMobileMenuOpen ? 'open' : 'closed'}`}
         <img
           width="30px"
           height="30px"
-          className="link img img__search"
-          src="/images/search-green.svg"
+          className="lazyload link img img__search"
+          data-src="/images/search-green.svg"
           alt="search"
           onClick={openSearch}
         />
         <img
           width="30px"
           height="30px"
-          className="link img img__shop"
-          src="/images/shop.svg"
+          className="lazyload link img img__shop"
+          data-src="/images/shop.svg"
           alt="shop"
           style={{ display: 'none' }}
         />
         <img
           width="30px"
           height="30px"
-          className="link img img__support"
-          src="/images/support_light.png"
+          className="lazyload link img img__support"
+          data-src="/images/support_light.png"
           onClick={() => setIsSupportPopupOpen(true)}
           alt="support"
         />
