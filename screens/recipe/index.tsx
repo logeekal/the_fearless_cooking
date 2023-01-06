@@ -34,6 +34,15 @@ function RecipePage(props: RecipePageProps) {
   )
   const faqExists = useMemo(() => recipe.faqs.length > 0, [recipe.faqs])
 
+  const mediumImageSet =
+    recipe.post.featuredImage?.node?.mediaDetails?.sizes?.filter(
+      (size) => size?.name === 'thumbnail'
+    )
+  const mediumImage =
+    mediumImageSet && mediumImageSet.length > 0
+      ? mediumImageSet[0]?.sourceUrl ?? ''
+      : ''
+
   return (
     <div id={`recipe ${recipeContainer}`}>
       <SEO
@@ -84,7 +93,7 @@ function RecipePage(props: RecipePageProps) {
         <img
           itemProp="image"
           className="lazyload"
-          data-src={recipe.post?.featuredImage?.node?.mediaItemUrl as string}
+          src={mediumImage}
           data-srcSet={recipe.post?.featuredImage?.node?.srcSet as string}
           sizes="(max-width: 600px) 80vw, 50vw"
           alt={`Image of ${recipe.post.title as string}`}
