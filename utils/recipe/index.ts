@@ -37,7 +37,7 @@ export const genCompleteRecipeObject = async () => {
   const result: ICompleteRecipeObj = {}
 
   allRecipes.forEach((recipe) => {
-    logger.info(`Processing ${recipe.databaseId} - ${recipe.title as string}`)
+    logger.debug(`Processing ${recipe.databaseId} - ${recipe.title as string}`)
     const recipeId = String(recipe.databaseId)
     if (!(recipeId in result)) {
       result[recipeId] = {} as ICompleteRecipeObj['k']
@@ -45,7 +45,7 @@ export const genCompleteRecipeObject = async () => {
     result[`${recipeId}`]['post'] = recipe
 
     if (!(recipeId in allRecipeContentById)) {
-      logger.info(
+      logger.debug(
         `Skipping recipe with Id: ${recipeId} because there is not content`
       )
       delete result[recipeId]
@@ -82,17 +82,17 @@ export const genCompleteRecipeObject = async () => {
       )
     )
 
-    logger.info('Calculating durations')
+    logger.debug('Calculating durations')
     if (selectedRecipeContent)
       selectedRecipeContent.recipe_metas['calculatedDurations'] =
-        calculateTotalDuration(selectedRecipeContent.recipe_metas)
-    logger.info('Succesfully calculated duration')
+        calculateTotalDuration(selectedRecipeContent.recipe_metas, recipe.uri)
+    logger.debug('Succesfully calculated duration')
 
-    logger.info('Generating Schema')
+    logger.debug('Generating Schema')
 
-    logger.info('Generated Schema')
+    logger.debug('Generated Schema')
 
-    logger.info(`Succesfully Generated Recipe : ${recipe.title as string}`)
+    logger.debug(`Succesfully Generated Recipe : ${recipe.title as string}`)
 
     result[recipeId]['faqs'] = recipeRelatedFAQs
     result[recipeId]['YTId'] = relatedYoutubeVideoID
