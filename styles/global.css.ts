@@ -7,36 +7,42 @@ globalFontFace('quicksand', {
   src: 'url(/fonts/_quicksand/Quicksand-Bold.woff2) format("woff2")',
   fontStyle: 'normal',
   fontWeight: 700,
+  fontDisplay: 'swap',
 })
 
 globalFontFace('quicksand', {
   src: 'url(/fonts/_quicksand/Quicksand-SemiBold.woff2) format("woff2")',
   fontStyle: 'normal',
   fontWeight: 600,
+  fontDisplay: 'swap',
 })
 
 globalFontFace('quicksand', {
   src: 'url(/fonts/_quicksand/Quicksand-Medium.woff2) format("woff2")',
   fontStyle: 'normal',
   fontWeight: 500,
+  fontDisplay: 'swap',
 })
 
 globalFontFace('quicksand', {
   src: 'url(/fonts/_quicksand/Quicksand-Regular.woff2) format("woff2")',
   fontStyle: 'normal',
   fontWeight: 400,
+  fontDisplay: 'swap',
 })
 
 globalFontFace('quicksand', {
   src: 'url(/fonts/_quicksand/Quicksand-Light.woff2) format("woff2")',
   fontStyle: 'normal',
   fontWeight: 300,
+  fontDisplay: 'swap',
 })
 
 globalFontFace('bilbo', {
   src: 'url(/fonts/bilbo-swash-caps/BilboSwashCaps-Regular.ttf)',
   fontStyle: 'normal',
   fontWeight: 300,
+  fontDisplay: 'swap',
 })
 
 globalStyle('html', {

@@ -94,25 +94,50 @@ export function replaceYTWithNoCookie(htmlString: string) {
 
 export function makeIframeLazy(html: string) {
   logger.debug('Making IFrame Lazy')
+
+  return makeElLazyLoad(html, 'iframe.youtube-player', ['src'])
   const $ = Cheerio.load(html)
 
-  $('iframe.youtube-player').addClass('lazyload')
-  const src = $('iframe.youtube-player.lazyload').attr('src')
-  $('iframe.youtube-player.lazyload').removeAttr('src')
-  $('iframe.youtube-player.lazyload').attr('data-src', src)
+  //$('iframe.youtube-player').addClass('lazyload')
+  //const src = $('iframe.youtube-player.lazyload').attr('src')
+  //$('iframe.youtube-player.lazyload').removeAttr('src')
+  //$('iframe.youtube-player.lazyload').attr('data-src', src)
+  //return $.html()
+}
+
+function makeElLazyLoad(
+  html: string,
+  selector: string,
+  attrs: string[]
+): string {
+  const $ = Cheerio.load(html)
+  $(selector).each(function () {
+    $(this).addClass('lazyload')
+    attrs.forEach((attrName) => {
+      const val = $(this).attr(attrName)
+      $(this).removeAttr(attrName)
+      $(this).attr(`data-${attrName}`, val)
+    })
+  })
+
   return $.html()
 }
 
 export function makeImagesLazy(html: string) {
   logger.debug('Making Images Lazy')
-  const $ = Cheerio.load(html)
-  const src = $('img.lazyload').attr('src')
-  const srcSet = $('img.lazyload').attr('srcSet')
-  $('img.lazyload').removeAttr('src')
-  $('img.lazyload').removeAttr('srcSet')
-  $('img.lazyload').attr('data-src', src)
-  $('img.lazyload').attr('data-srcset', srcSet)
-  return $.html()
+  return makeElLazyLoad(html, 'img', ['src', 'srcset'])
+  //const $ = Cheerio.load(html)
+  //$('img').each(function () {
+  //$(this).addClass('lazyload')
+  //const src = $(this).attr('src')
+  //const srcSet = $(this).attr('srcset')
+  //$(this).removeAttr('src')
+  //$(this).removeAttr('srcset')
+  //$(this).attr('data-src', src)
+  //$(this).attr('data-srcset', srcSet)
+  //})
+
+  //return $.html()
 }
 
 // @deprecate
