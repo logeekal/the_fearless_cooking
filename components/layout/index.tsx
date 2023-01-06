@@ -118,7 +118,7 @@ const Layout: FC<PropsWithChildren<LayoutProps>> = (props) => {
   return (
     <LayoutContext.Provider value={contextValue}>
       <Script src="/lib/lazysizes.min.js" async />
-      <Script src="/lib/ls.attrchange.min.js" async />
+      <Script src="/lib/ls.attrchange.js" async />
       <div className={`${currTheme} ${layoutClass}`}>
         <header className="body-width">
           <Navbar

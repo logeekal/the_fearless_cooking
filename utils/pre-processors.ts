@@ -106,12 +106,13 @@ export function makeIframeLazy(html: string) {
 export function makeImagesLazy(html: string) {
   logger.debug('Making Images Lazy')
   const $ = Cheerio.load(html)
-
-  $('img').each((i, el) => {
-    const src = el.attribs['src']
-    delete el.attribs['src']
-    el.attribs['data-src'] = src
-  })
+  const src = $('img.lazyload').attr('src')
+  const srcSet = $('img.lazyload').attr('srcSet')
+  $('img.lazyload').removeAttr('src')
+  $('img.lazyload').removeAttr('srcSet')
+  $('img.lazyload').attr('data-src', src)
+  $('img.lazyload').attr('data-srcset', srcSet)
+  return $.html()
 }
 
 // @deprecate
