@@ -17,10 +17,10 @@ import { ICompleteRecipeObj, IFAQRestContent, IRecipeContent } from '../types'
 export const genCompleteRecipeObject = async () => {
   const cacheService = new DiskCacheService()
   const recipeService = new RecipeService(cacheService)
-  //const ENTITY = 'ALL_COMPLETED_RECIPES'
+  const ENTITY = 'ALL_COMPLETED_RECIPES'
 
-  //const resultFromCache = recipeService.getFromCache<ICompleteRecipeObj>(ENTITY)
-  //if (resultFromCache) return resultFromCache
+  const resultFromCache = recipeService.getFromCache<ICompleteRecipeObj>(ENTITY)
+  if (resultFromCache) return resultFromCache
 
   const allRecipes = await recipeService.getAllRecipePosts()
   const allRecipeContent = await recipeService.getAllRecipesData()
@@ -98,7 +98,7 @@ export const genCompleteRecipeObject = async () => {
     result[recipeId]['YTId'] = relatedYoutubeVideoID
   })
 
-  //cacheService.set(ENTITY, JSON.stringify(result))
+  cacheService.set(ENTITY, JSON.stringify(result))
 
   return result
 }
