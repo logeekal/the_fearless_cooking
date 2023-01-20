@@ -103,7 +103,12 @@ function RecipePage(props: RecipePageProps) {
               recipe.post.title ??
               ''
             }`}
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            style={{
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+            }}
             sizes={recipe.post.featuredImage?.node?.sizes as string}
             src={recipe.post.featuredImage?.node?.sourceUrl as string}
             srcSet={recipe.post.featuredImage?.node?.srcSet as string}
