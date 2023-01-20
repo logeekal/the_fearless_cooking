@@ -1,4 +1,3 @@
-import NextImage from 'next/image'
 import Link from 'next/link'
 import React, { Fragment, useMemo } from 'react'
 import striptags from 'striptags'
@@ -98,14 +97,16 @@ function RecipePage(props: RecipePageProps) {
             paddingBottom: '56.25%', // 9/16 of width
           }}
         >
-          <NextImage
-            blurDataURL={mediumImage}
-            placeholder="blur"
-            priority={true}
-            alt={`Image of ${recipe.post.title as string}`}
-            layout="fill"
+          <img
+            alt={`${
+              recipe.post.featuredImage?.node?.altText ??
+              recipe.post.title ??
+              ''
+            }`}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             sizes={recipe.post.featuredImage?.node?.sizes as string}
             src={recipe.post.featuredImage?.node?.sourceUrl as string}
+            srcSet={recipe.post.featuredImage?.node?.srcSet as string}
           />
         </div>
         <article
