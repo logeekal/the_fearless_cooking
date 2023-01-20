@@ -2,9 +2,6 @@
   publish = 'out'
   command = 'yarn export'
 
-[[plugins]]
-  package = '@netlify/plugin-lighthouse'
-
 [functions]
   directory = './server/functions/'
   node_bundler = 'esbuild'
