@@ -1,3 +1,4 @@
+import NextImage from 'next/image'
 import Link from 'next/link'
 import React, { Fragment, useMemo } from 'react'
 import striptags from 'striptags'
@@ -90,15 +91,23 @@ function RecipePage(props: RecipePageProps) {
             })}
           </div>
         </div>
-        <img
-          itemProp="image"
-          className="lazyload"
-          src={mediumImage}
-          data-srcSet={recipe.post?.featuredImage?.node?.srcSet as string}
-          sizes="(max-width: 600px) 80vw, 50vw"
-          alt={`Image of ${recipe.post.title as string}`}
-        />
-
+        <div
+          style={{
+            position: 'relative',
+            width: '100%',
+            paddingBottom: '56.25%', // 9/16 of width
+          }}
+        >
+          <NextImage
+            blurDataURL={mediumImage}
+            placeholder="blur"
+            priority={true}
+            alt={`Image of ${recipe.post.title as string}`}
+            layout="fill"
+            sizes={recipe.post.featuredImage?.node?.sizes as string}
+            src={recipe.post.featuredImage?.node?.sourceUrl as string}
+          />
+        </div>
         <article
           id="article"
           dangerouslySetInnerHTML={{

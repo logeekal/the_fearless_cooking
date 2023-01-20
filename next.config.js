@@ -5,11 +5,24 @@ const withVanillaExtract = createVanillaExtractPlugin({
   identifiers: process.env.NODE_ENV === 'development' ? 'debug' : 'short',
 })
 
+const remotePatterns = [
+  {
+    protocol: 'https',
+    hostname: new URL(process.env.MF_HOST).hostname,
+    pathname: '/wp-content/uploads/*',
+  },
+]
+
+const domains = remotePatterns.map((i) => i.hostname)
+
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
+  },
+  images: {
+    domains,
   },
   async rewrites() {
     const functionsRewrite =
