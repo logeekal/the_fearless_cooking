@@ -90,15 +90,30 @@ function RecipePage(props: RecipePageProps) {
             })}
           </div>
         </div>
-        <img
-          itemProp="image"
-          className="lazyload"
-          src={mediumImage}
-          data-srcSet={recipe.post?.featuredImage?.node?.srcSet as string}
-          sizes="(max-width: 600px) 80vw, 50vw"
-          alt={`Image of ${recipe.post.title as string}`}
-        />
-
+        <div
+          style={{
+            position: 'relative',
+            width: '100%',
+            paddingBottom: '56.25%', // 9/16 of width
+          }}
+        >
+          <img
+            alt={`${
+              recipe.post.featuredImage?.node?.altText ??
+              recipe.post.title ??
+              ''
+            }`}
+            style={{
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+            }}
+            sizes={recipe.post.featuredImage?.node?.sizes as string}
+            src={recipe.post.featuredImage?.node?.sourceUrl as string}
+            srcSet={recipe.post.featuredImage?.node?.srcSet as string}
+          />
+        </div>
         <article
           id="article"
           dangerouslySetInnerHTML={{
