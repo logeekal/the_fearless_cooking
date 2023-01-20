@@ -63,9 +63,12 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
       <div className={`link card ${cardContainer}`} {...restProps}>
         <div>
           <img
-            className={`${cardImage} lazyload`}
-            data-src={thumbnailUrl}
-            alt={`image of ${post.title as string}`}
+            className={`${cardImage}`}
+            srcSet={post.featuredImage?.node?.srcSet as string}
+            sizes={post.featuredImage?.node?.sizes as string}
+            alt={`${
+              post.featuredImage?.node?.altText ?? (post.title as string)
+            }`}
           />
         </div>
         <div className={`card__article ${cardArticle}`}>

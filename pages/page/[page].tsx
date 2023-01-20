@@ -16,7 +16,7 @@ type HomeProps = LocalPageInfo & {
   recipes: Recipe[]
 }
 
-const PAGE_LENGTH = 4
+const PAGE_LENGTH = 6
 
 const PaginatedHomePage: NextPageWithLayout<HomeProps> = (props) => {
   const [currTheme, setCurrTheme] = useState(light)
