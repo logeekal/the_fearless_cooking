@@ -1,5 +1,6 @@
 const { createVanillaExtractPlugin } = require('@vanilla-extract/next-plugin')
 const path = require('path')
+const withPreact = require('next-plugin-preact')
 
 const withVanillaExtract = createVanillaExtractPlugin({
   identifiers: process.env.NODE_ENV === 'development' ? 'debug' : 'short',
@@ -49,4 +50,4 @@ const nextConfig = {
   },
 }
 
-module.exports = withVanillaExtract(nextConfig)
+module.exports = withPreact(withVanillaExtract(nextConfig))
