@@ -119,6 +119,13 @@ const Layout: FC<PropsWithChildren<LayoutProps>> = (props) => {
     <LayoutContext.Provider value={contextValue}>
       <Script src="/lib/lazysizes.min.js" async />
       <Script src="/lib/ls.attrchange.js" async />
+      <Script
+        strategy="afterInteractive"
+        defer
+        data-domain="thefearlesscooking.com"
+        src="https://analytics.logeekal.eu/js/script.js"
+      />
+
       <div className={`${currTheme} ${layoutClass}`}>
         <header className="body-width">
           <Navbar
