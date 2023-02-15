@@ -42,7 +42,6 @@ const withPlausible = (WrappedComponent: ComponentType) => {
     return (
       <PlausibleProvider
         domain="thefearlesscooking.com"
-        customDomain="analytics.logeekal.eu"
         trackLocalhost={false}
         trackOutboundLinks
         selfHosted
