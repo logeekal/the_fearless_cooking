@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router'
+import { usePlausible } from 'next-plausible'
 import React, { createRef, useCallback, useEffect } from 'react'
 //import { MdFormatListBulleted } from 'react-icons/md'
 import {
@@ -9,6 +10,7 @@ import {
 } from 'react-icons/ri'
 
 import { globalVars } from '../../styles/vars.css'
+import { AnalyticsEvents } from '../../types/common'
 import { useLayout } from '../layout/use_layout'
 import { bottomBar, bottomBarSection, icon, text } from './index.css'
 
@@ -25,6 +27,7 @@ const BottomBar = (props: BottomBarProps) => {
   const router = useRouter()
   const bottomBarRef = createRef<HTMLDivElement>()
 
+  const plausible = usePlausible<AnalyticsEvents>()
   useEffect(() => {
     if (!bottomBarRef.current) return
     if (bottomBarRef.current.classList.contains('visible')) return
@@ -57,14 +60,24 @@ const BottomBar = (props: BottomBarProps) => {
   const onRecipeClickHandler = useCallback(() => {
     if (recipe) {
       goToElementById('#recipe-card')
+      plausible('BottomTab', {
+        props: {
+          id: 'Recipe',
+        },
+      })
     }
-  }, [recipe, goToElementById])
+  }, [recipe, goToElementById, plausible])
 
   const onFAQClickHandler = useCallback(() => {
     if (faq) {
       goToElementById('#faq')
+      plausible('BottomTab', {
+        props: {
+          id: 'Recipe',
+        },
+      })
     }
-  }, [faq, goToElementById])
+  }, [faq, goToElementById, plausible])
 
   const scrollToTopHandler = useCallback(() => {
     goToElementById(window.location.href.split('#')[0])

@@ -73,3 +73,7 @@ export type SearchResultType = {
   title: string
   uri: string
 }
+
+export type AnalyticsEvents = {
+  BottomTab: { id: string }
+}

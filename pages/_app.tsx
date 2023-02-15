@@ -4,7 +4,8 @@ import '../styles/globals/index.scss'
 
 import { NextPage } from 'next'
 import type { AppProps } from 'next/app'
-import { ReactElement, ReactNode } from 'react'
+import PlausibleProvider from 'next-plausible'
+import { ComponentProps, ComponentType, ReactElement, ReactNode } from 'react'
 
 import { LayoutProps } from '../components/layout'
 
@@ -22,14 +23,37 @@ type AppPropsWithLayout<P> = AppProps<P> & {
 function MyApp({ Component, pageProps }: AppPropsWithLayout<unknown>) {
   const getLayout = Component.getLayout ?? ((page) => page)
 
+  const CompWithPlausible = withPlausible(Component)
+
   if ('layoutProps' in pageProps) {
     /* eslint-disable-next-line */
         const { layoutProps, ...rest } = pageProps
 
-    return getLayout(<Component {...rest} />, layoutProps)
+    return getLayout(<CompWithPlausible {...rest} />, layoutProps)
   }
 
   return getLayout(<Component {...pageProps} />, {} as LayoutProps)
+}
+
+const withPlausible = (WrappedComponent: ComponentType) => {
+  const WithPlausibleComp = (
+    props: ComponentProps<typeof WrappedComponent>
+  ) => {
+    return (
+      <PlausibleProvider
+        domain="thefearlesscooking.com"
+        customDomain="analytics.logeekal.eu"
+        trackLocalhost={false}
+        trackOutboundLinks
+        selfHosted
+      >
+        <WrappedComponent {...props} />{' '}
+      </PlausibleProvider>
+    )
+  }
+
+  WithPlausibleComp.displayName = 'WithPlausible'
+  return WithPlausibleComp
 }
 
 export default MyApp

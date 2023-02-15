@@ -1,5 +1,6 @@
 const { createVanillaExtractPlugin } = require('@vanilla-extract/next-plugin')
 const path = require('path')
+const { withPlausibleProxy } = require('next-plausible')
 
 const withVanillaExtract = createVanillaExtractPlugin({
   identifiers: process.env.NODE_ENV === 'development' ? 'debug' : 'short',
@@ -49,4 +50,10 @@ const nextConfig = {
   },
 }
 
-module.exports = withVanillaExtract(nextConfig)
+module.exports = withVanillaExtract(
+  withPlausibleProxy({
+    subdirectory: 'analytics',
+    scriptName: 'script.js',
+    customDomain: 'https://analytics.logeekal.eu',
+  })(nextConfig)
+)

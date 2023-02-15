@@ -13,3 +13,13 @@
   from = '/'
   to = '/page/1'
   status = 200
+
+[[redirects]]
+from = '/analytics/js/script.js'
+to = 'https://analytics.logeekal.eu/js/script.js'
+status = 200
+
+[[redirects]]
+from = 'analytics/api/event'
+to = 'https://analytics.logeekal.eu/api/event'
+status = 200
