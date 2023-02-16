@@ -76,4 +76,5 @@ export type SearchResultType = {
 
 export type AnalyticsEvents = {
   BottomTab: { id: string }
+  Search: { uri: string; keyword: string }
 }

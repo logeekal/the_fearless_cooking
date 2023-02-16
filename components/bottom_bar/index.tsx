@@ -73,7 +73,7 @@ const BottomBar = (props: BottomBarProps) => {
       goToElementById('#faq')
       plausible('BottomTab', {
         props: {
-          id: 'Recipe',
+          id: 'FAQ',
         },
       })
     }

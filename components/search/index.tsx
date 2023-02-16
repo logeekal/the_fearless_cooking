@@ -1,5 +1,6 @@
 import { debounce } from 'mini-debounce'
 import { useRouter } from 'next/router'
+import { usePlausible } from 'next-plausible'
 import React, {
   KeyboardEventHandler,
   useCallback,
@@ -11,7 +12,7 @@ import React, {
 import { getWindow } from 'ssr-window'
 
 import { ApiService } from '../../services/ApiService'
-import { SearchResultType } from '../../types/common'
+import { AnalyticsEvents, SearchResultType } from '../../types/common'
 import Combobox, {
   ComboboxInput,
   ComboboxOption,
@@ -42,6 +43,7 @@ const Search = () => {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
 
+  const plausible = usePlausible<AnalyticsEvents>()
   const inputRef = useRef<HTMLInputElement>(null)
   const { ref, outSideClick } = useOutsideClickDetector<HTMLDivElement>()
 
@@ -121,13 +123,18 @@ const Search = () => {
   const onSelect = useCallback(
     (currentSelectionIdx: number) => {
       const result = results[currentSelectionIdx]
-
       router
         .push(result.uri)
         .then()
         .catch((err) => console.error(err))
+      plausible('Search', {
+        props: {
+          uri: result.uri,
+          keyword: inputRef.current?.value ?? 'unknown',
+        },
+      })
     },
-    [results, router]
+    [results, router, plausible]
   )
 
   useEffect(() => {

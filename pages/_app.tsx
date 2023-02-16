@@ -42,9 +42,11 @@ const withPlausible = (WrappedComponent: ComponentType) => {
     return (
       <PlausibleProvider
         domain="thefearlesscooking.com"
+        customDomain="https://analytics.logeekal.eu"
+        selfHosted
         trackLocalhost={false}
         trackOutboundLinks
-        selfHosted
+        enabled
       >
         <WrappedComponent {...props} />{' '}
       </PlausibleProvider>
