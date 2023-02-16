@@ -15,8 +15,8 @@
   status = 200
 
 [[redirects]]
-from = '/analytics/js/script.js'
-to = 'https://analytics.logeekal.eu/js/script.js'
+from = '/analytics/js/*'
+to = 'https://analytics.logeekal.eu/js/:splat'
 status = 200
 
 [[redirects]]
