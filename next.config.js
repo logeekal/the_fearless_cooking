@@ -53,7 +53,6 @@ const nextConfig = {
 module.exports = withVanillaExtract(
   withPlausibleProxy({
     subdirectory: 'analytics',
-    scriptName: 'script.js',
     customDomain: 'https://analytics.logeekal.eu',
   })(nextConfig)
 )

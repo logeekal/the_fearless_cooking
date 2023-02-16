@@ -45,7 +45,6 @@ const withPlausible = (WrappedComponent: ComponentType) => {
         customDomain="https://analytics.logeekal.eu"
         selfHosted
         trackLocalhost={false}
-        trackOutboundLinks
         enabled
       >
         <WrappedComponent {...props} />{' '}
