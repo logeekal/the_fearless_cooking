@@ -15,6 +15,7 @@ import {
   cardContainer,
   cardExcerpt,
   cardImage,
+  cardImageContainer,
   cardTitle,
   footer,
   footerLeft,
@@ -61,7 +62,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
   return (
     <NextLink prefetch={false} href={post.uri}>
       <div className={`link card ${cardContainer}`} {...restProps}>
-        <div>
+        <div className={`${cardImageContainer}`}>
           <img
             className={`${cardImage} lazyload`}
             data-src={thumbnailUrl}

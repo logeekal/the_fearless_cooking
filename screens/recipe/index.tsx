@@ -11,6 +11,7 @@ import { SiteMeta } from '../../utils/config'
 import { ICompleteRecipe } from '../../utils/types'
 import {
   FAQSection,
+  featuredImageContainer,
   recipeCategories,
   recipeContainer,
   recipePost,
@@ -90,13 +91,7 @@ function RecipePage(props: RecipePageProps) {
             })}
           </div>
         </div>
-        <div
-          style={{
-            position: 'relative',
-            width: '100%',
-            paddingBottom: '56.25%', // 9/16 of width
-          }}
-        >
+        <div className={`${featuredImageContainer}`}>
           <img
             alt={`${
               recipe.post.featuredImage?.node?.altText ??

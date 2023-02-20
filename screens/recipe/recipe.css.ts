@@ -32,3 +32,10 @@ export const recipeCategories = style({
   color: vars.colors.brand,
   flexWrap: 'wrap',
 })
+
+export const featuredImageContainer = style({
+  position: 'relative',
+  width: '100%',
+  paddingBottom: '56.25%', // 9/16 of width
+  backgroundColor: vars.colors.greenLight,
+})
