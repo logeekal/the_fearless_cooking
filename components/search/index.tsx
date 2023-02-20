@@ -30,6 +30,7 @@ import {
   searchInputContainer,
   searchInputLabel,
   searchLoader,
+  searchResultContainer,
   searchResultImage,
   searchStartCTA,
 } from './search.css'
@@ -249,7 +250,9 @@ const Search = () => {
           />
         </div>
         <hr />
-        <div className={'search__results'}>{getResultsRender()}</div>
+        <div className={`search__results ${searchResultContainer}`}>
+          {getResultsRender()}
+        </div>
       </Combobox>
     </div>
   )

@@ -25,12 +25,29 @@ export const cardArticle = style({
   marginBottom: vars.space.s,
 })
 
-export const cardImage = style({
-  aspectRatio: '3 / 2',
+export const cardImageContainer = style({
+  backgroundColor: vars.colors.greenLight,
+  position: 'relative',
   width: '100%',
+  paddingBlockEnd: '66.67%',
+})
+
+export const cardImage = style({
+  width: '100%',
+  height: '100%',
+  position: 'absolute',
+  top: 0,
+  left: 0,
   objectFit: 'cover',
   objectPosition: 'center',
   borderRadius: '10px',
+  opacity: 0,
+  transition: 'opacity 0.5s ease-in-out',
+  selectors: {
+    '&.lazyloaded': {
+      opacity: 1,
+    },
+  },
 })
 
 export const cardExcerpt = style({

@@ -24,6 +24,7 @@ export const searchContainer = style({
       bottom: 'auto',
       width: '600px',
       height: 'auto',
+      minHeight: '400px',
       maxHeight: '500px',
       transform: 'translate(-50%,0%)',
     },
@@ -116,4 +117,8 @@ export const searchLoader = style({
   height: '50px',
   width: '100%',
   padding: vars.space.normal,
+})
+
+export const searchResultContainer = style({
+  overflow: 'clip',
 })

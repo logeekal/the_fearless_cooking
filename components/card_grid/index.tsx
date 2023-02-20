@@ -90,4 +90,4 @@ const ArticleGrid: React.FC<ArticleGridProps> = (props) => {
   )
 }
 
-export default ArticleGrid
+export default React.memo(ArticleGrid)
