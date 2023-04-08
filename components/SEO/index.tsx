@@ -11,7 +11,7 @@ export interface SEOQueryProps {
   url?: string
   isArticle: boolean
   schemas?: Array<{
-    type: 'recipe' | 'articles' | 'list' | 'FAQ'
+    type: 'recipe' | 'articles' | 'list' | 'FAQ' | 'article'
     schema: string
   }>
 }

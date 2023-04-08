@@ -1,6 +1,8 @@
 import DiskCacheService from '../../services/diskCache'
 import FAQService from '../../services/FAQService'
+import PostService from '../../services/PostService'
 import RecipeService from '../../services/RecipeService'
+import { Post } from '../../types/wp-graphql.types'
 import { arrToObj } from '..'
 import { logger } from '../logger'
 import {
@@ -97,6 +99,26 @@ export const genCompleteRecipeObject = async () => {
     result[recipeId]['faqs'] = recipeRelatedFAQs
     result[recipeId]['YTId'] = relatedYoutubeVideoID
   })
+
+  cacheService.set(ENTITY, JSON.stringify(result))
+
+  return result
+}
+
+export const genCompletePostObject = async () => {
+  const cacheService = new DiskCacheService()
+  const postService = new PostService(cacheService)
+
+  const ENTITY = 'ALL_COMPLETED_POSTS'
+
+  const resultFromCache =
+    postService.getFromCache<Record<string | number, Post>>(ENTITY)
+
+  if (resultFromCache) return resultFromCache
+
+  const allPosts = await postService.getAllPosts()
+
+  const result = arrToObj<Post>(allPosts, 'databaseId')
 
   cacheService.set(ENTITY, JSON.stringify(result))
 

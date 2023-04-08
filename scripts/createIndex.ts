@@ -3,9 +3,13 @@ import lunr from 'lunr'
 import * as path from 'path'
 import striptags from 'striptags'
 
-import { IndexableRecipeObj, IRecipeSearchObj } from '../types/common'
+import {
+  IndexableRecipeObj,
+  IPostSearchObj,
+  IRecipeSearchObj,
+} from '../types/common'
 import { logger } from '../utils/logger'
-import { genCompleteRecipeObject } from '../utils/recipe'
+import { genCompletePostObject, genCompleteRecipeObject } from '../utils/recipe'
 import { IRecipeContent } from '../utils/types'
 
 const recipeIndexFileName = 'recipe_index.json'
@@ -101,11 +105,39 @@ function writeJSON(dirPath: string, contents: unknown, fileName: string) {
   fs.writeFileSync(path.join(dirPath, fileName), strIdx, { flag: 'w' })
 }
 
+export const genIndexablePosts = async () => {
+  const postObj = await genCompletePostObject()
+
+  const indexablePostObj: Record<string, IPostSearchObj> = {}
+
+  Object.keys(postObj).forEach((id: string) => {
+    const post = postObj[id]
+    const indexablePost: IPostSearchObj = {} as IPostSearchObj
+    const postId = post.databaseId.toString()
+    indexablePost['id'] = postId
+    indexablePost['title'] = post.title as string
+    indexablePost['uri'] = post.uri
+
+    indexablePostObj[postId] = {
+      title: postObj[id].title ?? '',
+      id: postObj[id].databaseId.toString(),
+      uri: postObj[id].uri,
+    }
+  })
+
+  return indexablePostObj
+}
+
 export const genIndex = async () => {
   logger.info('Generating Index')
   const indexableRecipes = await genIndexableRecipes()
 
-  const searchIndex = genSearchIdx(Object.values(indexableRecipes))
+  const indexablePosts = await genIndexablePosts()
+
+  const searchIndex = genSearchIdx([
+    ...Object.values(indexableRecipes),
+    ...Object.values(indexablePosts),
+  ])
 
   const serverAssetsDir = path.join('server', 'assets')
 
@@ -113,7 +145,11 @@ export const genIndex = async () => {
   writeJSON(serverAssetsDir, searchIndex, recipeIndexFileName)
 
   // store recipeObj
-  writeJSON(serverAssetsDir, indexableRecipes, recipeDetails)
+  writeJSON(
+    serverAssetsDir,
+    { ...indexableRecipes, ...indexablePosts },
+    recipeDetails
+  )
 
   logger.info('Index generation success')
 }

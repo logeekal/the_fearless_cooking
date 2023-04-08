@@ -15,6 +15,12 @@ export interface IRecipeSearchObj {
   uri: string
 }
 
+export interface IPostSearchObj {
+  id: string
+  title: string
+  uri: string
+}
+
 export type IndexableRecipeObj = Record<string, IRecipeSearchObj>
 
 export type PossiblePostType = Post | Recipe

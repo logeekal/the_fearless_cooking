@@ -2,21 +2,30 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 
 import { getLayout, LayoutProps } from '../components/layout'
 import Category from '../screens/category'
+import PostPage from '../screens/post'
 import RecipePage from '../screens/recipe'
 import DiskCacheService from '../services/diskCache'
+import PostService from '../services/PostService'
 import RecipeService from '../services/RecipeService'
-import { Recipe, RecipeCourse, RecipeCuisine } from '../types/wp-graphql.types'
+import {
+  Post,
+  Recipe,
+  RecipeCourse,
+  RecipeCuisine,
+} from '../types/wp-graphql.types'
 import { arrToObj } from '../utils'
 import { PAGE_LENGTH } from '../utils/config'
 import { logger } from '../utils/logger'
 import { genCompleteRecipeObject } from '../utils/recipe'
 import { genFAQSchema } from '../utils/schema/faqSchema'
+import { genPostSchema } from '../utils/schema/post'
 import genRecipeSchema from '../utils/schema/recipe'
-import { ICompleteRecipe, LocalPageInfo } from '../utils/types'
+import { ICompletePost, ICompleteRecipe, LocalPageInfo } from '../utils/types'
 import { NextPageWithLayout } from './_app'
+import { POST_PAGE_LENGTH } from './blog/page/[page]'
 
 type CommonProps = LocalPageInfo & {
-  pageType: 'COURSE' | 'CUISINE' | 'RECIPE'
+  pageType: 'COURSE' | 'CUISINE' | 'RECIPE' | 'POST'
 }
 
 type CoursePageProps = CommonProps & {
@@ -34,9 +43,22 @@ type RecipePageProps = CommonProps & {
   recipe: ICompleteRecipe
 }
 
-type CatchAllPageProps = CoursePageProps | CuisinePageProps | RecipePageProps
+type PostPageProps = CommonProps & {
+  pageType: 'POST'
+  completePost: ICompletePost
+}
+
+type CatchAllPageProps =
+  | CoursePageProps
+  | CuisinePageProps
+  | RecipePageProps
+  | PostPageProps
 
 const CatchAll: NextPageWithLayout<CatchAllPageProps> = (props) => {
+  if (props.pageType === 'POST') {
+    return <PostPage post={props.completePost ?? {}} />
+  }
+
   if (props.pageType === 'RECIPE') {
     return <RecipePage recipe={props.recipe} />
   }
@@ -57,20 +79,31 @@ export const getStaticPaths: GetStaticPaths<{
   uri: string[]
 }> = async () => {
   logger.info('StaticPaths :  starting')
-  const recipeService = new RecipeService(new DiskCacheService())
+  const diskCacheService = new DiskCacheService()
+
+  const recipeService = new RecipeService(diskCacheService)
+
+  const postService = new PostService(diskCacheService)
 
   const courseURIs = await getCoursePaths(recipeService)
   const cuisineURIs = await getCuisinePaths(recipeService)
 
   const recipes = await recipeService.getAllRecipePosts()
+  const posts = await postService.getAllPosts()
   const recipeURIs = recipes.map((recipe) => ({
     params: {
       uri: recipe.uri.split('/').filter((part) => part !== ''),
     },
   }))
 
+  const postURIs = posts.map((post) => ({
+    params: {
+      uri: post.uri.split('/').filter((part) => part !== ''),
+    },
+  }))
+
   return {
-    paths: [...courseURIs, ...cuisineURIs, ...recipeURIs],
+    paths: [...courseURIs, ...cuisineURIs, ...recipeURIs, ...postURIs],
     fallback: false,
   }
 }
@@ -82,13 +115,22 @@ export const getStaticProps: GetStaticProps<
   { uri: Array<string> }
 > = async ({ params }) => {
   logger.info('StaticProps : starting')
-  const recipeService = new RecipeService(new DiskCacheService())
+  const diskCacheService = new DiskCacheService()
+
+  const recipeService = new RecipeService(diskCacheService)
+
+  const postService = new PostService(diskCacheService)
+
   const allRecipes = await recipeService.getAllRecipePosts()
   const allRecipesObjByURI = arrToObj<Recipe>(allRecipes, 'uri')
   const allRecipesObjById = arrToObj<Recipe>(allRecipes, 'databaseId')
   const cuisines = await recipeService.getAllCuisines()
   const cuisinesObjByURI = arrToObj<RecipeCuisine>(cuisines, 'uri')
   const cuisinesSummary = await recipeService.getAllCuisines('SUMMARY')
+
+  const allPosts = await postService.getAllPosts()
+  const allPostsObjByURI = arrToObj<Post>(allPosts, 'uri')
+  const allPostsObjById = arrToObj<Post>(allPosts, 'databaseId')
 
   if (!params) throw Error('Invalid Params in Get static Props', params)
   const pageNo = Number(params.uri[params.uri.length - 1])
@@ -99,7 +141,7 @@ export const getStaticProps: GetStaticProps<
     uri = `/${params.uri.slice(0, params.uri.length - 2).join('/')}/`
   }
   logger.info(`StaticProps : Generating  ${uri} and page no. : ${pageNo}`)
-
+  logger.info(Object.keys(allPostsObjByURI))
   // get courses
   const coursesParent = await recipeService.getAllCourses()
   const coursesObjByURI = arrToObj<RecipeCourse>(coursesParent, 'uri')
@@ -292,8 +334,41 @@ export const getStaticProps: GetStaticProps<
         },
       },
     }
-  } else {
-    logger.error(`Recipe URI : ${uri} not found`)
+  }
+
+  /////////////////////////////
+  ///////// POSTS
+  /////////////////////////////
+  //
+
+  if (uri in allPostsObjByURI) {
+    logger.info(`Post Found ${uri}`)
+    const selectedPost = allPostsObjByURI[uri]
+    const startIdx = 0
+    const endIdx = isNaN(pageNo)
+      ? startIdx + POST_PAGE_LENGTH
+      : (startIdx + POST_PAGE_LENGTH) * pageNo
+
+    const noOfPages = allPosts.length / POST_PAGE_LENGTH
+
+    return {
+      props: {
+        pageType: 'POST',
+        pageInfo: {
+          total: noOfPages,
+          current: isNaN(pageNo) ? 1 : pageNo,
+          uri,
+        },
+        completePost: {
+          post: selectedPost,
+          schema: genPostSchema(selectedPost),
+        },
+        layoutProps: {
+          courseSummary: coursesSummary,
+          cuisineSummary: cuisinesSummary,
+        },
+      },
+    }
   }
 
   return {

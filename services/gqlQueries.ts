@@ -261,3 +261,50 @@ export const GET_CUISINE = (
                 }
         }
   }`
+
+
+
+
+
+export const GEN_GET_POSTS_DETAIL_QUERY = (
+  first = 100,
+  endCursor: string | null = null,
+  startCursor: string | null = null
+) => `
+      query GET_POSTS {
+          posts(first:${first}, after:"${endCursor}", before:"${startCursor}") {
+            pageInfo {
+              endCursor
+              startCursor
+              hasNextPage
+              hasPreviousPage
+            }
+            nodes {
+              databaseId
+              content
+              uri
+              slug
+              link
+              excerpt
+              date
+              dateGmt
+              postId
+              title
+              featuredImage {
+                node {
+                  mediaItemUrl
+                  srcSet
+                  sourceUrl
+                  mediaDetails {
+                    sizes {
+                      name
+                      sourceUrl
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+    `
+
