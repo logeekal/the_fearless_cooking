@@ -141,7 +141,6 @@ export const getStaticProps: GetStaticProps<
     uri = `/${params.uri.slice(0, params.uri.length - 2).join('/')}/`
   }
   logger.info(`StaticProps : Generating  ${uri} and page no. : ${pageNo}`)
-  logger.info(Object.keys(allPostsObjByURI))
   // get courses
   const coursesParent = await recipeService.getAllCourses()
   const coursesObjByURI = arrToObj<RecipeCourse>(coursesParent, 'uri')
