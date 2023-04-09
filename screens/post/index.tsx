@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import striptags from 'striptags'
 
 import BottomBar from '../../components/bottom_bar'

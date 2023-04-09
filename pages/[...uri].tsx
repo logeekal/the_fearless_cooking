@@ -1,5 +1,4 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
-import { useEffect } from 'react'
 
 import { getLayout, LayoutProps } from '../components/layout'
 import Category from '../screens/category'

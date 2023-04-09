@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react'
+import React from 'react'
 
 import ArticleGrid from '../../components/card_grid'
 import { Post, Recipe } from '../../types/wp-graphql.types'
