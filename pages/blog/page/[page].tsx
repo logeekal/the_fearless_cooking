@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 import { getLayout, LayoutProps } from '../../../components/layout'
 import { SEO } from '../../../components/SEO'
-import Home from '../../../screens/home'
+import { Home2 } from '../../../screens/home'
 import DiskCacheService from '../../../services/diskCache'
 import PostService from '../../../services/PostService'
 import RecipeService from '../../../services/RecipeService'
@@ -28,14 +28,17 @@ const PaginatedPostPage: NextPageWithLayout<PostPageProps> = (props) => {
   return (
     <div className={`${currTheme} ${styleClass}`}>
       <SEO isArticle={false} title="Blogs | The Fearless cooking" />
-      <Home recipes={props.posts} pageInfo={props.pageInfo} />
+      <Home2 recipes={props.posts} pageInfo={props.pageInfo} />
       <button style={{ display: 'none' }} onClick={() => toggleTheme()}>
         Switch Theme
       </button>
     </div>
   )
 }
-
+//PaginatedPostPage =React.memo(PaginatedPostPage, (prevProps, nextProps) => {
+//console.log('PaginatedPostPage', {prevProps,nextProps})
+//return prevProps === nextProps
+//})
 PaginatedPostPage.displayName = 'Posts'
 PaginatedPostPage.getLayout = getLayout
 
@@ -89,7 +92,7 @@ export const getStaticProps: GetStaticProps<
 
   const result = {
     props: {
-      posts: allPostSummary.slice(startIdx, endIdx),
+      posts: allPostSummary.slice(startIdx, endIdx + 1),
       pageInfo: {
         total: noOfPages,
         current: page,

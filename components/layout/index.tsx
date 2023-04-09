@@ -134,7 +134,17 @@ const Layout: FC<PropsWithChildren<LayoutProps>> = (props) => {
         )}
 
         <CategoryBar
-          categories={[...props.courseSummary, ...props.cuisineSummary]}
+          categories={[
+            {
+              id: 'blog',
+              thumbnail: '/images/blog.svg',
+              name: 'Blog',
+              databaseId: 9999999,
+              uri: '/blog',
+            },
+            ...props.courseSummary,
+            ...props.cuisineSummary,
+          ]}
         />
         <main className={`${mainContent}`}>
           {props.children}
