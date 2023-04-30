@@ -1,8 +1,16 @@
+import fs from 'fs'
 import Jimp from 'jimp'
-import * as path from 'path'
+import path from 'path'
 
-import { ImageB64Format, RecipeObject, RecipeWithImage } from '../types/open_ai'
+import { safeName } from '../common'
+import {
+  AIRecipeObject,
+  AIRecipeWithImage,
+  ImageB64Format,
+} from '../types/open_ai'
+import { dishes } from '../utils/all_recipes'
 import { logger } from '../utils/logger'
+import { EmailService } from './email/EmailService'
 import { OpenAI } from './OpenAI'
 
 const imageSizes = {
@@ -34,14 +42,14 @@ export class AIRecipes {
     imageOutDir?: string
   ) => {
     // eslint-disable-next-line
-    const prompt = `Please provide vegan version of ${recipeName} in RFC8529 JSON. Please include time in ISO 8601 duration format. All keys should be camel case and should be in below format. \n {\"recipeName\":\"...\",\"servings\":\"2\",\"prepTime\":\"PT10M\",\"cookTime\":\"PT10M\",\"totalTime\":\"PT10M\",\"ingredients\":[{\"name\":\"...\",\"quanity\":\"...\", \"notes\":\"...\"}],\"instructions\":[\"...\"],\"nutrition\":{\"calories\":\"...\",\"fat\":\"\",\"sugar\":\"\",\"protein\":\"\"}}`
+    const prompt = `Please provide vegan version of ${recipeName} in RFC8529 JSON. Please include time in ISO 8601 duration format. All keys should be camel case and should be in below format. \n {\"recipeName\":\"...\",\"excerpt\":\"...\",\"servings\":\"2\",\"prepTime\":\"PT10M\",\"cookTime\":\"PT10M\",\"totalTime\":\"PT10M\",\"ingredients\":[{\"name\":\"...\",\"quantity\":\"1 cup\", \"notes\":\"...\"}],\"instructions\":[\"...\"],\"nutrition\":{\"calories\":\"...\",\"fat\":\"\",\"sugar\":\"\",\"protein\":\"\"}}`
 
     const recipeResponse = await this.openAIService.completion(prompt)
 
     let recipeObject
 
     try {
-      recipeObject = JSON.parse(recipeResponse) as RecipeObject
+      recipeObject = JSON.parse(recipeResponse) as AIRecipeObject
     } catch (jsonError) {
       logger.error(String(jsonError))
       logger.error(recipeResponse)
@@ -73,7 +81,7 @@ export class AIRecipes {
       imageOutDir
     )
 
-    const completeRecipe: RecipeWithImage = {
+    const completeRecipe: AIRecipeWithImage = {
       ...recipeObjWithId,
       image: recipeImages,
     }
@@ -89,7 +97,7 @@ export class AIRecipes {
     logger.info(`Getting images for recipe ${recipeName}`)
 
     // eslint-disable-next-line
-    const prompt = `A professional well-lit and beautiful photograph of a vegan version of ${recipeName}. Put recipe in center with white negative space around it`
+    const prompt =`${recipeName} in nature on a white plate, ultra realistic, close - up, appetite food, highly detailed, smooth, sharp focus, professional detailed photo.`
 
     const base64ImageResponse = await this.openAIService.image(prompt)
 
@@ -141,16 +149,58 @@ export class AIRecipes {
     )
   }
 
+  getAIRecipesGeneratedFileNames = () => {
+    const AI_RECIPE_DIR = path.join('content', 'ai-recipes')
+    const results: string[] = []
+    const dateDirs = fs.readdirSync(AI_RECIPE_DIR)
+    dateDirs.forEach((dir) => {
+      results.push(
+        ...fs.readdirSync(path.join(AI_RECIPE_DIR, dir)).filter((file) => {
+          return file.endsWith('json')
+        })
+      )
+    })
+
+    return results
+  }
+
+  getRandomVeganRecipeNameLocal = () => {
+    const generatedRecipes = this.getAIRecipesGeneratedFileNames()
+
+    return dishes.filter((dish, idx) => {
+      if (generatedRecipes.includes(`${safeName(dish)}.json`)) {
+        logger.debug(`Skipping ${dish}. Already generated...`)
+        return false
+      }
+      if (idx >= 90) {
+        const emailService = new EmailService()
+        emailService
+          .send({
+            /* eslint-disable-next-line */
+            subject: `[AI recipes] On index ${idx}. Add new dishes for AI Recipes`,
+          })
+          .then(() => 'Recipe Name list Almost over warning sent.')
+          .catch(() => {
+            throw new Error('Cannot Send Notification on email.')
+          })
+      }
+      return true
+    })[0]
+  }
+
   getRandomVeganRecipeName = async () => {
     const prompt =
+      /* eslint-disable-next-line */
       'Suggest me a random and popular vegan dish name in json with key "dish". Do not include the recipe '
 
-    const dishResponse = await this.openAIService.completion(prompt)
+    const dishResponse = await this.openAIService.completion(prompt, 'full')
 
     let dishObject: { dish: string }
 
     try {
-      dishObject = JSON.parse(dishResponse) as { dish: string }
+      dishObject = JSON.parse(dishResponse.replace('\n', '')) as {
+        dish: string
+      }
       return dishObject.dish
     } catch (jsonError) {
       logger.error(String(jsonError))

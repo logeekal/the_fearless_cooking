@@ -13,10 +13,6 @@ type CategoryPageProps = LocalPageInfo & {
 }
 
 function Category(props: CategoryPageProps) {
-  //console.log(
-  //`Category ${props.category.name as string} : `,
-  //props.category.recipes?.nodes?.length
-  //)
   return (
     <>
       <Home

@@ -46,7 +46,10 @@ export class OpenAI {
     }
   }
 
-  completion = async (prompt: string): Promise<string> => {
+  completion = async (
+    prompt: string,
+    randomness: 'normal' | 'full' = 'normal'
+  ): Promise<string> => {
     const payload: GPT35ModelRequest = {
       model: this.MODEL,
       messages: [
@@ -56,6 +59,7 @@ export class OpenAI {
         },
       ],
       n: 1,
+      temperature: randomness === 'normal' ? 1 : 2,
     }
 
     const response = await this.sendRequest<GPT35Response>(

@@ -1,6 +1,6 @@
 import striptags from 'striptags'
+import { Duration } from 'tinyduration'
 
-import { IDuration } from '../../types/common'
 import { Recipe } from '../../types/wp-graphql.types'
 import { devLogger } from '../logger'
 import { ICompleteRecipe, RecipeContent } from '../types'
@@ -8,7 +8,8 @@ import { ICompleteRecipe, RecipeContent } from '../types'
 const genRecipeSchema = (
   post: Recipe,
   recipe: ICompleteRecipe['content'],
-  recipeVideoId: string | undefined
+  recipeVideoId: string | undefined,
+  convertTime = true
 ) => {
   if (!recipe) return null
   devLogger.info(`Generating Recipe Schema for  : ${post.title || '???????'} `)
@@ -40,15 +41,15 @@ const genRecipeSchema = (
     },
     datePublished: post.dateGmt,
     description: recipe.recipeSubtitle,
-    prepTime: convertDurationToISO8601(
-      recipe.calculatedDurations.prepTimeInDurations
-    ),
-    cookTime: convertDurationToISO8601(
-      recipe.calculatedDurations.cookTimeInDurations
-    ),
-    totalTime: convertDurationToISO8601(
-      recipe.calculatedDurations.totalDuration
-    ),
+    prepTime: convertTime
+      ? convertDurationToISO8601(recipe.calculatedDurations.prepTimeInDurations)
+      : recipe.prepTime,
+    cookTime: convertTime
+      ? convertDurationToISO8601(recipe.calculatedDurations.cookTimeInDurations)
+      : recipe.cookTime,
+    totalTime: convertTime
+      ? convertDurationToISO8601(recipe.calculatedDurations.totalDuration)
+      : recipe.totalDuration,
     keywords: recipe.recipeKeywords,
     recipeYield: recipe.noOfServings,
     recipeCategory: recipeCourses,
@@ -139,14 +140,14 @@ const getRecipeInstructions = (recipe: RecipeContent, post: Recipe) => {
   return result
 }
 
-export const convertDurationToISO8601 = (duration: IDuration): string => {
+export const convertDurationToISO8601 = (duration: Duration): string => {
   let result = 'PT'
 
-  if (duration.hours > 0) {
+  if (duration.hours && duration.hours > 0) {
     result += `${duration.hours}H`
   }
 
-  if (duration.minutes > 0) {
+  if (duration.minutes && duration.minutes > 0) {
     result += `${duration.minutes}M`
   }
 

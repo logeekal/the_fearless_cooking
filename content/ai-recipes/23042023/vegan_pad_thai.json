@@ -1,0 +1,53 @@
+{
+  "id": 23042023,
+  "recipeName": "Vegan Pad Thai",
+  "excerpt": "A veggie-packed and flavorful version of the classic Thai dish, perfect for a quick and satisfying meal.",
+  "servings": "2",
+  "prepTime": "PT15M",
+  "cookTime": "PT15M",
+  "totalTime": "PT30M",
+  "ingredients": [
+    {
+      "name": "brown rice noodles",
+      "quantity": "8 oz",
+      "notes": "or other flat rice noodles"
+    },
+    { "name": "firm tofu", "quantity": "8 oz", "notes": "drained and pressed" },
+    { "name": "peanut oil", "quantity": "2 Tbsp", "notes": "" },
+    { "name": "garlic", "quantity": "4 cloves", "notes": "minced" },
+    { "name": "shallot", "quantity": "1", "notes": "finely chopped" },
+    { "name": "carrot", "quantity": "1", "notes": "peeled and grated" },
+    {
+      "name": "red bell pepper",
+      "quantity": "1/2",
+      "notes": "seeded and thinly sliced"
+    },
+    { "name": "mushrooms", "quantity": "4 oz", "notes": "sliced" },
+    { "name": "bean sprouts", "quantity": "1 cup", "notes": "" },
+    { "name": "scallions", "quantity": "2", "notes": "thinly sliced" },
+    { "name": "roasted peanuts", "quantity": "1/4 cup", "notes": "chopped" },
+    { "name": "lime wedges", "quantity": "4", "notes": "" }
+  ],
+  "instructions": [
+    "Cook noodles according to package instructions, then drain and set aside.",
+    "Crumble tofu into a small bowl and set aside.",
+    "In a large non-stick pan, heat peanut oil over medium-high heat.",
+    "Add minced garlic and chopped shallot and sauté until fragrant.",
+    "Add crumbled tofu to pan and sauté until lightly browned, stirring occasionally.",
+    "Add grated carrot, sliced red pepper, and sliced mushrooms to pan and sauté until vegetables are tender-crisp.",
+    "Add cooked noodles to pan and toss together with vegetables and tofu, stirring to combine.",
+    "Add bean sprouts and scallions to pan and toss together with noodles and vegetables, cooking for an additional 1-2 minutes.",
+    "Serve vegan Pad Thai hot, garnished with chopped peanuts and lime wedges as desired."
+  ],
+  "nutrition": {
+    "calories": "465",
+    "fat": "22g",
+    "sugar": "8g",
+    "protein": "18g"
+  },
+  "image": {
+    "large": "/images/ai-recipes/23042023_large.jpg",
+    "medium": "/images/ai-recipes/23042023_medium.jpg",
+    "small": "/images/ai-recipes/23042023_small.jpg"
+  }
+}

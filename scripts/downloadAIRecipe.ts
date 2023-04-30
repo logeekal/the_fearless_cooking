@@ -2,6 +2,7 @@ import * as dotenv from 'dotenv'
 import * as fs from 'fs'
 import * as path from 'path'
 
+import { safeName } from '../common'
 import { AIRecipes } from '../services/AIRecipes'
 import { OpenAI } from '../services/OpenAI'
 import { logger } from '../utils/logger'
@@ -26,23 +27,25 @@ async function downloadAIRecipe(outDirectory?: string) {
       year: 'numeric',
       month: '2-digit',
       day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
     })
       .format(new Date()) //dd.mm.yyyy
-      .replaceAll('.', '')
+      .replace(/[^0-9]/g, '')
   ) //ddmmyyyy
 
   const recipeDirName = path.join(outDir, `${newAIRecipeId}`)
   // santize the name for the folder
 
   if (fs.existsSync(recipeDirName)) {
-    logger.info(`Recipe ${recipeDirName} already exists. skipping download`)
+    logger.warn(`Recipe ${recipeDirName} already exists. skipping download`)
     return
   }
 
   const openAIService = new OpenAI()
   const aiRecipeService = new AIRecipes(openAIService)
 
-  const randomRecipeName = await aiRecipeService.getRandomVeganRecipeName()
+  const randomRecipeName = aiRecipeService.getRandomVeganRecipeNameLocal()
 
   logger.info(`Recipe of the day is ${randomRecipeName}. Downloading now...`)
 
@@ -51,10 +54,7 @@ async function downloadAIRecipe(outDirectory?: string) {
     newAIRecipeId
   )
 
-  const saveRecipeName = randomRecipeName
-    .replace(/[^a-z0-9]/gi, '_')
-    .toLowerCase()
-
+  const saveRecipeName = safeName(randomRecipeName)
   const recipeFile = path.join(recipeDirName, `${saveRecipeName}.json`)
 
   fs.mkdirSync(recipeDirName)

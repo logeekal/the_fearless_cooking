@@ -27,9 +27,10 @@ export type GPT35ModelRequest = {
     role: string
   }>
   n: number
+  temperature?: number
 }
 
-export type RecipeObject = {
+export type AIRecipeObject = {
   excerpt: string
   recipeName: string
   servings: string
@@ -46,21 +47,26 @@ export type RecipeObject = {
   }
 }
 
-export type RecipeWithId = {
+export type AIRecipeWithId = {
   id: number
-} & RecipeObject
+} & AIRecipeObject
 
-export type RecipeWithImage = {
+export type AIRecipeWithImage = {
   image: {
     large: string
+    medium: string
     small: string
   }
-} & RecipeWithId
+} & AIRecipeWithId
+
+export type AIRecipe = AIRecipeWithImage
 
 export type RecipeIngredient = {
   name: string
   quantity: string
+  unit?: string
   alternative?: string
+  notes?: string
 }
 
 export type GPT35Response = typeof sampleGPTResponse
