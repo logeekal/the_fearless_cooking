@@ -17,7 +17,7 @@ import { ICompleteRecipe, LocalPageInfo } from '../utils/types'
 import { NextPageWithLayout } from './_app'
 
 type CommonProps = LocalPageInfo & {
-  pageType: 'COURSE' | 'CUISINE' | 'RECIPE' | 'AIRECIPE'
+  pageType: 'COURSE' | 'CUISINE' | 'RECIPE' | 'AIRECIPE' | 'AICUISINE'
 }
 
 type CoursePageProps = CommonProps & {
@@ -26,7 +26,7 @@ type CoursePageProps = CommonProps & {
 }
 
 type CuisinePageProps = CommonProps & {
-  pageType: 'CUISINE'
+  pageType: 'CUISINE' | 'AICUISINE'
   cuisine: RecipeCuisine
 }
 
@@ -44,8 +44,14 @@ const CatchAll: NextPageWithLayout<CatchAllPageProps> = (props) => {
     )
   }
 
-  if (props.pageType === 'CUISINE') {
-    return <Category category={props.cuisine} pageInfo={props.pageInfo} />
+  if (props.pageType === 'CUISINE' || props.pageType === 'AICUISINE') {
+    return (
+      <Category
+        category={props.cuisine}
+        pageInfo={props.pageInfo}
+        isAI={props.pageType === 'AICUISINE'}
+      />
+    )
   }
 
   // default course
@@ -369,7 +375,7 @@ export const getStaticProps: GetStaticProps<
 
     return {
       props: {
-        pageType: 'CUISINE',
+        pageType: 'AICUISINE',
         pageInfo: {
           total: noOfPages,
           current: isNaN(pageNo) ? 1 : pageNo,

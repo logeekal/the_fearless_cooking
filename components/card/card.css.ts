@@ -15,6 +15,7 @@ export const cardContainer = style({
   background: vars.colors.card,
   position: 'relative',
   paddingBottom: calc.multiply(vars.space.s, 2),
+  width: '50%',
 })
 
 export const cardArticle = style({
