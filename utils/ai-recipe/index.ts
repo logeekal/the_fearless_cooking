@@ -87,7 +87,7 @@ export const convertAIRecipesToCompleteRecipes = (): ICompleteRecipeObj => {
           })),
         },
       ],
-    }
+    } as ICompleteRecipe['content']
 
     const recipeSchema = genRecipeSchema(
       recipe,
