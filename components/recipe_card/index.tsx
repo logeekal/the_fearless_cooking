@@ -1,7 +1,7 @@
 import React, { forwardRef, Fragment, useMemo } from 'react'
 import striptags from 'striptags'
+import { Duration } from 'tinyduration'
 
-import { IDuration } from '../../types/common'
 import { Recipe } from '../../types/wp-graphql.types'
 import { ICompleteRecipe } from '../../utils/types'
 import Checkbox from '../checkbox'
@@ -32,7 +32,7 @@ interface RecipeCardProps {
   recipePost: Recipe
 }
 
-const getTextDuration = (duration: IDuration): string => {
+const getTextDuration = (duration: Duration): string => {
   const hours = duration.hours ? `${duration.hours} hr` : undefined
   const mins = duration.minutes ? `${duration.minutes} min` : undefined
   if (!hours && !mins) {

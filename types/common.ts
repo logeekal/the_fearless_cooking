@@ -1,6 +1,8 @@
+import { Duration } from 'tinyduration'
+
 import { Post, Recipe } from './wp-graphql.types'
 
-export interface IDuration {
+export type IDuration = Partial<Duration> & {
   hours: number
   minutes: number
 }
@@ -59,10 +61,6 @@ export type ThemeType = {
     highest: string
     high: string
   }
-}
-export interface IDuration {
-  hours: number
-  minutes: number
 }
 
 export type GraphQLNextPageHandler<T> = (after: string) => T
