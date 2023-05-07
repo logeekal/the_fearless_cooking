@@ -2,6 +2,12 @@ name: Publish recipe of the day
 on:
   schedule:
     - cron: '30 5 * * *'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to run test'
+        type: environment
+        required: true
 jobs:
   Run_ansible_playbook:
     runs-on: ubuntu-latest
