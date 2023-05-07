@@ -3,7 +3,6 @@ export  const dishes = [
    "Vegan Pad Thai",
     "Avocado Toast",
     'Chana Masala',
-    'Pad Thai',
     'Hummus',
     'Falafel',
     'Caprese Salad',

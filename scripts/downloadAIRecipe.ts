@@ -46,6 +46,9 @@ async function downloadAIRecipe(outDirectory?: string) {
   const aiRecipeService = new AIRecipes(openAIService)
 
   const randomRecipeName = aiRecipeService.getRandomVeganRecipeNameLocal()
+  if (!randomRecipeName) {
+    throw new Error(`Invalid Random Recipe Name: ${String(randomRecipeName)}`)
+  }
 
   logger.info(`Recipe of the day is ${randomRecipeName}. Downloading now...`)
 

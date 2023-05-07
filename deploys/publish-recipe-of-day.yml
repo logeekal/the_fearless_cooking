@@ -1,0 +1,93 @@
+- name: Clone Git repo and create pull request
+  hosts: localhost
+  become: no
+
+  vars:
+    github_username: "{{ lookup('ansible.builtin.env', 'GITHUB_USERNAME', default=Undefined) }}"
+    github_password: "{{lookup('ansible.builtin.env', 'GITHUB_PASSWORD', default=Undefined)}}"
+    git_repo_url: "https://github.com/logeekal/the_fearless_cooking.git"
+    git_branch: "main"
+    git_repo: "logeekal/the_fearless_cooking"
+    git_clone_dir: "/tmp/the_fearless_cooking"
+    script_command: "yarn ai-recipe-day-download"
+    is_CI: "{{ lookup('ansible.builtin.env', 'CI', default=false) }}"
+    exclude_files_when_copy:
+      - node_modules
+
+  tasks:
+    - debug:
+        msg: "{{ github_password }}"
+    
+    - name: Clean up a directory
+      file: 
+        path: "{{ git_clone_dir }}"
+        state: absent
+
+    - name: Create a directory
+      file: 
+        path: "{{ git_clone_dir }}"
+        state: directory
+
+    - name: Clone Git repo
+      git:
+        repo: "{{ git_repo_url }}"
+        dest: "{{ git_clone_dir }}"
+        version: "{{ git_branch }}"
+      when: is_CI == true
+
+    - name: Copy current directory when running locally
+      synchronize:
+        src: "{{ playbook_dir | dirname }}/"
+        dest: "{{ git_clone_dir }}"
+        recursive: true
+        rsync_opts: |
+          "--include='/'"
+          {% for s in exclude_files_when_copy %}
+          "--exclude={{ s }}"
+          {% endfor %}
+      when: is_CI == false
+
+    - name: Install Deps
+      shell: "yarn"
+      args:
+        chdir: "{{ git_clone_dir }}"
+
+    - name: Run script
+      shell: "{{ script_command }}"
+      args:
+        chdir: "{{ git_clone_dir }}"
+
+    - name: Check for changes
+      command: git status --porcelain
+      args:
+        chdir: "{{ git_clone_dir }}"
+      register: git_status
+
+    - name: Get new branch Name
+      debug:
+        msg: "new_ai_recipe_{{ now(True, '%d%m%y%H%M') }}"
+      register: new_branch
+
+    - name: Add, Commit and Push
+      command: "{{ item  }} chdir={{ git_clone_dir }}"
+      with_items:
+        - "git checkout -b {{ new_branch.msg }}"
+        - "git add content public" 
+        - "git commit -m 'new ai post'"  
+        - "git push origin HEAD:{{ new_branch.msg }}"
+      when: git_status.stdout_lines | length > 0
+
+    - name: Create pull request
+      uri:
+        url: "https://api.github.com/repos/{{ git_repo }}/pulls"
+        method: POST
+        body_format: json
+        headers:
+          Authorization: "Bearer {{github_password}}"
+        body:
+          title: "AUTO PR (new_ai_recipe_0705231733) - New AI Article Published"
+          head: "new_ai_recipe_0705231733"
+          base: "{{ git_branch }}"
+          body: "Please review the changes"
+      register: pull_request
+      when: git_status.stdout_lines | length > 0
