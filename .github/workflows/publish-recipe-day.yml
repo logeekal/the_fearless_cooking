@@ -1,0 +1,15 @@
+name: Publish recipe of the day
+on:
+  schedule:
+    - cron: '30 5 * * *'
+jobs:
+  Run_ansible_playbook:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install ansible 
+        run: sudo apt install ansible
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Cd to repo
+        run: cd {{ github.workspace }}
+      - run: ansible-playbook deploys/publish-recipe-of-day.yml
