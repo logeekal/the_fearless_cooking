@@ -167,7 +167,7 @@ export class AIRecipes {
   getRandomVeganRecipeNameLocal = () => {
     const generatedRecipes = this.getAIRecipesGeneratedFileNames()
 
-    return dishes.filter((dish, idx) => {
+    return dishes.find((dish, idx) => {
       if (generatedRecipes.includes(`${safeName(dish)}.json`)) {
         logger.debug(`Skipping ${dish}. Already generated...`)
         return false
@@ -178,14 +178,15 @@ export class AIRecipes {
           .send({
             /* eslint-disable-next-line */
             subject: `[AI recipes] On index ${idx}. Add new dishes for AI Recipes`,
+            html: '',
           })
           .then(() => 'Recipe Name list Almost over warning sent.')
-          .catch(() => {
-            throw new Error('Cannot Send Notification on email.')
+          .catch((err) => {
+            throw new Error('Cannot Send Notification on email.' + String(err))
           })
       }
       return true
-    })[0]
+    })
   }
 
   getRandomVeganRecipeName = async () => {
