@@ -17,5 +17,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Cd to repo
-        run: cd {{ github.workspace }}
+        run: |
+          cd ${{ github.workspace }}
       - run: ansible-playbook deploys/publish-recipe-of-day.yml
