@@ -10,6 +10,7 @@ on:
         type: environment
 jobs:
   Run_ansible_playbook:
+    runs-on: ubuntu-latest
     env:
       OPEN_AI_KEY: ${{ secrets.OPEN_AI_KEY }}
       SMTP_HOST: ${{ secrets.SMTP_HOST }}
@@ -19,7 +20,6 @@ jobs:
       EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
       EMAIL_RECIPIENTS: ${{ secrets.EMAIL_RECIPIENTS }}
       FROM_NAME: ${{ secrets.FROM_NAME }}
-    runs-on: ubuntu-latest
     steps:
       - name: Install yarn 
         run: npm install -g yarn
