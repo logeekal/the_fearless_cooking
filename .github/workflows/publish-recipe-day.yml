@@ -12,11 +12,23 @@ jobs:
   Run_ansible_playbook:
     runs-on: ubuntu-latest
     steps:
-      - name: Install ansible 
-        run: sudo apt install ansible
+      - name: Install yarn 
+        run: npm install -g yarn
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Cd to repo
         run: |
           cd ${{ github.workspace }}
-      - run: ansible-playbook deploys/publish-recipe-of-day.yml
+      - name: Install dependencies
+        run: yarn
+      - name: Download AI Recipe
+        run: yarn ai-recipe-day-download
+      - name: Push changes
+        uses: golfzaptw/action-commit-push-pr
+        with:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          PREFIX_BRANCHES: 'update'
+          DEFAULT_BRANCHES: 'main'
+          COMMIT_MESSAGE: 'New AI recipe'
+          TITLE_PR: 'Chore: New AI Recipe of the Day'
+          BODY_PR: ''
