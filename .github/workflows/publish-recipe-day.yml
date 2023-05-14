@@ -11,14 +11,14 @@ on:
 jobs:
   Run_ansible_playbook:
     env:
-      OPEN_AI_KEY: {{ secrets.OPEN_AI_KEY }}
-      SMTP_HOST: {{ secrets.SMTP_HOST }}
+      OPEN_AI_KEY: ${{ secrets.OPEN_AI_KEY }}
+      SMTP_HOST: ${{ secrets.SMTP_HOST }}
       SMTP_PORT: 587
-      SMTP_USERNAME: {{ secrets.SMTP_USERNAME  }}
-      SMTP_PASSWORD: {{ secrets.SMTP_PASSWORD }}
-      EMAIL_SENDER: {{ secrets.EMAIL_SENDER }}
-      EMAIL_RECIPIENTS: {{ secrets.EMAIL_RECIPIENTS }}
-      FROM_NAME: {{ secrets.FROM_NAME }}
+      SMTP_USERNAME: ${{ secrets.SMTP_USERNAME  }}
+      SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+      EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+      EMAIL_RECIPIENTS: ${{ secrets.EMAIL_RECIPIENTS }}
+      FROM_NAME: ${{ secrets.FROM_NAME }}
     runs-on: ubuntu-latest
     steps:
       - name: Install yarn 
