@@ -16,15 +16,15 @@ jobs:
         run: npm install -g yarn
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Cd to repo
+      - name: switch to repo directory
         run: |
-          cd ${{ github.workspace }}
+          cd "${{ github.workspace }}"
       - name: Install dependencies
         run: yarn
       - name: Download AI Recipe
         run: yarn ai-recipe-day-download
       - name: Push changes
-        uses: golfzaptw/action-commit-push-pr
+        uses: golfzaptw/action-commit-push-pr@1.0.2
         with:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           PREFIX_BRANCHES: 'update'
