@@ -9,7 +9,7 @@ on:
         required: false
         type: environment
 jobs:
-  Run_ansible_playbook:
+  download_ai_recipe_of_the_day:
     runs-on: ubuntu-latest
     env:
       NODE_ENV: 'production'
