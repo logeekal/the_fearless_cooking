@@ -10,7 +10,7 @@ dotenv.config({
   path: path.join(process.cwd(), '.env.local'),
 })
 
-checkEnvs()
+checkEnvs({})
 
 downloadData()
   .then(() => {

@@ -34,14 +34,17 @@ interface CheckEnvArgs {
   optional_envs?: Array<string>
 }
 
-export function checkEnvs({ mandatory_envs, optional_envs }: CheckEnvArgs) {
+export function checkEnvs({
+  mandatory_envs = MANDATORY_ENVS,
+  optional_envs = OPTIONAL_ENVS,
+}: CheckEnvArgs) {
   let envsMissingError = false
 
   logger.info('=====> Mandatory envs \n')
 
-  const mandatory_envs_local = mandatory_envs ?? MANDATORY_ENVS
+  const mandatory_envs_local = mandatory_envs
 
-  const optional_envs_local = optional_envs ?? OPTIONAL_ENVS
+  const optional_envs_local = optional_envs
 
   mandatory_envs_local.forEach((envVar) => {
     if (!(envVar in process.env) || isStringInvalid(process.env[envVar])) {
