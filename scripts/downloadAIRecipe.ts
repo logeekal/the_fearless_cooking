@@ -6,6 +6,7 @@ import { safeName } from '../common'
 import { AIRecipes } from '../services/AIRecipes'
 import { OpenAI } from '../services/OpenAI'
 import { logger } from '../utils/logger'
+import { checkEnvs } from './env-checker'
 
 dotenv.config({
   path: path.resolve(process.cwd(), '.env.local'),
@@ -63,6 +64,19 @@ async function downloadAIRecipe(outDirectory?: string) {
   fs.mkdirSync(recipeDirName)
   fs.writeFileSync(recipeFile, JSON.stringify(recipe))
 }
+
+checkEnvs({
+  mandatory_envs: [
+    'OPEN_AI_KEY',
+    'SMTP_HOST',
+    'SMT_PORT',
+    'SMTP_USERNAME',
+    'SMTP_PASSWORD',
+    'EMAIL_SENDER',
+    'EMAIL_RECIPIENTS',
+    'FROM_NAME',
+  ],
+})
 
 downloadAIRecipe()
   .then(() => logger.info('Done!'))
