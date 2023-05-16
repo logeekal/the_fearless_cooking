@@ -6,16 +6,46 @@ on:
     inputs:
       environment:
         description: 'Environment to run test'
+        required: false
         type: environment
-        required: true
 jobs:
-  Run_ansible_playbook:
+  download_ai_recipe_of_the_day:
     runs-on: ubuntu-latest
+    env:
+      NODE_ENV: 'production'
+      GH_TOKEN: ${{ github.token }}
+      OPEN_AI_KEY: ${{ secrets.OPEN_AI_KEY }}
+      SMTP_HOST: ${{ secrets.SMTP_HOST }}
+      SMTP_PORT: 587
+      SMTP_USERNAME: ${{ secrets.SMTP_USERNAME  }}
+      SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+      EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+      EMAIL_RECIPIENTS: ${{ secrets.EMAIL_RECIPIENTS }}
+      FROM_NAME: ${{ secrets.FROM_NAME }}
+      PR_PREFIX: "[AUTO AI RECIPE]"
     steps:
-      - name: Install ansible 
-        run: sudo apt install ansible
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Cd to repo
-        run: cd {{ github.workspace }}
-      - run: ansible-playbook deploys/publish-recipe-of-day.yml
+      - name: switch to repo directory
+        run: |
+          cd "${{ github.workspace }}"
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          cache: 'yarn'
+          node-version: '16'
+      - name: Install dependencies
+        run: yarn
+      - name: Download AI Recipe
+        run: yarn ai-recipe-day-download
+      - name: Add, commit and Push changes
+        run: |
+          CURRENT_DATE=$(date +"%d%m%Y%H%M")
+          BRANCH_NAME="new_ai_recipe_$CURRENT_DATE"
+          git config --global user.email "jtn.kathuria@gmail.com"
+          git config --global user.name "The Fearless Cooking"
+          git add content public
+          git checkout -b "$BRANCH_NAME"
+          git commit -m "Added AI Recipe : $CURRENT_DATE"
+          git push -u origin $(git branch --show-current)
+          gh pr create --title "$PR_PREFIX Add with Id: $CURRENT_DATE" --body "Nothing to say here"

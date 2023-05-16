@@ -40,12 +40,12 @@ export class EmailService {
 
   async send(mailArgs: Mail.Options) {
     await this.transporter.sendMail({
-      ...mailArgs,
       to: process.env.EMAIL_RECIPIENTS as string,
       from: {
         name: process.env.FROM_NAME as string,
         address: process.env.EMAIL_SENDER as string,
       },
+      ...mailArgs,
     })
   }
 }

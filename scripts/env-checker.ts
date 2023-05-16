@@ -29,12 +29,24 @@ const isStringInvalid = (str: string | undefined) => {
   return result
 }
 
-export function checkEnvs() {
+interface CheckEnvArgs {
+  mandatory_envs?: Array<string>
+  optional_envs?: Array<string>
+}
+
+export function checkEnvs({
+  mandatory_envs = MANDATORY_ENVS,
+  optional_envs = OPTIONAL_ENVS,
+}: CheckEnvArgs) {
   let envsMissingError = false
 
   logger.info('=====> Mandatory envs \n')
 
-  MANDATORY_ENVS.forEach((envVar) => {
+  const mandatory_envs_local = mandatory_envs
+
+  const optional_envs_local = optional_envs
+
+  mandatory_envs_local.forEach((envVar) => {
     if (!(envVar in process.env) || isStringInvalid(process.env[envVar])) {
       logger.info(`${envVar} : 🔥`)
       envsMissingError = true
@@ -43,10 +55,10 @@ export function checkEnvs() {
     }
   })
 
-  if (OPTIONAL_ENVS.length > 0) {
+  if (optional_envs_local.length > 0) {
     logger.info('=====> Optional envs \n')
 
-    OPTIONAL_ENVS.forEach((envVar) => {
+    optional_envs_local.forEach((envVar) => {
       if (!process.env[envVar]) {
         logger.info(`${envVar} : 🔥`)
       } else {
