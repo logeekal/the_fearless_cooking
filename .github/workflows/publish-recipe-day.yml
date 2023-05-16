@@ -12,6 +12,7 @@ jobs:
   Run_ansible_playbook:
     runs-on: ubuntu-latest
     env:
+      GH_TOKEN: ${{ github.token }}
       OPEN_AI_KEY: ${{ secrets.OPEN_AI_KEY }}
       SMTP_HOST: ${{ secrets.SMTP_HOST }}
       SMTP_PORT: 587
@@ -20,6 +21,7 @@ jobs:
       EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
       EMAIL_RECIPIENTS: ${{ secrets.EMAIL_RECIPIENTS }}
       FROM_NAME: ${{ secrets.FROM_NAME }}
+      PR_PREFIX: "[AUTO AI RECIPE]"
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -35,12 +37,12 @@ jobs:
         run: yarn
       - name: Download AI Recipe
         run: yarn ai-recipe-day-download
-      - name: Push changes
-        uses: golfzaptw/action-commit-push-pr@1.0.2
-        with:
-          BODY_PR: ''
-          COMMIT_MESSAGE: 'New AI recipe'
-          DEFAULT_BRANCHES: 'main'
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          PREFIX_BRANCHES: 'update'
-          TITLE_PR: 'Chore: New AI Recipe of the Day'
+      - name: Add, commit and Push changes
+        run: |
+          CURRENT_DATE=$(date +"%d%m%Y%H%M")
+          BRANCH_NAME="new_ai_recipe_$CURRENT_DATE"
+          git add content public
+          git checkout -b "$BRANCH_NAME"
+          git commit -m "Added AI Recipe : $CURRENT_DATE"
+          git push -u origin $(git branch --show-current)
+          gh pr create --title "$PR_PREFIX Add with Id: $CURRENT_DATE" --body "Nothing to say here"
