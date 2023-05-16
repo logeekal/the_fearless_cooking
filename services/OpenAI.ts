@@ -20,6 +20,7 @@ export class OpenAI {
         ? process.env.OPEN_AI_KEY ?? ''
         : process.env.OPEN_AI_TEST_KEY ?? ''
 
+    console.log(this.API_KEY)
     if (!this.API_KEY || this.API_KEY.length == 0) {
       const msg = `Invalid OpenAI API_KEY: ${this.API_KEY}`
       logger.error(msg)

@@ -21,8 +21,11 @@ jobs:
       EMAIL_RECIPIENTS: ${{ secrets.EMAIL_RECIPIENTS }}
       FROM_NAME: ${{ secrets.FROM_NAME }}
     steps:
-      - name: Install yarn 
-        run: npm install -g yarn
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          cache: 'yarn'
+          node-version: '16'
       - name: Checkout code
         uses: actions/checkout@v3
       - name: switch to repo directory

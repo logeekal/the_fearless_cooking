@@ -78,8 +78,6 @@ checkEnvs({
   ],
 })
 
-console.log({ env: process.env })
-
 downloadAIRecipe()
   .then(() => logger.info('Done!'))
   .catch((err) => logger.error(String(err)))
