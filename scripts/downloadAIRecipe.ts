@@ -69,7 +69,7 @@ checkEnvs({
   mandatory_envs: [
     'OPEN_AI_KEY',
     'SMTP_HOST',
-    'SMT_PORT',
+    'SMTP_PORT',
     'SMTP_USERNAME',
     'SMTP_PASSWORD',
     'EMAIL_SENDER',
