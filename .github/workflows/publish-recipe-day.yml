@@ -41,6 +41,8 @@ jobs:
         run: |
           CURRENT_DATE=$(date +"%d%m%Y%H%M")
           BRANCH_NAME="new_ai_recipe_$CURRENT_DATE"
+          git config --global user.email "jtn.kathuria@gmail.com"
+          git config --global user.name "The Fearless Cooking"
           git add content public
           git checkout -b "$BRANCH_NAME"
           git commit -m "Added AI Recipe : $CURRENT_DATE"
