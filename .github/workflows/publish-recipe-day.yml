@@ -12,6 +12,7 @@ jobs:
   Run_ansible_playbook:
     runs-on: ubuntu-latest
     env:
+      NODE_ENV: 'production'
       GH_TOKEN: ${{ github.token }}
       OPEN_AI_KEY: ${{ secrets.OPEN_AI_KEY }}
       SMTP_HOST: ${{ secrets.SMTP_HOST }}
