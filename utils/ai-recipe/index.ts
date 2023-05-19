@@ -55,8 +55,8 @@ export const convertAIRecipesToCompleteRecipes = (): ICompleteRecipeObj => {
       noOfServings: recipeJson.servings,
       recipeSubtitle: '',
       recipeDescription: recipeJson.excerpt ?? '',
-      cookTime: recipeJson.cookTime,
-      prepTime: recipeJson.prepTime,
+      cookTime: recipeJson.cookTime || 'PT0M',
+      prepTime: recipeJson.prepTime || 'PT0M',
       totalDuration: recipeJson.totalTime,
       calculatedDurations: {
         cookTimeInDurations: parse(recipeJson.cookTime),
