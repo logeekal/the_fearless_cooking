@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { URL } from 'url'
 
+import { SiteMeta } from '../utils/config'
 import { logger } from '../utils/logger'
 
 type Sitemap = {
@@ -15,7 +16,7 @@ const defaultConfig: Sitemap = {
   exclude: ['_next', 'fonts', 'images', '404.html'],
   nextExportDir: ['out'],
   format: 'txt',
-  baseUrl: 'http://thefearlesscooking.com',
+  baseUrl: SiteMeta.canonicalUrl,
 }
 
 export const collectSSGURLs = (config: Sitemap) => {
