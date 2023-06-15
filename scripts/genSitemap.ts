@@ -15,7 +15,7 @@ const defaultConfig: Sitemap = {
   exclude: ['_next', 'fonts', 'images', '404.html'],
   nextExportDir: ['out'],
   format: 'txt',
-  baseUrl: 'http://localhost:3000',
+  baseUrl: 'http://thefearlesscooking.com',
 }
 
 export const collectSSGURLs = (config: Sitemap) => {
