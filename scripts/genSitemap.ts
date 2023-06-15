@@ -61,7 +61,9 @@ const walkDir = function (dir: string, ignore_dir: string[], level = 0) {
 
 export const combineConfig = (config: Sitemap): Sitemap => {
   if (!('base_url' in config)) {
-    logger.warn('Missing base_url in config. Using localhost with port: 3000')
+    logger.warn(
+      `Missing base_url in config. Using baseUrl from default config : ${defaultConfig.baseUrl}`
+    )
   }
   if (!('outDir' in config)) {
     logger.warn('Missing outDir in config. using public as default')
