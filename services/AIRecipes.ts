@@ -8,6 +8,7 @@ import {
   AIRecipeWithImage,
   ImageB64Format,
 } from '../types/open_ai'
+import { validateAIRecipe } from '../utils/ai-recipe'
 import { dishes } from '../utils/all_recipes'
 import { logger } from '../utils/logger'
 import { EmailService } from './email/EmailService'
@@ -34,22 +35,35 @@ const imageSizes = {
 export class AIRecipes {
   OUT_DIR = path.join(__dirname, '..', 'public', 'images', 'ai-recipes')
 
-  constructor(private openAIService: OpenAI) {}
+  constructor(
+    private openAIService: OpenAI,
+    private emailService: EmailService
+  ) {}
 
   singleRecipe = async (
-    recipeName: string,
+    dishName: string,
     desiredRecipeId?: number,
     imageOutDir?: string
   ) => {
     // eslint-disable-next-line
-    const prompt = `Please provide vegan version of ${recipeName} in RFC8529 JSON. Please include time in ISO 8601 duration format. All keys should be camel case and should be in below format. \n {\"recipeName\":\"...\",\"excerpt\":\"...\",\"servings\":\"2\",\"prepTime\":\"PT10M\",\"cookTime\":\"PT10M\",\"totalTime\":\"PT10M\",\"ingredients\":[{\"name\":\"...\",\"quantity\":\"1 cup\", \"notes\":\"...\"}],\"instructions\":[\"...\"],\"nutrition\":{\"calories\":\"...\",\"fat\":\"\",\"sugar\":\"\",\"protein\":\"\"}}`
+    const prompt = `Provide detailed recipe of ${dishName} in valid JSON format provided. You should divide recipe ingredients and instructions in logical groups keeping the order same. All units must be metric with imperial in bracket. Here is JSON format:  {\n  \"recipeName\": \"...\",\n  \"excerpt\": \"...\",\n  \"servings\": \"2\",\n  \"prepTime\": \"PT10M\",\n  \"cookTime\": \"PT10M\",\n  \"totalTime\": \"PT10M\",\n  \"ingredients\": [\n    {\n      \"name\": \"ingredient section name\",\n      \"ingredients\": [\n        {\n          \"name\": \"...\",\n          \"quantity\": \"1 cup\",\n          \"notes\": \"...\"\n        }\n      ]\n    }\n  ],\n  \"instructions\": [\n    {\n      \"name\": \"sub-recipe\",\n      \"instructions\": [\n        \"...\"\n      ]\n    }\n  ],\n  \"nutrition\": {\n    \"calories\": \"...\",\n    \"fat\": \"\",\n    \"sugar\": \"\",\n    \"protein\": \"\"\n  }\n}`
 
     const recipeResponse = await this.openAIService.completion(prompt)
 
-    let recipeObject
-
+    let recipeObject: AIRecipeObject
     try {
       recipeObject = JSON.parse(recipeResponse) as AIRecipeObject
+      const validatorResult = validateAIRecipe(recipeObject)
+      if (!validatorResult.isValid && validatorResult.error) {
+        const msg = 'Invalid JSON Schema - Errors in Body'
+        if (process.env.NODE_ENV !== 'development')
+          await this.emailService.send({
+            subject: msg,
+            text: validatorResult.error,
+          })
+        logger.error(msg)
+        logger.error(validatorResult.error)
+      }
     } catch (jsonError) {
       logger.error(String(jsonError))
       logger.error(recipeResponse)
@@ -76,7 +90,7 @@ export class AIRecipes {
     }
 
     const recipeImages = await this.getRecipeImages(
-      recipeName,
+      dishName,
       recipeId,
       imageOutDir
     )
@@ -97,7 +111,7 @@ export class AIRecipes {
     logger.info(`Getting images for recipe ${recipeName}`)
 
     // eslint-disable-next-line
-    const prompt =`${recipeName} in nature on a white plate, ultra realistic, close - up, appetite food, highly detailed, smooth, sharp focus, professional detailed photo.`
+    const prompt = `${recipeName} in nature on a white plate, ultra realistic, close - up, appetite food, highly detailed, smooth, sharp focus, professional detailed photo.`
 
     const base64ImageResponse = await this.openAIService.image(prompt)
 

@@ -4,6 +4,7 @@ import * as path from 'path'
 
 import { safeName } from '../common'
 import { AIRecipes } from '../services/AIRecipes'
+import { EmailService } from '../services/email/EmailService'
 import { OpenAI } from '../services/OpenAI'
 import { logger } from '../utils/logger'
 import { checkEnvs } from './env-checker'
@@ -44,7 +45,8 @@ async function downloadAIRecipe(outDirectory?: string) {
   }
 
   const openAIService = new OpenAI()
-  const aiRecipeService = new AIRecipes(openAIService)
+  const emailService = new EmailService()
+  const aiRecipeService = new AIRecipes(openAIService, emailService)
 
   const randomRecipeName = aiRecipeService.getRandomVeganRecipeNameLocal()
   if (!randomRecipeName) {

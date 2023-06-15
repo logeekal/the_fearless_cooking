@@ -30,6 +30,16 @@ export type GPT35ModelRequest = {
   temperature?: number
 }
 
+type AIRecipeInstructions = {
+  name: string
+  instructions: Array<string>
+}
+
+type AIRecipeIngredients = {
+  name: string
+  ingredients: Array<RecipeIngredient>
+}
+
 export type AIRecipeObject = {
   excerpt: string
   recipeName: string
@@ -37,8 +47,8 @@ export type AIRecipeObject = {
   prepTime: string
   cookTime: string
   totalTime: string
-  ingredients: Array<RecipeIngredient>
-  instructions: Array<string>
+  ingredients: Array<AIRecipeIngredients>
+  instructions: Array<AIRecipeInstructions>
   nutrition?: {
     calories: string
     fat: string

@@ -1,11 +1,30 @@
 import fs from 'fs'
+import { Validator } from 'jsonschema'
 import path from 'path'
 import { parse } from 'tinyduration'
 
 import { safeName } from '../../common'
-import { AIRecipe } from '../../types/open_ai'
+import { AIRecipe, RecipeIngredient } from '../../types/open_ai'
 import genRecipeSchema from '../schema/recipe'
 import { ICompleteRecipe, ICompleteRecipeObj } from '../types'
+import { aiRecipeSchema } from './ai_recipe_schema'
+
+export const validateAIRecipe = (
+  jsonToValidate: unknown
+): {
+  isValid: boolean
+  error?: string
+} => {
+  const validator = new Validator()
+  const result = validator.validate(jsonToValidate, aiRecipeSchema)
+
+  return {
+    isValid: result.valid,
+    error: result.errors
+      ? JSON.stringify(result.errors, undefined, 2)
+      : undefined,
+  }
+}
 
 export const convertAIRecipesToCompleteRecipes = (): ICompleteRecipeObj => {
   const aiRecipes = genAIRecipeObjects()
@@ -63,30 +82,61 @@ export const convertAIRecipesToCompleteRecipes = (): ICompleteRecipeObj => {
         prepTimeInDurations: parse(recipeJson.prepTime || 'PT0M'),
         totalDuration: parse(recipeJson.totalTime || 'PT0M'),
       },
-      recipeIngredients: [
-        {
-          sectionTitle: '',
-          ingredients: recipeJson.ingredients.map((ing) => ({
-            ingredient: ing.name,
-            quantity: ing.quantity ?? '',
-            notes: ing.notes ?? '',
-            unit: ing.unit ?? '',
-          })),
-        },
-      ],
-      recipeInstructions: [
-        {
-          sectionTitle: '',
-          instruction: recipeJson.instructions.map((inst) => ({
-            instruction: inst,
-            image: '',
-            image_preview: '',
-            videoURL: '',
-            instructionNotes: '',
-            instructionTitle: '',
-          })),
-        },
-      ],
+      recipeIngredients: !('quantity' in recipeJson.ingredients[0])
+        ? // new AI Recipe format
+          recipeJson.ingredients.map((ing) => {
+            return {
+              sectionTitle: ing.name,
+              ingredients: ing.ingredients.map((ing) => ({
+                ingredient: ing.name,
+                quantity: ing.quantity ?? '',
+                notes: ing.notes ?? '',
+                unit: ing.unit ?? '',
+              })),
+            }
+          })
+        : // old recipe format
+          [
+            {
+              sectionTitle: '',
+              ingredients: recipeJson.ingredients.map(
+                // @ts-expect-error "This is the old recipe format
+                // for which type does not exist"
+                (ing: RecipeIngredient) => ({
+                  ingredient: ing.name,
+                  notes: ing.notes ?? '',
+                  unit: ing.unit ?? '',
+                  quantity: ing.quantity ?? '',
+                })
+              ),
+            },
+          ],
+      recipeInstructions:
+        typeof recipeJson.instructions[0] !== 'string'
+          ? recipeJson.instructions.map((ins) => ({
+              sectionTitle: ins.name,
+              instruction: ins.instructions.map((inst) => ({
+                instruction: inst,
+                image: '',
+                image_preview: '',
+                videoURL: '',
+                instructionNotes: '',
+                instructionTitle: '',
+              })),
+            }))
+          : [
+              {
+                sectionTitle: '',
+                instruction: recipeJson.instructions.map((inst) => ({
+                  instruction: inst,
+                  image: '',
+                  image_preview: '',
+                  videoURL: '',
+                  instructionNotes: '',
+                  instructionTitle: '',
+                })),
+              },
+            ],
     } as ICompleteRecipe['content']
 
     const recipeSchema = genRecipeSchema(
