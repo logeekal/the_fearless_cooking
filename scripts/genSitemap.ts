@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { URL } from 'url'
 
+import { SiteMeta } from '../utils/config'
 import { logger } from '../utils/logger'
 
 type Sitemap = {
@@ -15,7 +16,7 @@ const defaultConfig: Sitemap = {
   exclude: ['_next', 'fonts', 'images', '404.html'],
   nextExportDir: ['out'],
   format: 'txt',
-  baseUrl: 'http://thefearlesscooking.com',
+  baseUrl: SiteMeta.canonicalUrl,
 }
 
 export const collectSSGURLs = (config: Sitemap) => {
@@ -60,7 +61,9 @@ const walkDir = function (dir: string, ignore_dir: string[], level = 0) {
 
 export const combineConfig = (config: Sitemap): Sitemap => {
   if (!('base_url' in config)) {
-    logger.warn('Missing base_url in config. Using localhost with port: 3000')
+    logger.warn(
+      `Missing base_url in config. Using baseUrl from default config : ${defaultConfig.baseUrl}`
+    )
   }
   if (!('outDir' in config)) {
     logger.warn('Missing outDir in config. using public as default')
