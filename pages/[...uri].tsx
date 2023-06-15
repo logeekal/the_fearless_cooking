@@ -322,8 +322,6 @@ export const getStaticProps: GetStaticProps<
         },
       },
     }
-  } else {
-    logger.error(`Recipe URI : ${uri} not found`)
   }
 
   if (uri in allAIRecipeByURI) {
