@@ -30,6 +30,6 @@ jobs:
       - name: "Comment when PR is marked as automerge"
         uses: peter-evans/create-or-update-comment@v3
         with:
-          issue-number: ${{ github.events.number }}
+          issue-number: ${{ github.event.pull_request.number }}
           body: |
             Marking this PR as Automerge. 🚀
