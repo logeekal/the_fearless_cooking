@@ -3,6 +3,14 @@ on:
   pull_request_target:
     types:
       - labeled
+  workflow_dispatch:
+      inputs:
+        pull-request:
+          description: Pull Request Number
+          required: true
+        review:
+          description: Review ID
+          required: false
 
 jobs:
   automerge:
@@ -10,7 +18,7 @@ jobs:
     steps:
       - uses: reitermarkus/automerge@v2
         with:
-          token: ${{ secrets.MY_GITHUB_TOKEN }}
+          token: ${{ github.token }}
           merge-method: squash
           squash-title: squash-commit-title
           squash-commit-title: ${pull_request.title}
@@ -18,10 +26,10 @@ jobs:
           required-labels: automerge
           pull-request: ${{ github.event.inputs.pull-request }}
           review: ${{ github.event.inputs.review }}
-          dry-run: true
+          dry-run: false
       - name: "Comment when PR is marked as automerge"
         uses: peter-evans/create-or-update-comment@v3
         with:
-          issue-number: ${{ github.events.issue.number }}
+          issue-number: ${{ github.event.inputs.pull-request }}
           body: |
             Marking this PR as Automerge. 🚀
