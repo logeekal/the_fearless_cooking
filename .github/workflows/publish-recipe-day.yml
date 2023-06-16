@@ -48,4 +48,4 @@ jobs:
           git checkout -b "$BRANCH_NAME"
           git commit -m "Added AI Recipe : $CURRENT_DATE"
           git push -u origin $(git branch --show-current)
-          gh pr create --title "$PR_PREFIX Add with Id: $CURRENT_DATE" --body "Nothing to say here"
+          gh pr create --title "$PR_PREFIX Add with Id: $CURRENT_DATE" --body "Nothing to say here" --label "automerge"

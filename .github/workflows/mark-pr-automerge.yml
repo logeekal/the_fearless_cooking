@@ -11,6 +11,7 @@ on:
         review:
           description: Review ID
           required: false
+
 jobs:
   automerge:
     runs-on: ubuntu-latest
