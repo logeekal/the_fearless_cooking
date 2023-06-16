@@ -20,7 +20,7 @@ jobs:
           review: ${{ github.event.inputs.review }}
           dry-run: true
       - name: "Comment when PR is marked as automerge"
-        uses: peter-evans/create-or-update-comment
+        uses: peter-evans/create-or-update-comment@v3
         with:
           issue-number: ${{ github.events.issue.number }}
           body: |
