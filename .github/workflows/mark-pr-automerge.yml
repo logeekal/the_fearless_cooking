@@ -2,7 +2,9 @@ name: Mark PR as automerge
 on:
   pull_request_target:
     types:
+      - labeled
       - opened
+      - reopened
 
   workflow_dispatch:
       inputs:
@@ -28,9 +30,10 @@ jobs:
           pull-request: ${{ github.event.inputs.pull-request }}
           review: ${{ github.event.inputs.review }}
           dry-run: false
+
       - name: "Comment when PR is marked as automerge"
         uses: peter-evans/create-or-update-comment@v3
         with:
-          issue-number: ${{ github.event.inputs.pull-request }}
+          issue-number: ${{ github.event.issue.number || github.event.inputs.pull-request }}
           body: |
             Marking this PR as Automerge. 🚀
