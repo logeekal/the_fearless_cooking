@@ -2,7 +2,8 @@ name: Mark PR as automerge
 on:
   pull_request_target:
     types:
-      - labeled
+      - opened
+
   workflow_dispatch:
       inputs:
         pull-request:
