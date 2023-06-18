@@ -1,11 +1,12 @@
 name: Mark PR as automerge
 on:
   pull_request:
+    branches:
+      - main
     types:
-      - labeled
       - opened
+      - labeled
       - reopened
-
   workflow_dispatch:
       inputs:
         pull-request:
