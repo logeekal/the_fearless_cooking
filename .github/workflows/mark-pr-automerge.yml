@@ -1,11 +1,11 @@
 name: Mark PR as automerge
 on:
-  pull_request:
+  pull_request_target:
+    branches: [main]
     types:
-      - labeled
       - opened
+      - labeled
       - reopened
-
   workflow_dispatch:
       inputs:
         pull-request:
@@ -14,7 +14,6 @@ on:
         review:
           description: Review ID
           required: false
-
 jobs:
   automerge:
     runs-on: ubuntu-latest

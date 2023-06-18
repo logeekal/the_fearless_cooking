@@ -42,6 +42,7 @@ jobs:
           echo "RECIPE_OUTPUT<<EOFMARKER" >> ${GITHUB_ENV}
           echo "${RECIPE_OUTPUT}" >> ${GITHUB_ENV}
           echo "EOFMARKER" >> ${GITHUB_ENV}
+          echo "${RECIPE_OUTPUT}"
       - name: Add, commit and Push changes
         run: |
           CURRENT_DATE=$(date +"%d%m%Y%H%M")
