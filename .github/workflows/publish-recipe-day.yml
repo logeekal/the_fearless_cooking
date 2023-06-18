@@ -37,7 +37,11 @@ jobs:
       - name: Install dependencies
         run: yarn
       - name: Download AI Recipe
-        run: yarn ai-recipe-day-download
+        run: |
+          export RECIPE_OUTPUT=$(yarn ai-recipe-day-download)
+          echo "RECIPE_OUTPUT<<EOFMARKER" >> ${GITHUB_ENV}
+          echo "${RECIPE_OUTPUT}" >> ${GITHUB_ENV}
+          echo "EOFMARKER" >> ${GITHUB_ENV}
       - name: Add, commit and Push changes
         run: |
           CURRENT_DATE=$(date +"%d%m%Y%H%M")
@@ -48,4 +52,4 @@ jobs:
           git checkout -b "$BRANCH_NAME"
           git commit -m "Added AI Recipe : $CURRENT_DATE"
           git push -u origin $(git branch --show-current)
-          gh pr create --title "$PR_PREFIX Add with Id: $CURRENT_DATE" --body "Nothing to say here" --label "automerge"
+          gh pr create --title "$PR_PREFIX Add with Id: $CURRENT_DATE" --body "${{ env.RECIPE_OUTPUT }}" --label "automerge"
