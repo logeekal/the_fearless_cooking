@@ -1,6 +1,7 @@
 name: Mark PR as automerge
 on:
   pull_request_target:
+    branches: [main]
     types:
       - opened
       - labeled
