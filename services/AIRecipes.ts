@@ -63,6 +63,7 @@ export class AIRecipes {
           })
         logger.error(msg)
         logger.error(validatorResult.error)
+        throw Error('Recipe does not confirm to the schema')
       }
     } catch (jsonError) {
       logger.error(String(jsonError))
