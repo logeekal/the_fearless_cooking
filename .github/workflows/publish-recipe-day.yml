@@ -37,7 +37,7 @@ jobs:
       - name: Install dependencies
         run: yarn
       - name: Download AI Recipe
-        run: echo "OUTPUT=$(yarn ai-recipe-day-download)" >> $GITHUB_ENV
+        run: echo "OUTPUT=$(yarn ai-recipe-day-download)" >> "$GITHUB_ENV"
       - name: Add, commit and Push changes
         run: |
           CURRENT_DATE=$(date +"%d%m%Y%H%M")
