@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NODE_ENV: 'production'
-      GH_TOKEN: ${{ github.token }}
+      GITHUB_TOKEN: ${{ secrets.GH_ACTION_TOKEN }}
       OPEN_AI_KEY: ${{ secrets.OPEN_AI_KEY }}
       SMTP_HOST: ${{ secrets.SMTP_HOST }}
       SMTP_PORT: 587
@@ -55,20 +55,20 @@ jobs:
           git push -u origin $(git branch --show-current)
           gh pr create --title "$PR_PREFIX Add with Id: $CURRENT_DATE" --body "${{ env.RECIPE_OUTPUT }}" --label "automerge"
           echo "PR_NUMBER=$(gh pr view --json number --jq '.number')" >> "$GITHUB_ENV"
-      - uses: reitermarkus/automerge@v2
-        with:
-          token: ${{ github.token }}
-          merge-method: squash
-          squash-title: squash-commit-title
-          squash-commit-title: ${pull_request.title}
-          do-not-merge-labels: never-merge
-          required-labels: automerge
-          pull-request: ${{ env.PR_NUMBER }}
-          review: ${{ github.event.inputs.review }}
-          dry-run: false
-      - name: "Comment when PR is marked as automerge"
-        uses: peter-evans/create-or-update-comment@v3
-        with:
-          issue-number: ${{ env.PR_NUMBER }}
-          body: |
-            Marking this PR as Automerge. 🚀
+      # - uses: reitermarkus/automerge@v2
+      #   with:
+      #     token: ${{ github.token }}
+      #     merge-method: squash
+      #     squash-title: squash-commit-title
+      #     squash-commit-title: ${pull_request.title}
+      #     do-not-merge-labels: never-merge
+      #     required-labels: automerge
+      #     pull-request: ${{ env.PR_NUMBER }}
+      #     review: ${{ github.event.inputs.review }}
+      #     dry-run: false
+      # - name: "Comment when PR is marked as automerge"
+      #   uses: peter-evans/create-or-update-comment@v3
+      #   with:
+      #     issue-number: ${{ env.PR_NUMBER }}
+      #     body: |
+      #       Marking this PR as Automerge. 🚀
