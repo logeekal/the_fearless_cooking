@@ -154,7 +154,7 @@ export default class RecipeService {
       return cuisinesFromCache
     }
 
-    devLogger.info('Nothing found in Cache: Fetching...')
+    devLogger.info('getAllCuisines : Nothing found in Cache: Fetching...')
 
     try {
       const response: AxiosResponse<
@@ -199,7 +199,7 @@ export default class RecipeService {
     if (coursesFromCache) {
       return coursesFromCache
     }
-    devLogger.info('Nothing found in Cache: Fetching...')
+    devLogger.info('getAllCourses : Nothing found in Cache: Fetching...')
 
     const response: AxiosResponse<
       IWPGraphQL<{

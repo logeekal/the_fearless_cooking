@@ -4,6 +4,7 @@ import path from 'path'
 import { parse } from 'tinyduration'
 
 import { safeName } from '../../common'
+import DiskCacheService from '../../services/diskCache'
 import { AIRecipe, RecipeIngredient } from '../../types/open_ai'
 import genRecipeSchema from '../schema/recipe'
 import { ICompleteRecipe, ICompleteRecipeObj } from '../types'
@@ -27,6 +28,19 @@ export const validateAIRecipe = (
 }
 
 export const convertAIRecipesToCompleteRecipes = (): ICompleteRecipeObj => {
+  const ENTITY = 'AI_RECIPES_COMPLETE'
+
+  const cacheService = new DiskCacheService()
+
+  const resultStringFromCache = cacheService.get(ENTITY)?.toString()
+
+  if (resultStringFromCache) {
+    const completeRecipeJSON = JSON.parse(
+      resultStringFromCache
+    ) as unknown as ICompleteRecipeObj
+    return completeRecipeJSON
+  }
+
   const aiRecipes = genAIRecipeObjects()
 
   const result: ICompleteRecipeObj = {}
@@ -154,6 +168,8 @@ export const convertAIRecipesToCompleteRecipes = (): ICompleteRecipeObj => {
       YTId: null,
     }
   }
+
+  cacheService.set(ENTITY, JSON.stringify(result))
 
   return result
 }
