@@ -92,7 +92,7 @@ export default CatchAll
 export const getStaticPaths: GetStaticPaths<{
   uri: string[]
 }> = async () => {
-  logger.info('StaticPaths :  starting')
+  logger.debug('StaticPaths :  starting')
   const diskCacheService = new DiskCacheService()
 
   const recipeService = new RecipeService(diskCacheService)
@@ -141,7 +141,7 @@ export const getStaticProps: GetStaticProps<
   },
   { uri: Array<string> }
 > = async ({ params }) => {
-  logger.info('StaticProps : starting')
+  logger.debug('StaticProps : starting')
   const diskCacheService = new DiskCacheService()
 
   const recipeService = new RecipeService(diskCacheService)
@@ -170,7 +170,7 @@ export const getStaticProps: GetStaticProps<
     // set URI without page number
     uri = `/${params.uri.slice(0, params.uri.length - 2).join('/')}/`
   }
-  logger.info(`StaticProps : Generating  ${uri} and page no. : ${pageNo}`)
+  logger.debug(`StaticProps : Generating  ${uri} and page no. : ${pageNo}`)
   // get courses
   const coursesParent = await recipeService.getAllCourses()
   const coursesObjByURI = arrToObj<RecipeCourse>(coursesParent, 'uri')
@@ -189,8 +189,8 @@ export const getStaticProps: GetStaticProps<
       ? startIdx + PAGE_LENGTH
       : (startIdx + PAGE_LENGTH) * pageNo
 
-    logger.info(`Generating ${uri} and pageNo. : ${pageNo ?? 0} `)
-    logger.info(`startIdx : ${startIdx} & endIdx: ${endIdx}`)
+    logger.debug(`Generating ${uri} and pageNo. : ${pageNo ?? 0} `)
+    logger.debug(`startIdx : ${startIdx} & endIdx: ${endIdx}`)
 
     const courseSummary = await recipeService.getCourseSummaryById(
       courseObj.databaseId
@@ -256,8 +256,8 @@ export const getStaticProps: GetStaticProps<
       ? startIdx + PAGE_LENGTH
       : (startIdx + PAGE_LENGTH) * pageNo
 
-    logger.info(`Generating ${uri} and pageNo. : ${pageNo ?? 0} `)
-    logger.info(`startIdx : ${startIdx} & endIdx: ${endIdx}`)
+    logger.debug(`Generating ${uri} and pageNo. : ${pageNo ?? 0} `)
+    logger.debug(`startIdx : ${startIdx} & endIdx: ${endIdx}`)
 
     const cuisineObj = cuisinesObjByURI[uri]
     const cuisineSummary = await recipeService.getCuisineSummaryById(
@@ -371,7 +371,7 @@ export const getStaticProps: GetStaticProps<
   //
 
   if (uri in allPostsObjByURI) {
-    logger.info(`Post Found ${uri}`)
+    logger.debug(`Post Found ${uri}`)
     const selectedPost = allPostsObjByURI[uri]
     const startIdx = 0
     const endIdx = isNaN(pageNo)
