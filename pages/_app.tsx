@@ -56,14 +56,10 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout<unknown>) {
     return CompWithPlausible
   }, [router.pathname, router.isReady, router.locale])
 
-  if ('layoutProps' in pageProps) {
-    /* eslint-disable-next-line */
+  /* eslint-disable-next-line */
     const { layoutProps, ...rest } = pageProps
 
-    return getLayout(<FinalComp {...rest} />, layoutProps)
-  }
-
-  return getLayout(<FinalComp {...pageProps} />, {} as LayoutProps)
+  return getLayout(<FinalComp {...rest} />, layoutProps ?? {})
 }
 
 const withPlausible = (WrappedComponent: ComponentType) => {
