@@ -7,6 +7,7 @@ export const sideBar = style({
   '@media': {
     [breakPoints.large]: {
       minWidth: '350px',
+      maxWidth: '400px',
     },
   },
 })

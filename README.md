@@ -1,3 +1,5 @@
+[![AI recipe of the day](https://github.com/logeekal/the_fearless_cooking/actions/workflows/publish-recipe-day.yml/badge.svg)](https://github.com/logeekal/the_fearless_cooking/actions/workflows/publish-recipe-day.yml)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started

@@ -1,3 +1,5 @@
+import { Duration } from 'tinyduration'
+
 /* eslint-disable */
 export const RECIPE_SAMPLE_CONTENT = {
   success: true,
@@ -25,15 +27,19 @@ export const RECIPE_SAMPLE_CONTENT = {
           prepTimeInDurations: {
             hours: 2,
             minutes: 2,
-          },
+            seconds: 0,
+            years: 0,
+            months: 0,
+            days:0,
+          } as Duration,
           cookTimeInDurations: {
             hours: 2,
             minutes: 2,
-          },
+          } as Duration,
           totalDuration: {
             hours: 2,
             minutes: 2,
-          },
+          } as Duration,
         },
         bestSeason: 'summer',
         recipeCalories: '240 kcal',

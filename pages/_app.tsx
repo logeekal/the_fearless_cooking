@@ -32,7 +32,17 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout<unknown>) {
 
   const router = useRouter()
 
-  const CompWithPlausible = withPlausible(Component)
+  /*
+   *
+   * Nextjs re-renders the complete app when there is
+   * a change in query string of the URL. Below
+   * memoization makes sure that App is rendered
+   * only when there is relevant state change of router
+   * */
+  const CompWithPlausible = useMemo(
+    () => withPlausible(Component),
+    [router.pathname, router.isReady, router.locale, Component]
+  )
 
   const FinalComp = useMemo(() => {
     /*
@@ -40,7 +50,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout<unknown>) {
      * Nextjs re-renders the complete app when there is
      * a change in query string of the URL. Below
      * memoization makes sure that App is rendered
-     * only when there is relavant state change of router
+     * only when there is relevant state change of router
      * */
 
     return CompWithPlausible

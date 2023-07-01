@@ -1,0 +1,129 @@
+{
+  "id": 150620231653,
+  "recipeName": "Vegan Meatball Sub",
+  "excerpt": "A delicious and filling vegan take on the classic meatball sub, with flavorful vegan meatballs and a tasty tomato sauce.",
+  "servings": "2",
+  "prepTime": "PT15M",
+  "cookTime": "PT30M",
+  "totalTime": "PT45M",
+  "ingredients": [
+    {
+      "name": "Vegan Meatballs",
+      "ingredients": [
+        {
+          "name": "Vital Wheat Gluten",
+          "quantity": "1 cup (120 g)",
+          "notes": ""
+        },
+        {
+          "name": "Chickpea Flour",
+          "quantity": "1/4 cup (30 g)",
+          "notes": ""
+        },
+        {
+          "name": "Nutritional Yeast",
+          "quantity": "1/4 cup (20 g)",
+          "notes": ""
+        },
+        {
+          "name": "Garlic Powder",
+          "quantity": "1 tsp (5 g)",
+          "notes": ""
+        },
+        {
+          "name": "Onion Powder",
+          "quantity": "1 tsp (5 g)",
+          "notes": ""
+        },
+        {
+          "name": "Fennel Seeds",
+          "quantity": "1 tsp (5 g)",
+          "notes": ""
+        },
+        {
+          "name": "Smoked Paprika",
+          "quantity": "1 tsp (5 g)",
+          "notes": ""
+        },
+        {
+          "name": "Liquid Smoke",
+          "quantity": "1 tsp (5 g)",
+          "notes": ""
+        },
+        {
+          "name": "Warm Water",
+          "quantity": "3/4 cup (177 mL)",
+          "notes": ""
+        },
+        {
+          "name": "Soy Sauce",
+          "quantity": "2 tbsp (30 mL)",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "name": "Sub Ingredients",
+      "ingredients": [
+        {
+          "name": "8-inch Baguette",
+          "quantity": "2",
+          "notes": ""
+        },
+        {
+          "name": "Tomato Sauce",
+          "quantity": "1 cup (240 mL)",
+          "notes": ""
+        },
+        {
+          "name": "Vegan Cheese",
+          "quantity": "1/2 cup (56 g)",
+          "notes": ""
+        },
+        {
+          "name": "Fresh Basil",
+          "quantity": "1/4 cup (15 g)",
+          "notes": ""
+        }
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "name": "Vegan Meatballs",
+      "instructions": [
+        "Preheat your oven to 375°F (190°C).",
+        "In a large bowl, mix together the vital wheat gluten, chickpea flour, nutritional yeast, garlic powder, onion powder, fennel seeds, smoked paprika, and liquid smoke.",
+        "Add the warm water and soy sauce, and stir until well combined.",
+        "Knead the dough for 2-3 minutes, until it becomes tighter and more elastic.",
+        "Roll the dough into 1-inch (2.5 cm) balls and place them onto a lined baking sheet.",
+        "Bake for 15-20 minutes, until the meatballs are firm and lightly browned."
+      ]
+    },
+    {
+      "name": "Sub Assembly",
+      "instructions": [
+        "Preheat your oven to 350°F (175°C).",
+        "Slice your baguette in half, lengthwise.",
+        "Warm tomato sauce in a small saucepan over medium heat.",
+        "Place vegan meatballs into the saucepan and coat well in tomato sauce then remove meatballs.",
+        "Place the bottom half of the baguette onto a baking sheet, then top with tomato sauce and vegan cheese.",
+        "Place meatballs onto the bed of sauce and cheese then top with more cheese, if desired. ",
+        "Place the top half of the baguette onto the sub then bake in the oven for 5-7 minutes, or until the cheese is melted and bubbly.",
+        "Remove from the oven and let the sub cool for a few minutes before topping it with fresh basil. ",
+        "Serve warm."
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "565",
+    "fat": "16 g",
+    "sugar": "12 g",
+    "protein": "37 g"
+  },
+  "image": {
+    "large": "/images/ai-recipes/150620231653_large.jpg",
+    "medium": "/images/ai-recipes/150620231653_medium.jpg",
+    "small": "/images/ai-recipes/150620231653_small.jpg"
+  }
+}

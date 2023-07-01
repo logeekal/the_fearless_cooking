@@ -15,6 +15,7 @@ export interface ICompleteRecipeObj {
   [k: string]: {
     post: Recipe
     content: IRecipeContent['data'][number]['recipe_metas'] | null
+    recipeSchema?: string | null
     faqs: IFAQRestContent[]
     YTId: string | null | undefined
   }

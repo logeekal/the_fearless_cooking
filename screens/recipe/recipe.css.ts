@@ -39,3 +39,10 @@ export const featuredImageContainer = style({
   paddingBottom: '56.25%', // 9/16 of width
   backgroundColor: vars.colors.greenLight,
 })
+
+export const featuredImageSquareContainer = style({
+  position: 'relative',
+  width: '100%',
+  paddingBottom: '100%', // 9/16 of width
+  backgroundColor: vars.colors.greenLight,
+})

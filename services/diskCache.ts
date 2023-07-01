@@ -16,6 +16,7 @@ export default class DiskCacheService implements ICacheService {
   }
 
   set(name: string, value: string): void {
+    logger.debug(`Setting Cache : ${name}`)
     const fileHandler = path.join(this.cacheDir, name)
     if (!fs.existsSync(fileHandler)) {
       logger.trace(`Setting cache for ${name}`)

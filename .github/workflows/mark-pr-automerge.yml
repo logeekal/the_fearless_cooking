@@ -1,0 +1,38 @@
+name: Mark PR as automerge
+on:
+  pull_request_target:
+    branches: [main]
+    types:
+      - opened
+      - labeled
+      - reopened
+  workflow_dispatch:
+      inputs:
+        pull-request:
+          description: Pull Request Number
+          required: true
+        review:
+          description: Review ID
+          required: false
+jobs:
+  automerge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: reitermarkus/automerge@v2
+        with:
+          token: ${{ github.token }}
+          merge-method: squash
+          squash-title: squash-commit-title
+          squash-commit-title: ${pull_request.title}
+          do-not-merge-labels: never-merge
+          required-labels: automerge
+          pull-request: ${{ github.event.inputs.pull-request }}
+          review: ${{ github.event.inputs.review }}
+          dry-run: false
+
+      - name: "Comment when PR is marked as automerge"
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          issue-number: ${{ github.event.issue.number || github.event.inputs.pull-request }}
+          body: |
+            Marking this PR as Automerge. 🚀

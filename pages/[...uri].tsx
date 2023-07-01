@@ -14,6 +14,7 @@ import {
   RecipeCuisine,
 } from '../types/wp-graphql.types'
 import { arrToObj } from '../utils'
+import { convertAIRecipesToCompleteRecipes } from '../utils/ai-recipe'
 import { PAGE_LENGTH } from '../utils/config'
 import { logger } from '../utils/logger'
 import { genCompleteRecipeObject } from '../utils/recipe'
@@ -25,7 +26,7 @@ import { NextPageWithLayout } from './_app'
 import { POST_PAGE_LENGTH } from './blog/page/[page]'
 
 type CommonProps = LocalPageInfo & {
-  pageType: 'COURSE' | 'CUISINE' | 'RECIPE' | 'POST'
+  pageType: 'COURSE' | 'CUISINE' | 'RECIPE' | 'AIRECIPE' | 'AICUISINE' | 'POST'
 }
 
 type CoursePageProps = CommonProps & {
@@ -34,12 +35,12 @@ type CoursePageProps = CommonProps & {
 }
 
 type CuisinePageProps = CommonProps & {
-  pageType: 'CUISINE'
+  pageType: 'CUISINE' | 'AICUISINE'
   cuisine: RecipeCuisine
 }
 
 type RecipePageProps = CommonProps & {
-  pageType: 'RECIPE'
+  pageType: 'RECIPE' | 'AIRECIPE'
   recipe: ICompleteRecipe
 }
 
@@ -59,16 +60,29 @@ const CatchAll: NextPageWithLayout<CatchAllPageProps> = (props) => {
     return <PostPage post={props.completePost ?? {}} />
   }
 
-  if (props.pageType === 'RECIPE') {
-    return <RecipePage recipe={props.recipe} />
+  if (props.pageType === 'RECIPE' || props.pageType === 'AIRECIPE') {
+    return (
+      <RecipePage recipe={props.recipe} isAI={props.pageType === 'AIRECIPE'} />
+    )
   }
 
-  if (props.pageType === 'CUISINE') {
-    return <Category category={props.cuisine} pageInfo={props.pageInfo} />
+  if (props.pageType === 'CUISINE' || props.pageType === 'AICUISINE') {
+    return (
+      <Category
+        category={props.cuisine}
+        pageInfo={props.pageInfo}
+        isAI={props.pageType === 'AICUISINE'}
+      />
+    )
   }
 
   // default course
-  return <Category category={props.course} pageInfo={props.pageInfo} />
+  return (
+    <Category
+      category={(props as CoursePageProps).course}
+      pageInfo={props.pageInfo}
+    />
+  )
 }
 
 CatchAll.getLayout = getLayout
@@ -102,8 +116,21 @@ export const getStaticPaths: GetStaticPaths<{
     },
   }))
 
+  const aiRecipeURIs = Object.values(convertAIRecipesToCompleteRecipes()).map(
+    (aiRecipe) => aiRecipe.post.uri
+  )
+
+  const aiRecipeCategoryPageURIs = getAiRecipeCategoryPagePath()
+
   return {
-    paths: [...courseURIs, ...cuisineURIs, ...recipeURIs, ...postURIs],
+    paths: [
+      ...courseURIs,
+      ...cuisineURIs,
+      ...recipeURIs,
+      ...aiRecipeURIs,
+      ...aiRecipeCategoryPageURIs,
+      ...postURIs,
+    ],
     fallback: false,
   }
 }
@@ -131,6 +158,9 @@ export const getStaticProps: GetStaticProps<
   const allPosts = await postService.getAllPosts()
   const allPostsObjByURI = arrToObj<Post>(allPosts, 'uri')
   const allPostsObjById = arrToObj<Post>(allPosts, 'databaseId')
+  const allAIRecipeObject = convertAIRecipesToCompleteRecipes()
+  const allAIRecipes = Object.values(allAIRecipeObject).map((item) => item.post)
+  const allAIRecipeByURI = arrToObj<Recipe>(allAIRecipes, 'uri')
 
   if (!params) throw Error('Invalid Params in Get static Props', params)
   const pageNo = Number(params.uri[params.uri.length - 1])
@@ -369,6 +399,69 @@ export const getStaticProps: GetStaticProps<
       },
     }
   }
+  if (uri in allAIRecipeByURI) {
+    logger.debug(`Generating AI Recipe : ${uri}`)
+    const recipeId = allAIRecipeByURI[uri].databaseId
+    const selectedRecipe = allAIRecipeObject[recipeId]
+    return {
+      props: {
+        pageType: 'AIRECIPE',
+        pageInfo: {
+          total: 1,
+          current: 1,
+          uri,
+        },
+        recipe: selectedRecipe,
+        layoutProps: {
+          courseSummary: coursesSummary,
+          cuisineSummary: cuisinesSummary,
+        },
+      },
+    }
+  }
+
+  if (uri.startsWith('/ai-recipes')) {
+    logger.debug('Generating AI Recipe category Page')
+    const startIdx = 0
+
+    //// only needed if we want to display recipes from only that page.
+    //if (!isNaN(pageNo)) {
+    //startIdx = (pageNo - 1) * PAGE_LENGTH
+    //}
+
+    const endIdx = isNaN(pageNo)
+      ? startIdx + PAGE_LENGTH
+      : (startIdx + PAGE_LENGTH) * pageNo
+
+    const aiRecipeCuisineSummary = getAIRecipeAsCuisine()
+    const noOfPages = Math.ceil(
+      aiRecipeCuisineSummary?.recipes?.nodes?.length / PAGE_LENGTH
+    )
+
+    const recipeDetailForCuisine: Array<Recipe> =
+      aiRecipeCuisineSummary?.recipes?.nodes?.slice(startIdx, endIdx)
+
+    aiRecipeCuisineSummary['recipes'] = {
+      ...aiRecipeCuisineSummary['recipes'],
+      nodes: recipeDetailForCuisine,
+    }
+
+    return {
+      props: {
+        pageType: 'AICUISINE',
+        pageInfo: {
+          total: noOfPages,
+          current: isNaN(pageNo) ? 1 : pageNo,
+          uri,
+        },
+        cuisine: aiRecipeCuisineSummary,
+        layoutProps: {
+          courseSummary: coursesSummary,
+          cuisineSummary: cuisinesSummary,
+        },
+      },
+    }
+  }
 
   return {
     notFound: true,
@@ -440,4 +533,45 @@ const getCuisinePaths = async (recipeService: RecipeService) => {
   })
 
   return allURIsWithPage
+}
+
+const getAiRecipeCategoryPagePath = () => {
+  // ai recipe being used as a psuedo cuisine
+  const aiRecipeCuisineSummary: RecipeCuisine = getAIRecipeAsCuisine()
+
+  const noOfRecipes =
+    (aiRecipeCuisineSummary?.recipes?.nodes?.length as number) ?? 0
+
+  const noOfPages = Math.ceil(noOfRecipes / PAGE_LENGTH)
+
+  const aiRecipesCuisinePageURIs =
+    noOfPages === 1
+      ? [aiRecipeCuisineSummary.uri]
+      : Array.from({ length: noOfPages - 1 })
+          .map((_, page) => `${aiRecipeCuisineSummary.uri}page/${page + 2}`)
+          .concat(aiRecipeCuisineSummary.uri)
+
+  const allURIsWithPage = aiRecipesCuisinePageURIs.map((uri) => {
+    return {
+      params: {
+        uri: uri.split('/').filter((part) => part !== ''),
+      },
+    }
+  })
+
+  return allURIsWithPage
+}
+
+const getAIRecipeAsCuisine = () => {
+  return {
+    id: 'ai-recipes',
+    databaseId: 9999999,
+    uri: '/ai-recipes/',
+    name: 'AI Recipes',
+    recipes: {
+      nodes: Object.values(convertAIRecipesToCompleteRecipes()).map(
+        (completeRecipe) => completeRecipe.post
+      ),
+    },
+  }
 }

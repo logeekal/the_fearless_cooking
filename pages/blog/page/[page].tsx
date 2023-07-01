@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 import { getLayout, LayoutProps } from '../../../components/layout'
 import { SEO } from '../../../components/SEO'
-import { Home2 } from '../../../screens/home'
+import Home from '../../../screens/home'
 import DiskCacheService from '../../../services/diskCache'
 import PostService from '../../../services/PostService'
 import RecipeService from '../../../services/RecipeService'
@@ -21,14 +21,14 @@ export const POST_PAGE_LENGTH = 4
 
 const PaginatedPostPage: NextPageWithLayout<PostPageProps> = (props) => {
   const [currTheme, setCurrTheme] = useState(light)
-
   const toggleTheme = () => {
     currTheme == light ? setCurrTheme(dark) : setCurrTheme(light)
   }
+
   return (
     <div className={`${currTheme} ${styleClass}`}>
       <SEO isArticle={false} title="Blogs | The Fearless cooking" />
-      <Home2 recipes={props.posts} pageInfo={props.pageInfo} />
+      <Home recipes={props.posts} pageInfo={props.pageInfo} />
       <button style={{ display: 'none' }} onClick={() => toggleTheme()}>
         Switch Theme
       </button>
