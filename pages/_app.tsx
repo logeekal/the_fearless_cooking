@@ -44,22 +44,10 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout<unknown>) {
     [router.pathname, router.isReady, router.locale, Component]
   )
 
-  const FinalComp = useMemo(() => {
-    /*
-     *
-     * Nextjs re-renders the complete app when there is
-     * a change in query string of the URL. Below
-     * memoization makes sure that App is rendered
-     * only when there is relevant state change of router
-     * */
-
-    return CompWithPlausible
-  }, [router.pathname, router.isReady, router.locale])
-
   /* eslint-disable-next-line */
     const { layoutProps, ...rest } = pageProps
 
-  return getLayout(<FinalComp {...rest} />, layoutProps ?? {})
+  return getLayout(<CompWithPlausible {...rest} />, layoutProps ?? {})
 }
 
 const withPlausible = (WrappedComponent: ComponentType) => {
