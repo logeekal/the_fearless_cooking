@@ -43,6 +43,10 @@ const nextConfig = {
         destination: '/page/1',
       },
       {
+        source: '/blog',
+        destination: '/blog/page/1',
+      },
+      {
         ...functionsRewrite,
       },
     ]

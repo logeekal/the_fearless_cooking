@@ -2,22 +2,31 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 
 import { getLayout, LayoutProps } from '../components/layout'
 import Category from '../screens/category'
+import PostPage from '../screens/post'
 import RecipePage from '../screens/recipe'
 import DiskCacheService from '../services/diskCache'
+import PostService from '../services/PostService'
 import RecipeService from '../services/RecipeService'
-import { Recipe, RecipeCourse, RecipeCuisine } from '../types/wp-graphql.types'
+import {
+  Post,
+  Recipe,
+  RecipeCourse,
+  RecipeCuisine,
+} from '../types/wp-graphql.types'
 import { arrToObj } from '../utils'
 import { convertAIRecipesToCompleteRecipes } from '../utils/ai-recipe'
 import { PAGE_LENGTH } from '../utils/config'
 import { logger } from '../utils/logger'
 import { genCompleteRecipeObject } from '../utils/recipe'
 import { genFAQSchema } from '../utils/schema/faqSchema'
+import { genPostSchema } from '../utils/schema/post'
 import genRecipeSchema from '../utils/schema/recipe'
-import { ICompleteRecipe, LocalPageInfo } from '../utils/types'
+import { ICompletePost, ICompleteRecipe, LocalPageInfo } from '../utils/types'
 import { NextPageWithLayout } from './_app'
+import { POST_PAGE_LENGTH } from './blog/page/[page]'
 
 type CommonProps = LocalPageInfo & {
-  pageType: 'COURSE' | 'CUISINE' | 'RECIPE' | 'AIRECIPE' | 'AICUISINE'
+  pageType: 'COURSE' | 'CUISINE' | 'RECIPE' | 'AIRECIPE' | 'AICUISINE' | 'POST'
 }
 
 type CoursePageProps = CommonProps & {
@@ -35,9 +44,22 @@ type RecipePageProps = CommonProps & {
   recipe: ICompleteRecipe
 }
 
-type CatchAllPageProps = CoursePageProps | CuisinePageProps | RecipePageProps
+type PostPageProps = CommonProps & {
+  pageType: 'POST'
+  completePost: ICompletePost
+}
+
+type CatchAllPageProps =
+  | CoursePageProps
+  | CuisinePageProps
+  | RecipePageProps
+  | PostPageProps
 
 const CatchAll: NextPageWithLayout<CatchAllPageProps> = (props) => {
+  if (props.pageType === 'POST') {
+    return <PostPage post={props.completePost ?? {}} />
+  }
+
   if (props.pageType === 'RECIPE' || props.pageType === 'AIRECIPE') {
     return (
       <RecipePage recipe={props.recipe} isAI={props.pageType === 'AIRECIPE'} />
@@ -70,16 +92,27 @@ export default CatchAll
 export const getStaticPaths: GetStaticPaths<{
   uri: string[]
 }> = async () => {
-  logger.info('StaticPaths :  starting')
-  const recipeService = new RecipeService(new DiskCacheService())
+  logger.debug('StaticPaths :  starting')
+  const diskCacheService = new DiskCacheService()
+
+  const recipeService = new RecipeService(diskCacheService)
+
+  const postService = new PostService(diskCacheService)
 
   const courseURIs = await getCoursePaths(recipeService)
   const cuisineURIs = await getCuisinePaths(recipeService)
 
   const recipes = await recipeService.getAllRecipePosts()
+  const posts = await postService.getAllPosts()
   const recipeURIs = recipes.map((recipe) => ({
     params: {
       uri: recipe.uri.split('/').filter((part) => part !== ''),
+    },
+  }))
+
+  const postURIs = posts.map((post) => ({
+    params: {
+      uri: post.uri.split('/').filter((part) => part !== ''),
     },
   }))
 
@@ -96,6 +129,7 @@ export const getStaticPaths: GetStaticPaths<{
       ...recipeURIs,
       ...aiRecipeURIs,
       ...aiRecipeCategoryPageURIs,
+      ...postURIs,
     ],
     fallback: false,
   }
@@ -107,8 +141,13 @@ export const getStaticProps: GetStaticProps<
   },
   { uri: Array<string> }
 > = async ({ params }) => {
-  logger.info('StaticProps : starting')
-  const recipeService = new RecipeService(new DiskCacheService())
+  logger.debug('StaticProps : starting')
+  const diskCacheService = new DiskCacheService()
+
+  const recipeService = new RecipeService(diskCacheService)
+
+  const postService = new PostService(diskCacheService)
+
   const allRecipes = await recipeService.getAllRecipePosts()
   const allRecipesObjByURI = arrToObj<Recipe>(allRecipes, 'uri')
   const allRecipesObjById = arrToObj<Recipe>(allRecipes, 'databaseId')
@@ -116,6 +155,9 @@ export const getStaticProps: GetStaticProps<
   const cuisinesObjByURI = arrToObj<RecipeCuisine>(cuisines, 'uri')
   const cuisinesSummary = await recipeService.getAllCuisines('SUMMARY')
 
+  const allPosts = await postService.getAllPosts()
+  const allPostsObjByURI = arrToObj<Post>(allPosts, 'uri')
+  const allPostsObjById = arrToObj<Post>(allPosts, 'databaseId')
   const allAIRecipeObject = convertAIRecipesToCompleteRecipes()
   const allAIRecipes = Object.values(allAIRecipeObject).map((item) => item.post)
   const allAIRecipeByURI = arrToObj<Recipe>(allAIRecipes, 'uri')
@@ -128,8 +170,7 @@ export const getStaticProps: GetStaticProps<
     // set URI without page number
     uri = `/${params.uri.slice(0, params.uri.length - 2).join('/')}/`
   }
-  logger.info(`StaticProps : Generating  ${uri} and page no. : ${pageNo}`)
-
+  logger.debug(`StaticProps : Generating  ${uri} and page no. : ${pageNo}`)
   // get courses
   const coursesParent = await recipeService.getAllCourses()
   const coursesObjByURI = arrToObj<RecipeCourse>(coursesParent, 'uri')
@@ -148,8 +189,8 @@ export const getStaticProps: GetStaticProps<
       ? startIdx + PAGE_LENGTH
       : (startIdx + PAGE_LENGTH) * pageNo
 
-    logger.info(`Generating ${uri} and pageNo. : ${pageNo ?? 0} `)
-    logger.info(`startIdx : ${startIdx} & endIdx: ${endIdx}`)
+    logger.debug(`Generating ${uri} and pageNo. : ${pageNo ?? 0} `)
+    logger.debug(`startIdx : ${startIdx} & endIdx: ${endIdx}`)
 
     const courseSummary = await recipeService.getCourseSummaryById(
       courseObj.databaseId
@@ -215,8 +256,8 @@ export const getStaticProps: GetStaticProps<
       ? startIdx + PAGE_LENGTH
       : (startIdx + PAGE_LENGTH) * pageNo
 
-    logger.info(`Generating ${uri} and pageNo. : ${pageNo ?? 0} `)
-    logger.info(`startIdx : ${startIdx} & endIdx: ${endIdx}`)
+    logger.debug(`Generating ${uri} and pageNo. : ${pageNo ?? 0} `)
+    logger.debug(`startIdx : ${startIdx} & endIdx: ${endIdx}`)
 
     const cuisineObj = cuisinesObjByURI[uri]
     const cuisineSummary = await recipeService.getCuisineSummaryById(
@@ -324,6 +365,40 @@ export const getStaticProps: GetStaticProps<
     }
   }
 
+  /////////////////////////////
+  ///////// POSTS
+  /////////////////////////////
+  //
+
+  if (uri in allPostsObjByURI) {
+    logger.debug(`Post Found ${uri}`)
+    const selectedPost = allPostsObjByURI[uri]
+    const startIdx = 0
+    const endIdx = isNaN(pageNo)
+      ? startIdx + POST_PAGE_LENGTH
+      : (startIdx + POST_PAGE_LENGTH) * pageNo
+
+    const noOfPages = allPosts.length / POST_PAGE_LENGTH
+
+    return {
+      props: {
+        pageType: 'POST',
+        pageInfo: {
+          total: noOfPages,
+          current: isNaN(pageNo) ? 1 : pageNo,
+          uri,
+        },
+        completePost: {
+          post: selectedPost,
+          schema: genPostSchema(selectedPost),
+        },
+        layoutProps: {
+          courseSummary: coursesSummary,
+          cuisineSummary: cuisinesSummary,
+        },
+      },
+    }
+  }
   if (uri in allAIRecipeByURI) {
     logger.debug(`Generating AI Recipe : ${uri}`)
     const recipeId = allAIRecipeByURI[uri].databaseId

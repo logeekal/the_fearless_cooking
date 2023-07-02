@@ -49,3 +49,12 @@ export type LocalPageInfo = {
     uri: string
   }
 }
+
+export type ICompletePost = {
+  post: Post
+  schema: Record<string, unknown>
+}
+
+export type ICompletePostObj = {
+  [k: string]: ICompletePost
+}

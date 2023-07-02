@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { devLogger, logger } from '../utils/logger'
+import { logger } from '../utils/logger'
 import { IFAQRestContent } from '../utils/types'
 import { ICacheService } from './CacheService'
 
@@ -22,7 +22,6 @@ export default class FAQService {
   getFromCache = <T>(entity: string): T | undefined => {
     if (this.cacheService && !this.clean) {
       if (this.cacheService.get(entity)) {
-        devLogger.info(`Returning ${entity} from cache`)
         return JSON.parse(
           this.cacheService.get(entity)?.toString() as string
         ) as unknown as T

@@ -18,7 +18,7 @@ const MANDATORY_ENVS = [
   'FROM_NAME',
 ]
 
-const OPTIONAL_ENVS: string[] = []
+const OPTIONAL_ENVS: string[] = ['LOG_LEVEL']
 
 const isStringInvalid = (str: string | undefined) => {
   const result =
