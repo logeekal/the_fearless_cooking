@@ -12,7 +12,7 @@ const genRecipeSchema = (
   convertTime = true
 ) => {
   if (!recipe) return null
-  devLogger.info(`Generating Recipe Schema for  : ${post.title || '???????'} `)
+  devLogger.debug(`Generating Recipe Schema for  : ${post.title || '???????'} `)
   let videoId = null
   videoId = recipeVideoId
 

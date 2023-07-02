@@ -101,6 +101,8 @@ export default class RecipeService {
       return recipeDataFromCache
     }
 
+    logger.info('getAllRecipesData:  Nothing found in cache. Downloading...')
+
     const recipeURL = `${this.host}/wp-json/deliciousrecipe/v1/recipe?per_page=100`
 
     const getRecipePage = async (url: string) => {
@@ -224,10 +226,12 @@ export default class RecipeService {
       logger.error('No Course found')
       return []
     }
+
     const result = response.data.data.recipeCourses.nodes
     if (!result) {
       throw Error('No Course found')
     }
+    logger.debug('getAllCourses:  Found result. Now setting cache')
 
     this.cacheService && this.cacheService.set(ENTITY, JSON.stringify(result))
 

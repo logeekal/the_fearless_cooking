@@ -6,6 +6,7 @@ import { parse } from 'tinyduration'
 import { safeName } from '../../common'
 import DiskCacheService from '../../services/diskCache'
 import { AIRecipe, RecipeIngredient } from '../../types/open_ai'
+import { logger } from '../logger'
 import genRecipeSchema from '../schema/recipe'
 import { ICompleteRecipe, ICompleteRecipeObj } from '../types'
 import { aiRecipeSchema } from './ai_recipe_schema'
@@ -42,6 +43,8 @@ export const convertAIRecipesToCompleteRecipes = (): ICompleteRecipeObj => {
   }
 
   const aiRecipes = genAIRecipeObjects()
+
+  logger.info(`Found ${aiRecipes.length} AI Recipes`)
 
   const result: ICompleteRecipeObj = {}
 

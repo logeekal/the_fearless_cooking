@@ -23,6 +23,7 @@ export const genCompleteRecipeObject = async () => {
 
   const resultFromCache = recipeService.getFromCache<ICompleteRecipeObj>(ENTITY)
   if (resultFromCache) return resultFromCache
+  logger.info('Generating Complete Recipe Object')
 
   const allRecipes = await recipeService.getAllRecipePosts()
   const allRecipeContent = await recipeService.getAllRecipesData()
@@ -101,6 +102,7 @@ export const genCompleteRecipeObject = async () => {
   })
 
   cacheService.set(ENTITY, JSON.stringify(result))
+  logger.info('Complete Recipe Object generation complete.')
 
   return result
 }

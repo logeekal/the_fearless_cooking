@@ -5,6 +5,7 @@ import DiskCacheService from '../services/diskCache'
 import FAQService from '../services/FAQService'
 import PostService from '../services/PostService'
 import RecipeService from '../services/RecipeService'
+import { convertAIRecipesToCompleteRecipes } from '../utils/ai-recipe'
 import { logger } from '../utils/logger'
 
 dotenv.config({
@@ -21,6 +22,8 @@ export async function downloadData() {
 
   //===== Recipe Service
   await recipeService.getAllRecipesData()
+  await recipeService.getAllCourses('SUMMARY')
+  await recipeService.getAllCuisines('SUMMARY')
   await recipeService.getAllCourses()
   await recipeService.getAllCuisines()
   await recipeService.getAllRecipePosts()
@@ -30,6 +33,9 @@ export async function downloadData() {
 
   //======= Post Service
   await postService.getAllPosts()
+
+  // AI Recipes
+  convertAIRecipesToCompleteRecipes()
 
   logger.info('Downloading Data Complete')
 }

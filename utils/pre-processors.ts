@@ -23,8 +23,6 @@ export function getFAQs(htmlString: string): number[] {
     (item) => typeof item !== 'undefined'
   ) as number[]
 
-  devLogger.info('FAQ IDs ', finalFAQIds)
-
   return finalFAQIds
 }
 
@@ -62,7 +60,7 @@ export function replaceYTwithLiteTY(htmlString: string, title: string) {
 
 export function getYoutubeVideoId(htmlString: string) {
   if (!htmlString) return null
-  devLogger.info('Getting video id')
+  devLogger.trace('Getting video id')
 
   const $ = Cheerio.load(htmlString)
 
@@ -74,9 +72,9 @@ export function getYoutubeVideoId(htmlString: string) {
 
   if (ytIframe[0] && ytIframe[0].type === 'tag') {
     const ytEmbedURL = new URL(ytIframe[0].attribs['src'])
-    devLogger.info(`Found Video URL :  ${ytEmbedURL.toString()}`)
+    devLogger.trace(`Found Video URL :  ${ytEmbedURL.toString()}`)
     const vidId = ytEmbedURL.pathname.split('/')[2]
-    devLogger.info(`Found video ID: ${vidId}`)
+    devLogger.trace(`Found video ID: ${vidId}`)
     if (vidId === 'videoseries') {
       throw new Error('Found Playlist. Insert video link for post. ')
     }
