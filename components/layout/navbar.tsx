@@ -83,6 +83,11 @@ ${navMenuIconContainer} ${isMobileMenuOpen ? 'open' : 'closed'}`}
               <h2 className="link">Home</h2>
             </NextLink>
           </li>
+          <li className={`nav__menu--item ${navMenuItem}`} onClick={toggleMenu}>
+            <NextLink href={'/blog'} prefetch={false}>
+              <h2 className="link">Blog</h2>
+            </NextLink>
+          </li>
           <li className={`nav__menu--item mobile ${navMenuItem}`}>
             <Accordion title={<h2 className={`${navMenuItem}`}>Cook</h2>}>
               <CategorySubMenu
