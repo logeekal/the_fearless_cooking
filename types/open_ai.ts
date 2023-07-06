@@ -41,6 +41,7 @@ type AIRecipeIngredients = {
 }
 
 export type AIRecipeObject = {
+  creationDate: string
   excerpt: string
   recipeName: string
   servings: string

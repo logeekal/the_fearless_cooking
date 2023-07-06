@@ -3,6 +3,7 @@ import { openSync, writeFileSync } from 'fs'
 import path from 'path'
 import striptags from 'striptags'
 
+import { convertAIRecipesToCompleteRecipes } from '../utils/ai-recipe'
 import { logger } from '../utils/logger'
 import { genCompleteRecipeObject } from '../utils/recipe'
 import { ICompleteRecipeObj } from '../utils/types'
@@ -50,12 +51,15 @@ export class RSS {
   createRecipeRSS() {
     logger.info('Creating Recipe RSS')
     const destDir = path.join(process.cwd(), this.outDir)
-    const fileName = this.rssFileName
+    const fileName = 'recipe-' + this.rssFileName
     const filePath = path.join(destDir, fileName)
     const f = openSync(filePath, 'w')
     this.getRecipeObject()
       .then(() => {
-        const recipeChannelItems = this.genRecipeChannelItems()
+        if (!this.recipeObj) {
+          throw new Error('Recipe Object should not be empty')
+        }
+        const recipeChannelItems = this.genRecipeChannelItems(this.recipeObj)
         const recipeRSS = this.genRecipeChannel(recipeChannelItems)
         writeFileSync(f, this.withRSSVersion(recipeRSS))
         logger.info(`Recipe RSS created : ${filePath}`)
@@ -63,19 +67,34 @@ export class RSS {
       .catch(() => console.error)
   }
 
-  withRSSVersion(channel: string) {
+  createAIRecipeRSS() {
+    logger.info('Creating AI Recipe RSS')
+    const destDir = path.join(process.cwd(), this.outDir)
+    const fileName = `ai-recipe-${this.rssFileName}`
+    const filePath = path.join(destDir, fileName)
+
+    const f = openSync(filePath, 'w')
+
+    const aiRecipeObject = convertAIRecipesToCompleteRecipes()
+    const aiRecipeChannelItems = this.genRecipeChannelItems(aiRecipeObject)
+    const aiRecipeRSS = this.genRecipeChannel(aiRecipeChannelItems)
+    writeFileSync(f, aiRecipeRSS)
+    logger.info(`AI Recipe RSS generated : ${filePath}`)
+  }
+
+  private withRSSVersion(channel: string) {
     return `<rss version="${this.version}">
             ${channel}
             </rss>`
   }
 
-  getFullURL(relativeURL: string) {
+  private getFullURL(relativeURL: string) {
     const baseURLCurrent = new URL(this.baseURL)
     baseURLCurrent.pathname = relativeURL
     return baseURLCurrent.toString()
   }
 
-  escapeCharsForXML(str: string) {
+  private escapeCharsForXML(str: string) {
     const escapeData = [
       {
         old: '&',
@@ -102,7 +121,7 @@ export class RSS {
     }, newStr)
   }
 
-  genRecipeChannel(items: RSSChannelItem[]) {
+  private genRecipeChannel(items: RSSChannelItem[]) {
     logger.info(`Generating Channel with ${items.length} items`)
     const description = 'This feed lists the recipes by The Fearless Cooking'
 
@@ -138,9 +157,9 @@ export class RSS {
       `
   }
 
-  genRecipeChannelItems() {
-    if (!this.recipeObj) throw Error('No Recipe Data while creating Items')
-    return Object.values(this.recipeObj).map((recipe) => {
+  private genRecipeChannelItems(recipeObj: ICompleteRecipeObj) {
+    if (!recipeObj) throw Error('No Recipe Data while creating Items')
+    return Object.values(recipeObj).map((recipe) => {
       const courses =
         recipe.post.recipeCourses?.nodes?.map((i) => ({
           name: this.escapeCharsForXML(i?.name ?? ''),
@@ -157,7 +176,7 @@ export class RSS {
         title: this.escapeCharsForXML(recipe.post.title as string),
         link: this.getFullURL(recipe.post.uri),
         description: this.escapeCharsForXML(recipe.post.excerpt as string),
-        pubDate: recipe.post.dateGmt as string,
+        pubDate: new Date(recipe.post.dateGmt ?? '').toUTCString(),
         author: 'Richa Gupta',
         guid: String(recipe.post.databaseId),
         categories: [...courses, ...cuisines],

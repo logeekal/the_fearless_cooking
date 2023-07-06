@@ -6,4 +6,5 @@ run()
 
 // gen RSS
 const rss = new RSS()
+rss.createAIRecipeRSS()
 rss.createRecipeRSS()

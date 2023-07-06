@@ -159,7 +159,14 @@ export const getStaticProps: GetStaticProps<
   const allPostsObjByURI = arrToObj<Post>(allPosts, 'uri')
   const allPostsObjById = arrToObj<Post>(allPosts, 'databaseId')
   const allAIRecipeObject = convertAIRecipesToCompleteRecipes()
-  const allAIRecipes = Object.values(allAIRecipeObject).map((item) => item.post)
+  const allAIRecipes = Object.values(allAIRecipeObject)
+    .map((item) => item.post)
+    .sort(
+      (a, b) =>
+        Date.parse(a.dateGmt ?? '') ??
+        Date.now() - Date.parse(b.dateGmt ?? '') ??
+        Date.now()
+    )
   const allAIRecipeByURI = arrToObj<Recipe>(allAIRecipes, 'uri')
 
   if (!params) throw Error('Invalid Params in Get static Props', params)
@@ -569,9 +576,13 @@ const getAIRecipeAsCuisine = () => {
     uri: '/ai-recipes/',
     name: 'AI Recipes',
     recipes: {
-      nodes: Object.values(convertAIRecipesToCompleteRecipes()).map(
-        (completeRecipe) => completeRecipe.post
-      ),
+      nodes: Object.values(convertAIRecipesToCompleteRecipes())
+        .map((completeRecipe) => completeRecipe.post)
+        .sort((a, b) => {
+          const dateB = new Date(b.dateGmt ?? Date.now())
+          const dateA = new Date(a.dateGmt ?? Date.now())
+          return dateB > dateA ? 1 : -1
+        }),
     },
   }
 }
