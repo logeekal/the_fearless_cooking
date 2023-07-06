@@ -117,7 +117,7 @@ export class RSS {
 
     const newStr = striptags(str)
     return escapeData.reduce((str, escStr) => {
-      return str.replace(escStr.old, escStr.new)
+      return str.replaceAll(escStr.old, escStr.new)
     }, newStr)
   }
 
