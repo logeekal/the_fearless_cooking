@@ -1,1 +1,148 @@
-{"id":50720231243,"recipeName":"Vegan Caesar Wrap","excerpt":"A refreshing vegan wrap with the classic Caesar salad flavors","servings":"2","prepTime":"PT15M","cookTime":"PT5M","totalTime":"PT20M","ingredients":[{"name":"For the wrap","ingredients":[{"name":"Whole wheat tortillas","quantity":"2","notes":""},{"name":"Extra firm tofu, pressed and drained","quantity":"300g","notes":""},{"name":"Romaine lettuce leaves","quantity":"6","notes":""},{"name":"Vegan Caesar dressing (recipe below)","quantity":"1/4 cup","notes":""},{"name":"Cherry tomatoes, halved","quantity":"1/2 cup","notes":""},{"name":"Vegan parmesan cheese (recipe below)","quantity":"1/4 cup","notes":""}]},{"name":"For the vegan Caesar dressing:","ingredients":[{"name":"Vegan mayonnaise","quantity":"1/4 cup","notes":""},{"name":"Lemon juice","quantity":"2 tbsp","notes":""},{"name":"Dijon mustard","quantity":"1 tsp","notes":""},{"name":"Garlic powder","quantity":"1/2 tsp","notes":""},{"name":"Salt","quantity":"1/4 tsp","notes":""},{"name":"Black pepper","quantity":"1/4 tsp","notes":""}]},{"name":"For the vegan parmesan cheese:","ingredients":[{"name":"Raw cashew nuts","quantity":"1/2 cup","notes":""},{"name":"Nutritional yeast flakes","quantity":"2 tbsp","notes":""},{"name":"Garlic powder","quantity":"1/2 tsp","notes":""},{"name":"Salt","quantity":"1/4 tsp","notes":""}]}],"instructions":[{"name":"To make the vegan parmesan cheese:","instructions":["In a blender or food processor, pulse the cashew nuts until they are finely ground.","Add the nutritional yeast, garlic powder, and salt, and pulse to combine.","Transfer the mixture to an airtight container and store in the refrigerator until ready to use."]},{"name":"To make the vegan Caesar dressing:","instructions":["In a small bowl, whisk together the vegan mayonnaise, lemon juice, Dijon mustard, garlic powder, salt, and black pepper until smooth and creamy.","Adjust the seasoning to taste, adding more salt, pepper, or lemon juice as needed.","Store in the refrigerator until ready to use."]},{"name":"To make the vegan Caesar wrap:","instructions":["Heat a large non-stick skillet over medium-high heat.","Slice the pressed tofu into thin strips and add them to the skillet.","Cook the tofu for 5 minutes, or until crispy and lightly browned on both sides.","Remove the skillet from the heat and drizzle the tofu with the vegan Caesar dressing, tossing to coat.","To assemble the wrap, lay a tortilla flat on a plate or cutting board.","Top the tortilla with 3 romaine lettuce leaves, followed by half of the tofu, cherry tomatoes, and vegan parmesan cheese.","Drizzle with more of the vegan Caesar dressing, and wrap the tortilla tightly around the filling.","Repeat with the remaining tortilla and ingredients, and serve immediately."]}],"nutrition":{"calories":"424","fat":"22 g","sugar":"3 g","protein":"31 g"},"image":{"large":"/images/ai-recipes/50720231243_large.jpg","medium":"/images/ai-recipes/50720231243_medium.jpg","small":"/images/ai-recipes/50720231243_small.jpg"}}
+{
+  "id": 150720231243,
+  "recipeName": "Vegan Caesar Wrap",
+  "excerpt": "A refreshing vegan wrap with the classic Caesar salad flavors",
+  "servings": "2",
+  "prepTime": "PT15M",
+  "cookTime": "PT5M",
+  "totalTime": "PT20M",
+  "ingredients": [
+    {
+      "name": "For the wrap",
+      "ingredients": [
+        {
+          "name": "Whole wheat tortillas",
+          "quantity": "2",
+          "notes": ""
+        },
+        {
+          "name": "Extra firm tofu, pressed and drained",
+          "quantity": "300g",
+          "notes": ""
+        },
+        {
+          "name": "Romaine lettuce leaves",
+          "quantity": "6",
+          "notes": ""
+        },
+        {
+          "name": "Vegan Caesar dressing (recipe below)",
+          "quantity": "1/4 cup",
+          "notes": ""
+        },
+        {
+          "name": "Cherry tomatoes, halved",
+          "quantity": "1/2 cup",
+          "notes": ""
+        },
+        {
+          "name": "Vegan parmesan cheese (recipe below)",
+          "quantity": "1/4 cup",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "name": "For the vegan Caesar dressing:",
+      "ingredients": [
+        {
+          "name": "Vegan mayonnaise",
+          "quantity": "1/4 cup",
+          "notes": ""
+        },
+        {
+          "name": "Lemon juice",
+          "quantity": "2 tbsp",
+          "notes": ""
+        },
+        {
+          "name": "Dijon mustard",
+          "quantity": "1 tsp",
+          "notes": ""
+        },
+        {
+          "name": "Garlic powder",
+          "quantity": "1/2 tsp",
+          "notes": ""
+        },
+        {
+          "name": "Salt",
+          "quantity": "1/4 tsp",
+          "notes": ""
+        },
+        {
+          "name": "Black pepper",
+          "quantity": "1/4 tsp",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "name": "For the vegan parmesan cheese:",
+      "ingredients": [
+        {
+          "name": "Raw cashew nuts",
+          "quantity": "1/2 cup",
+          "notes": ""
+        },
+        {
+          "name": "Nutritional yeast flakes",
+          "quantity": "2 tbsp",
+          "notes": ""
+        },
+        {
+          "name": "Garlic powder",
+          "quantity": "1/2 tsp",
+          "notes": ""
+        },
+        {
+          "name": "Salt",
+          "quantity": "1/4 tsp",
+          "notes": ""
+        }
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "name": "To make the vegan parmesan cheese:",
+      "instructions": [
+        "In a blender or food processor, pulse the cashew nuts until they are finely ground.",
+        "Add the nutritional yeast, garlic powder, and salt, and pulse to combine.",
+        "Transfer the mixture to an airtight container and store in the refrigerator until ready to use."
+      ]
+    },
+    {
+      "name": "To make the vegan Caesar dressing:",
+      "instructions": [
+        "In a small bowl, whisk together the vegan mayonnaise, lemon juice, Dijon mustard, garlic powder, salt, and black pepper until smooth and creamy.",
+        "Adjust the seasoning to taste, adding more salt, pepper, or lemon juice as needed.",
+        "Store in the refrigerator until ready to use."
+      ]
+    },
+    {
+      "name": "To make the vegan Caesar wrap:",
+      "instructions": [
+        "Heat a large non-stick skillet over medium-high heat.",
+        "Slice the pressed tofu into thin strips and add them to the skillet.",
+        "Cook the tofu for 5 minutes, or until crispy and lightly browned on both sides.",
+        "Remove the skillet from the heat and drizzle the tofu with the vegan Caesar dressing, tossing to coat.",
+        "To assemble the wrap, lay a tortilla flat on a plate or cutting board.",
+        "Top the tortilla with 3 romaine lettuce leaves, followed by half of the tofu, cherry tomatoes, and vegan parmesan cheese.",
+        "Drizzle with more of the vegan Caesar dressing, and wrap the tortilla tightly around the filling.",
+        "Repeat with the remaining tortilla and ingredients, and serve immediately."
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "424",
+    "fat": "22 g",
+    "sugar": "3 g",
+    "protein": "31 g"
+  },
+  "image": {
+    "large": "/images/ai-recipes/50720231243_large.jpg",
+    "medium": "/images/ai-recipes/50720231243_medium.jpg",
+    "small": "/images/ai-recipes/50720231243_small.jpg"
+  }
+}

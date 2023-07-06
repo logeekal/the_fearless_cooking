@@ -5,6 +5,7 @@ import path from 'path'
 import { safeName } from '../common'
 import {
   AIRecipeObject,
+  AIRecipeWithId,
   AIRecipeWithImage,
   ImageB64Format,
 } from '../types/open_ai'
@@ -71,23 +72,22 @@ export class AIRecipes {
       throw new Error(String(jsonError))
     }
 
-    const recipeId =
-      desiredRecipeId ??
-      parseInt(
-        new Intl.DateTimeFormat('de-DE', {
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit',
-        })
-          .format(new Date()) //dd.mm.yyyy
-          .replaceAll('.', '')
-      ) //ddmmyyyy
+    const recipeIdStr = new Intl.DateTimeFormat('de-DE', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    })
+      .format(new Date()) //dd.mm.yyyy
+      .replaceAll('.', '')
+
+    const recipeId = desiredRecipeId ?? parseInt(recipeIdStr) //ddmmyyyy
 
     logger.info(`Generating recipeId : ${recipeId}`)
 
-    const recipeObjWithId = {
+    const recipeObjWithId: AIRecipeWithId = {
       id: recipeId,
       ...recipeObject,
+      creationDate: recipeIdStr,
     }
 
     const recipeImages = await this.getRecipeImages(

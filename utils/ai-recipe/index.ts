@@ -49,6 +49,39 @@ export const convertAIRecipesToCompleteRecipes = (): ICompleteRecipeObj => {
   const result: ICompleteRecipeObj = {}
 
   for (const recipeJson of aiRecipes) {
+    const dateRegex =
+      /^([0-9]{2})([0-9]{1,2})([0-9]{4})(([0-9]{2})([0-9]{2}))?$/
+    /*
+     * Above regex was tested on
+        150620231653
+        23042023
+        22620230531
+        20720231635
+        240620231241
+       * */
+    const dateSegments = String(recipeJson.creationDate ?? recipeJson.id).match(
+      dateRegex
+    )
+    if (!dateSegments) {
+      logger.error(
+        `Failed Regex : ${String(dateRegex)} on recipeId :${
+          recipeJson.id
+        }. Got result : ${JSON.stringify(dateSegments, undefined, 2)} `
+      )
+      throw Error(`Creation date undefined for recipeId : ${recipeJson.id}`)
+    }
+    const [, dd, mm, yyyy, , hh, mi] = dateSegments as string[]
+    const creationDate = new Date(
+      `${yyyy}-${mm}-${dd} ${hh ?? '00'}:${mi ?? '00'}`
+    )
+    if (!creationDate || !dateSegments) {
+      logger.error(
+        `Failed Regex : ${String(dateRegex)} on recipeId :${
+          recipeJson.id
+        }. Got result : ${JSON.stringify(dateSegments, undefined, 2)} `
+      )
+      throw Error(`Creation date undefined for recipeId : ${recipeJson.id}`)
+    }
     const recipe: ICompleteRecipe['post'] = {
       id: String(recipeJson.id),
       recipeId: recipeJson.id,
@@ -56,6 +89,8 @@ export const convertAIRecipesToCompleteRecipes = (): ICompleteRecipeObj => {
       title: recipeJson.recipeName,
       content: '',
       excerpt: recipeJson.excerpt ?? '',
+      dateGmt: creationDate.toUTCString(),
+      modified: creationDate.toUTCString(),
       uri: `/ai-recipes/${safeName(recipeJson.recipeName)}/`,
       recipeCuisines: {
         nodes: [

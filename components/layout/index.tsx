@@ -119,6 +119,18 @@ const Layout: FC<PropsWithChildren<LayoutProps>> = (props) => {
     <LayoutContext.Provider value={contextValue}>
       <Script src="/lib/lazysizes.min.js" async />
       <Script src="/lib/ls.attrchange.js" async />
+      <link
+        rel="alternate"
+        type="application/rss+xml"
+        title="AI recipes RSS"
+        href="/ai-recipe-rss.xml"
+      />
+      <link
+        rel="self"
+        type="application/rss+xml"
+        title="Recipe RSS"
+        href="/recipe-rss.xml"
+      />
       <div className={`${currTheme} ${layoutClass}`}>
         <header className="body-width">
           <Navbar
