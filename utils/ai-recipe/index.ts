@@ -62,7 +62,6 @@ export const convertAIRecipesToCompleteRecipes = (): ICompleteRecipeObj => {
     const dateSegments = String(recipeJson.creationDate ?? recipeJson.id).match(
       dateRegex
     )
-    logger.error({ dateSegments })
     if (!dateSegments) {
       logger.error(
         `Failed Regex : ${String(dateRegex)} on recipeId :${

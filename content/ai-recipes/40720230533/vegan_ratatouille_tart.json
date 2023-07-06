@@ -1,1 +1,122 @@
-{"id":40720230533,"recipeName":"Vegan Ratatouille Tart","excerpt":"A vegan twist on the classic French dish, with a crispy tart base and colourful vegetables.","servings":"6","prepTime":"PT20M","cookTime":"PT45M","totalTime":"PT65M","ingredients":[{"name":"Tart Base","ingredients":[{"name":"Plain Flour","quantity":"250g","notes":""},{"name":"Vegan Butter","quantity":"125g","notes":"Chilled and diced"},{"name":"Water","quantity":"2-3 tbsp","notes":"Chilled"}]},{"name":"Ratatouille Filling","ingredients":[{"name":"Aubergine","quantity":"1 large","notes":"Sliced into rounds"},{"name":"Courgette","quantity":"1 large","notes":"Sliced into rounds"},{"name":"Red Onion","quantity":"1","notes":"Sliced into rounds"},{"name":"Red Pepper","quantity":"1 large","notes":"Sliced into strips"},{"name":"Garlic","quantity":"2 cloves","notes":"Finely chopped"},{"name":"Tomato Paste","quantity":"1 tbsp","notes":""},{"name":"Vegetable Stock","quantity":"100 ml","notes":""},{"name":"Thyme","quantity":"1 tsp","notes":"Fresh leaves only"},{"name":"Salt","quantity":"1/2 tsp","notes":""},{"name":"Black Pepper","quantity":"1/4 tsp","notes":"Freshly ground"}]}],"instructions":[{"name":"Prepare the Tart Base","instructions":["Preheat the oven to 180C/350F/gas mark 4.","In a large mixing bowl, rub together the flour and vegan butter with your fingertips until it resembles breadcrumbs.","Add in 2-3 tbsp of chilled water, mixing it with your hands until it forms a rough dough.","Knead the dough on a floured surface for a few minutes until it is smooth, then roll it out to fit a 9-inch tart tin.","Place the rolled out dough into the tart tin, trimming off any excess around the edges, and prick the base with a fork.","Bake in the pre-heated oven for 15-20 minutes until the base is lightly golden, then set aside to cool."]},{"name":"Make the Ratatouille Filling","instructions":["In a large frying pan or wok, sauté the sliced aubergine and courgette in a little oil over a medium-high heat until they are lightly browned on both sides. Remove from the pan and set aside.","In the same pan, add a little more oil and sauté the sliced red onion and pepper for 5-7 minutes until they are softened and starting to caramelise.","Add the chopped garlic, thyme and tomato paste to the pan and stir through, cooking for a minute until fragrant.","Add the vegetable stock to the pan and stir everything together, then add the sautéed aubergine and courgette back into the pan.","Lower the heat and allow the Ratatouille to simmer for 10-15 minutes until the vegetables are soft and the sauce is thickened. Season with salt and black pepper to taste.","Spoon the Ratatouille filling into the prepared tart case, smoothing it out with a spatula. Return the tart to the oven and bake for a further 15-20 minutes, until the filling is golden and bubbling.","Serve the Ratatouille Tart hot or cold, garnished with fresh herbs such as parsley or basil."]}],"nutrition":{"calories":"321","fat":"16","sugar":"3","protein":"6"},"image":{"large":"/images/ai-recipes/40720230533_large.jpg","medium":"/images/ai-recipes/40720230533_medium.jpg","small":"/images/ai-recipes/40720230533_small.jpg"}}
+{
+  "id": 140720230533,
+  "recipeName": "Vegan Ratatouille Tart",
+  "excerpt": "A vegan twist on the classic French dish, with a crispy tart base and colourful vegetables.",
+  "servings": "6",
+  "prepTime": "PT20M",
+  "cookTime": "PT45M",
+  "totalTime": "PT65M",
+  "ingredients": [
+    {
+      "name": "Tart Base",
+      "ingredients": [
+        {
+          "name": "Plain Flour",
+          "quantity": "250g",
+          "notes": ""
+        },
+        {
+          "name": "Vegan Butter",
+          "quantity": "125g",
+          "notes": "Chilled and diced"
+        },
+        {
+          "name": "Water",
+          "quantity": "2-3 tbsp",
+          "notes": "Chilled"
+        }
+      ]
+    },
+    {
+      "name": "Ratatouille Filling",
+      "ingredients": [
+        {
+          "name": "Aubergine",
+          "quantity": "1 large",
+          "notes": "Sliced into rounds"
+        },
+        {
+          "name": "Courgette",
+          "quantity": "1 large",
+          "notes": "Sliced into rounds"
+        },
+        {
+          "name": "Red Onion",
+          "quantity": "1",
+          "notes": "Sliced into rounds"
+        },
+        {
+          "name": "Red Pepper",
+          "quantity": "1 large",
+          "notes": "Sliced into strips"
+        },
+        {
+          "name": "Garlic",
+          "quantity": "2 cloves",
+          "notes": "Finely chopped"
+        },
+        {
+          "name": "Tomato Paste",
+          "quantity": "1 tbsp",
+          "notes": ""
+        },
+        {
+          "name": "Vegetable Stock",
+          "quantity": "100 ml",
+          "notes": ""
+        },
+        {
+          "name": "Thyme",
+          "quantity": "1 tsp",
+          "notes": "Fresh leaves only"
+        },
+        {
+          "name": "Salt",
+          "quantity": "1/2 tsp",
+          "notes": ""
+        },
+        {
+          "name": "Black Pepper",
+          "quantity": "1/4 tsp",
+          "notes": "Freshly ground"
+        }
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "name": "Prepare the Tart Base",
+      "instructions": [
+        "Preheat the oven to 180C/350F/gas mark 4.",
+        "In a large mixing bowl, rub together the flour and vegan butter with your fingertips until it resembles breadcrumbs.",
+        "Add in 2-3 tbsp of chilled water, mixing it with your hands until it forms a rough dough.",
+        "Knead the dough on a floured surface for a few minutes until it is smooth, then roll it out to fit a 9-inch tart tin.",
+        "Place the rolled out dough into the tart tin, trimming off any excess around the edges, and prick the base with a fork.",
+        "Bake in the pre-heated oven for 15-20 minutes until the base is lightly golden, then set aside to cool."
+      ]
+    },
+    {
+      "name": "Make the Ratatouille Filling",
+      "instructions": [
+        "In a large frying pan or wok, sauté the sliced aubergine and courgette in a little oil over a medium-high heat until they are lightly browned on both sides. Remove from the pan and set aside.",
+        "In the same pan, add a little more oil and sauté the sliced red onion and pepper for 5-7 minutes until they are softened and starting to caramelise.",
+        "Add the chopped garlic, thyme and tomato paste to the pan and stir through, cooking for a minute until fragrant.",
+        "Add the vegetable stock to the pan and stir everything together, then add the sautéed aubergine and courgette back into the pan.",
+        "Lower the heat and allow the Ratatouille to simmer for 10-15 minutes until the vegetables are soft and the sauce is thickened. Season with salt and black pepper to taste.",
+        "Spoon the Ratatouille filling into the prepared tart case, smoothing it out with a spatula. Return the tart to the oven and bake for a further 15-20 minutes, until the filling is golden and bubbling.",
+        "Serve the Ratatouille Tart hot or cold, garnished with fresh herbs such as parsley or basil."
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "321",
+    "fat": "16",
+    "sugar": "3",
+    "protein": "6"
+  },
+  "image": {
+    "large": "/images/ai-recipes/40720230533_large.jpg",
+    "medium": "/images/ai-recipes/40720230533_medium.jpg",
+    "small": "/images/ai-recipes/40720230533_small.jpg"
+  }
+}

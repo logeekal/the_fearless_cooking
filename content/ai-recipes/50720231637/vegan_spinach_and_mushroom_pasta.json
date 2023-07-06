@@ -1,1 +1,118 @@
-{"id":50720231637,"recipeName":"Vegan Spinach and Mushroom Pasta","excerpt":"This delicious vegan pasta dish is packed with nutrients and flavour!","servings":"2","prepTime":"PT10M","cookTime":"PT20M","totalTime":"PT30M","ingredients":[{"name":"Pasta","ingredients":[{"name":"Pasta","quantity":"250 g","notes":"spaghetti"},{"name":"Water","quantity":"2 L","notes":"for boiling"},{"name":"Salt","quantity":"1 tsp","notes":"for boiling pasta"}]},{"name":"Spinach and Mushroom Sauce","ingredients":[{"name":"Olive Oil","quantity":"2 tbsp","notes":""},{"name":"Garlic","quantity":"2 cloves","notes":"minced"},{"name":"Mushrooms","quantity":"250 g","notes":"sliced"},{"name":"Spinach","quantity":"200 g","notes":"chopped"},{"name":"Plant-based Milk","quantity":"1/2 cup","notes":""},{"name":"Cornstarch","quantity":"1 tbsp","notes":"dissolved in 1 tbsp cold water"},{"name":"Nutritional Yeast","quantity":"2 tbsp","notes":""},{"name":"Salt","quantity":"1 tsp","notes":""},{"name":"Black Pepper","quantity":"1/4 tsp","notes":"freshly ground"}]}],"instructions":[{"name":"Boiling Pasta","instructions":["Bring a large pot of water to a boil.","Add salt and pasta to the pot.","Cook pasta according to package instructions.","Drain the pasta and set aside."]},{"name":"Spinach and Mushroom Sauce","instructions":["Heat olive oil in a large pan over medium heat.","Add minced garlic and cook until fragrant.","Add sliced mushrooms and cook until tender.","Add chopped spinach and cook until wilted.","Add plant-based milk, cornstarch mixture, and nutritional yeast to the pan.","Stir until well combined.","Season with salt and black pepper to taste.","Cook until the sauce thickens and simmers for a few minutes.","Serve the pasta with the sauce on top.","Enjoy!"]}],"nutrition":{"calories":"491","fat":"13g","sugar":"4g","protein":"20g"},"image":{"large":"/images/ai-recipes/50720231637_large.jpg","medium":"/images/ai-recipes/50720231637_medium.jpg","small":"/images/ai-recipes/50720231637_small.jpg"}}
+{
+  "id": 150720231637,
+  "recipeName": "Vegan Spinach and Mushroom Pasta",
+  "excerpt": "This delicious vegan pasta dish is packed with nutrients and flavour!",
+  "servings": "2",
+  "prepTime": "PT10M",
+  "cookTime": "PT20M",
+  "totalTime": "PT30M",
+  "ingredients": [
+    {
+      "name": "Pasta",
+      "ingredients": [
+        {
+          "name": "Pasta",
+          "quantity": "250 g",
+          "notes": "spaghetti"
+        },
+        {
+          "name": "Water",
+          "quantity": "2 L",
+          "notes": "for boiling"
+        },
+        {
+          "name": "Salt",
+          "quantity": "1 tsp",
+          "notes": "for boiling pasta"
+        }
+      ]
+    },
+    {
+      "name": "Spinach and Mushroom Sauce",
+      "ingredients": [
+        {
+          "name": "Olive Oil",
+          "quantity": "2 tbsp",
+          "notes": ""
+        },
+        {
+          "name": "Garlic",
+          "quantity": "2 cloves",
+          "notes": "minced"
+        },
+        {
+          "name": "Mushrooms",
+          "quantity": "250 g",
+          "notes": "sliced"
+        },
+        {
+          "name": "Spinach",
+          "quantity": "200 g",
+          "notes": "chopped"
+        },
+        {
+          "name": "Plant-based Milk",
+          "quantity": "1/2 cup",
+          "notes": ""
+        },
+        {
+          "name": "Cornstarch",
+          "quantity": "1 tbsp",
+          "notes": "dissolved in 1 tbsp cold water"
+        },
+        {
+          "name": "Nutritional Yeast",
+          "quantity": "2 tbsp",
+          "notes": ""
+        },
+        {
+          "name": "Salt",
+          "quantity": "1 tsp",
+          "notes": ""
+        },
+        {
+          "name": "Black Pepper",
+          "quantity": "1/4 tsp",
+          "notes": "freshly ground"
+        }
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "name": "Boiling Pasta",
+      "instructions": [
+        "Bring a large pot of water to a boil.",
+        "Add salt and pasta to the pot.",
+        "Cook pasta according to package instructions.",
+        "Drain the pasta and set aside."
+      ]
+    },
+    {
+      "name": "Spinach and Mushroom Sauce",
+      "instructions": [
+        "Heat olive oil in a large pan over medium heat.",
+        "Add minced garlic and cook until fragrant.",
+        "Add sliced mushrooms and cook until tender.",
+        "Add chopped spinach and cook until wilted.",
+        "Add plant-based milk, cornstarch mixture, and nutritional yeast to the pan.",
+        "Stir until well combined.",
+        "Season with salt and black pepper to taste.",
+        "Cook until the sauce thickens and simmers for a few minutes.",
+        "Serve the pasta with the sauce on top.",
+        "Enjoy!"
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "491",
+    "fat": "13g",
+    "sugar": "4g",
+    "protein": "20g"
+  },
+  "image": {
+    "large": "/images/ai-recipes/50720231637_large.jpg",
+    "medium": "/images/ai-recipes/50720231637_medium.jpg",
+    "small": "/images/ai-recipes/50720231637_small.jpg"
+  }
+}
