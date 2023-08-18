@@ -119,7 +119,7 @@ const Layout: FC<PropsWithChildren<LayoutProps>> = (props) => {
     <LayoutContext.Provider value={contextValue}>
       <Script src="/lib/lazysizes.min.js" async />
       <Script src="/lib/ls.attrchange.js" async />
-      <div className={`${currTheme} ${layoutClass}`}>
+      <div className={`${currTheme} ${layoutClass} layout`}>
         <header className="body-width">
           <Navbar
             courseSummary={props.courseSummary}
@@ -146,7 +146,7 @@ const Layout: FC<PropsWithChildren<LayoutProps>> = (props) => {
             ...props.cuisineSummary,
           ]}
         />
-        <main className={`${mainContent}`}>
+        <main className={`layout-content ${mainContent}`}>
           {props.children}
           <Sidebar />
         </main>
