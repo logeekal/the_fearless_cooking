@@ -81,7 +81,20 @@ globalStyle('h1', {
 })
 
 globalStyle('h2', {
+  marginBlockStart: vars.space.normal,
   fontSize: vars.fontSize.heading,
+})
+
+globalStyle('h3', {
+  marginBlockStart: vars.space.normal,
+  fontSize: vars.fontSize.heading,
+  fontStyle: 'italic',
+})
+
+globalStyle('h4', {
+  marginBlockStart: vars.space.normal,
+  fontSize: vars.fontSize.para,
+  fontStyle: 'italic',
 })
 
 globalStyle('.upper', {
@@ -208,3 +221,31 @@ globalStyle('*::selection', {
 globalStyle('.disabled-feat', {
   display: 'none !important',
 })
+
+//////////////////////
+// Figure
+//////////////////////
+globalStyle('figure', {
+  display: 'flex',
+  flexDirection: 'column',
+})
+
+globalStyle('figcaption', {
+  fontSize: '1.3rem',
+  marginBlockStart: '0px',
+  paddingBlockStart: '2px',
+  backgroundColor: vars.colors.brand,
+  color: vars.colors.card,
+  lineHeight: '2.3rem',
+  paddingInline: '5px',
+  fontStyle: 'italic',
+  borderBottomLeftRadius: '5px',
+  borderBottomRightRadius: '5px',
+  display: 'inline-flex',
+  flexDirection: 'row-reverse',
+})
+globalStyle('figcaption a', {
+  color: vars.colors.card,
+})
+//////////////////////
+//////////////////////

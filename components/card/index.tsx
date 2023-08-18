@@ -60,7 +60,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
 
   if (!thumbnailUrl) return <></>
   return (
-    <NextLink prefetch={false} href={post.uri}>
+    <NextLink legacyBehavior prefetch={false} href={post.uri}>
       <div className={`link card ${cardContainer}`} {...restProps}>
         <div className={`${cardImageContainer}`}>
           <img
