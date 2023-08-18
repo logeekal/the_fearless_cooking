@@ -3,7 +3,7 @@ import { style } from '@vanilla-extract/css'
 import { vars } from '../../styles/themes.css'
 
 export const modalBg = style({
-  position: 'fixed',
+  position: 'absolute',
   background: 'rgb(0,0,0,0.3)',
   backdropFilter: 'blur(2px)',
   width: '100vw',

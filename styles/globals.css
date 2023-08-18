@@ -3,3 +3,8 @@
     color-scheme: light;
   }
 }
+
+
+.lock-scroll {
+  overflow:hidden
+}

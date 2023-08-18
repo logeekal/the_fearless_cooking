@@ -244,8 +244,13 @@ globalStyle('figcaption', {
   display: 'inline-flex',
   flexDirection: 'row-reverse',
 })
+
 globalStyle('figcaption a', {
   color: vars.colors.card,
 })
 //////////////////////
 //////////////////////
+
+globalStyle('ol', {
+  marginBlock: vars.space.s,
+})

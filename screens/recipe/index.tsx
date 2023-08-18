@@ -5,8 +5,10 @@ import striptags from 'striptags'
 import BottomBar from '../../components/bottom_bar'
 import { cardCategory } from '../../components/card/card.css'
 import FAQs from '../../components/faq'
+import { useWindowSize } from '../../components/hooks/use_window_size'
 import RecipeCard from '../../components/recipe_card'
 import { SEO } from '../../components/SEO'
+import { BREAKPOINTS } from '../../styles/vars.css'
 import { SiteMeta } from '../../utils/config'
 import { ICompleteRecipe } from '../../utils/types'
 import {
@@ -25,6 +27,7 @@ type RecipePageProps = {
 
 function RecipePage(props: RecipePageProps) {
   const { recipe, isAI = false } = props
+  const { width } = useWindowSize()
 
   const categories = [
     ...(recipe.post.recipeCuisines?.nodes ?? []),
@@ -158,7 +161,9 @@ function RecipePage(props: RecipePageProps) {
         </div>
       ) : null}
 
-      <BottomBar recipe={recipeExists} faq={faqExists} />
+      {width < BREAKPOINTS.desktop.min ? (
+        <BottomBar recipe={recipeExists} faq={faqExists} />
+      ) : null}
     </div>
   )
 }

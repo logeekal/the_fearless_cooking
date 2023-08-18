@@ -12,11 +12,11 @@ export const bottomBar = style({
   background: vars.colors.card,
   bottom: 0,
   paddingBlock: vars.space.normal,
-  borderTopLeftRadius: '10px',
-  borderTopRightRadius: '10px',
+  // borderTopLeftRadius: '10px',
+  // borderTopRightRadius: '10px',
   paddingInline: vars.space.l,
   borderTop: '2px solid green',
-  boxShadow: '0px -5px 15px 15px rgba(255,255,255,1)',
+  // boxShadow: '0px -5px 15px 15px rgba(255,255,255,1)',
   '@media': {
     [breakPoints.mobile]: {
       ...rowFlex,
