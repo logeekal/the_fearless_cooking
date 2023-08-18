@@ -20,7 +20,6 @@ const Modal = (props: Props) => {
       document.body.classList.add(LOCK_SCROLL)
       return
     }
-
     document.body.classList.remove(LOCK_SCROLL)
   }, [show])
 

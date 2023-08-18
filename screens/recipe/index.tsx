@@ -161,7 +161,7 @@ function RecipePage(props: RecipePageProps) {
         </div>
       ) : null}
 
-      {width < BREAKPOINTS.desktop.min ? (
+      {width < BREAKPOINTS.mobile.max ? (
         <BottomBar recipe={recipeExists} faq={faqExists} />
       ) : null}
     </div>
