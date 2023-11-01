@@ -3,6 +3,7 @@ import striptags from 'striptags'
 import { Duration } from 'tinyduration'
 
 import { Recipe } from '../../types/wp-graphql.types'
+import { logger } from '../../utils/logger'
 import { ICompleteRecipe } from '../../utils/types'
 import Checkbox from '../checkbox'
 import { getStepURL } from '../utils'
@@ -64,6 +65,8 @@ const RecipeCard = forwardRef<HTMLDivElement, RecipeCardProps>(
         .map((cuisineObj) => cuisineObj)
       return cuisines ?? []
     }, [recipePost])
+
+    logger.info('recipeCuisines')
 
     const recipeCourses = useMemo(() => {
       const courses = recipePost.recipeCourses?.nodes

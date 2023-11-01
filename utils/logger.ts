@@ -1,8 +1,11 @@
-import { pino } from 'pino'
+import pino from 'pino'
 
 export const logger = pino({
   name: 'SSR',
   level: process.env.LOG_LEVEL ?? 'info',
+  browser: {
+    serialize: true,
+  },
   transport: {
     target: 'pino-pretty',
     options: {
@@ -10,10 +13,6 @@ export const logger = pino({
     },
   },
 })
-
-const prodDestination = pino.destination(
-  process.env.NODE_ENV === 'production' ? 0 : 1
-)
 
 export const devLogger = logger
 

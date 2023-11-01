@@ -5,8 +5,9 @@ import { Post, Recipe } from '../types/wp-graphql.types'
 export type IRecipeContent = typeof RECIPE_SAMPLE_CONTENT
 export type IFAQRestContent = typeof FAQ_REST_DATA
 
-export interface IWPGraphQL<T> {
+export type IWPGraphQL<T> = {
   data: T
+  errors?: Array<unknown>
 }
 
 export type RecipeContent = IRecipeContent['data'][0]['recipe_metas']

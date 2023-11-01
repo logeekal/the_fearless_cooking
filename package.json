@@ -20,11 +20,13 @@
     "ai-recipe-day-download": "ts-node ./scripts/downloadAIRecipe.ts",
     "load-env-dev": "dotenv -e .env.local",
     "ai-recipe-day": "npm run load-env-dev ansible-playbook deploys/publish-recipe-of-day.yml ",
-    "ts": "ts-node"
+    "ts": "ts-node",
+    "tsc": "tsc"
   },
   "dependencies": {
-    "@netlify/functions": "^1.6.0",
+    "@netlify/functions": "^2.0.1",
     "@popperjs/core": "^2.11.6",
+    "@tanstack/react-query": "^4.33.0",
     "@types/jest": "^29.2.0",
     "@types/lunr": "^2.3.4",
     "@vanilla-extract/babel-plugin": "^1.1.7",
@@ -67,6 +69,7 @@
     "@graphql-codegen/typescript": "^2.8.6",
     "@swc/core": "^1.2.231",
     "@swc/helpers": "^0.4.6",
+    "@tanstack/eslint-plugin-query": "^4.32.5",
     "@types/isomorphic-fetch": "^0.0.36",
     "@types/node": "18.0.6",
     "@types/nodemailer": "^6.4.7",

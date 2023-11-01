@@ -75,7 +75,7 @@ export const handler: Handler = async (event) => {
       })
     }
     return Promise.resolve({
-      statusCode: 402,
+      statusCode: 405,
       body: 'Method not allowed',
     })
   } catch (err) {

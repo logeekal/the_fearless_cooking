@@ -5,12 +5,14 @@ import striptags from 'striptags'
 import BottomBar from '../../components/bottom_bar'
 import { cardCategory } from '../../components/card/card.css'
 import FAQs from '../../components/faq'
+import { useGetComments } from '../../components/hooks/comments'
 import { useWindowSize } from '../../components/hooks/use_window_size'
 import RecipeCard from '../../components/recipe_card'
 import { SEO } from '../../components/SEO'
 import { BREAKPOINTS } from '../../styles/vars.css'
 import { SiteMeta } from '../../utils/config'
 import { ICompleteRecipe } from '../../utils/types'
+import { CommentComponent } from '../comments'
 import {
   FAQSection,
   featuredImageContainer,
@@ -49,6 +51,12 @@ function RecipePage(props: RecipePageProps) {
       ? mediumImageSet[0]?.sourceUrl ?? ''
       : ''
 
+  const comments = useGetComments(
+    recipe.post.databaseId,
+    1,
+    recipe.post.comments?.nodes ?? []
+  )
+
   return (
     <div id={`recipe ${recipeContainer}`}>
       <SEO
@@ -68,6 +76,17 @@ function RecipePage(props: RecipePageProps) {
           },
         ]}
       />
+      {props.recipe.post.comments?.nodes?.map(
+        (commentNode) =>
+          !commentNode?.parentDatabaseId && (
+            <CommentComponent
+              initialCommentData={commentNode}
+              postId={props.recipe.post.recipeId}
+              key={commentNode?.databaseId}
+            />
+          )
+      )}
+
       <div id="recipe-post" className={`recipe-post ${recipePost}`}>
         <div className="recipe__postHeader">
           <h1

@@ -4,7 +4,9 @@
 
 [functions]
   directory = './server/functions/'
-  node_bundler = 'esbuild'
+  included_files = ["server/**/*.*","services/**/*.*"]
+  node_bundler = "esbuild"
+  external_node_modules = ["axios"]
 
 [dev]
   functionsPort = 9999
