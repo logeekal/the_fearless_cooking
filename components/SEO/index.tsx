@@ -1,5 +1,5 @@
+import NextHead from 'next/head'
 import React from 'react'
-import Helmet from 'react-helmet'
 
 import { SiteMeta as siteMetadata } from '../../utils/config'
 //import genRecipeSchema from './utils/genRecipeSchema'
@@ -28,11 +28,7 @@ export function SEO({
 }: SEOProps) {
   return (
     <>
-      <Helmet
-        htmlAttributes={{
-          lang: 'en',
-        }}
-      >
+      <NextHead>
         {/* General Tags */}
         <title>{title || siteMetadata.title}</title>
         <meta
@@ -74,7 +70,7 @@ export function SEO({
               {schemaObj.schema}
             </script>
           ))}
-      </Helmet>
+      </NextHead>
     </>
   )
 }
