@@ -4,7 +4,7 @@
 
 [functions]
   directory = './server/functions/'
-  included_files = ["server/**/*.*","services/**/*.*"]
+  included_files = ["server/**/*.*","services/**/*.*", "utils/**/*.ts"]
   node_bundler = "esbuild"
   external_node_modules = ["axios"]
 

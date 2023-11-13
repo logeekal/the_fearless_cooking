@@ -445,5 +445,4 @@ query GET_POST_COMMENTS {
                 }
     }
   }
-}
 ` 

@@ -19,10 +19,11 @@ export const handler: Handler = async (event: HandlerEvent) => {
     getIfExists(postId, 'postId')
 
     const output = await getAllCommentsController(parsedBody)
-    return {
+
+    return Promise.resolve({
       statusCode: 200,
       body: JSON.stringify(output),
-    }
+    })
   } catch (err) {
     console.error({ err })
     return Promise.resolve({

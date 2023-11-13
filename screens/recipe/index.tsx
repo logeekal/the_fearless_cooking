@@ -4,6 +4,7 @@ import striptags from 'striptags'
 
 import BottomBar from '../../components/bottom_bar'
 import { cardCategory } from '../../components/card/card.css'
+import { CommentEditor } from '../../components/comments'
 import FAQs from '../../components/faq'
 import { useGetComments } from '../../components/hooks/comments'
 import { useWindowSize } from '../../components/hooks/use_window_size'
@@ -179,6 +180,7 @@ function RecipePage(props: RecipePageProps) {
           <FAQs faqs={recipe.faqs} />
         </div>
       ) : null}
+      <CommentEditor />
 
       {width < BREAKPOINTS.mobile.max ? (
         <BottomBar recipe={recipeExists} faq={faqExists} />
