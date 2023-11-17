@@ -4,9 +4,8 @@ import striptags from 'striptags'
 
 import BottomBar from '../../components/bottom_bar'
 import { cardCategory } from '../../components/card/card.css'
-import { CommentEditor } from '../../components/comments'
+import { CommentForm } from '../../components/comments/comment_form'
 import FAQs from '../../components/faq'
-import { useGetComments } from '../../components/hooks/comments'
 import { useWindowSize } from '../../components/hooks/use_window_size'
 import RecipeCard from '../../components/recipe_card'
 import { SEO } from '../../components/SEO'
@@ -52,11 +51,11 @@ function RecipePage(props: RecipePageProps) {
       ? mediumImageSet[0]?.sourceUrl ?? ''
       : ''
 
-  const comments = useGetComments(
-    recipe.post.databaseId,
-    1,
-    recipe.post.comments?.nodes ?? []
-  )
+  // const comments = useGetComments(
+  //   recipe.post.databaseId,
+  //   1,
+  //   recipe.post.comments?.nodes ?? []
+  // )
 
   return (
     <div id={`recipe ${recipeContainer}`}>
@@ -180,7 +179,7 @@ function RecipePage(props: RecipePageProps) {
           <FAQs faqs={recipe.faqs} />
         </div>
       ) : null}
-      <CommentEditor />
+      <CommentForm />
 
       {width < BREAKPOINTS.mobile.max ? (
         <BottomBar recipe={recipeExists} faq={faqExists} />

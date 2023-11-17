@@ -1,6 +1,7 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import React, { useCallback, useState } from 'react'
 
+import { useGetCommentRepliesQuery } from '../../components/hooks/comments/use_get_comment_replies_query'
 import { ApiService } from '../../services/ApiService'
 import { Comment, Maybe } from '../../types/wp-graphql.types'
 
@@ -15,14 +16,10 @@ export const CommentComponent = (props: Props) => {
   const queryClient = useQueryClient()
   const { initialCommentData, postId } = props
 
-  const commentQuery = useQuery({
-    queryKey: ['commentReplies', initialCommentData?.id],
-    queryFn: () =>
-      initialCommentData?.id
-        ? apiService.getReplies({ commentInternalId: initialCommentData?.id })
-        : [],
-    initialData: initialCommentData,
-  })
+  const commentWithReplies = useGetCommentRepliesQuery(
+    {},
+    initialCommentData ?? undefined
+  )
 
   const addReplyMutation = useMutation({
     mutationFn: apiService.addComment,
@@ -34,7 +31,7 @@ export const CommentComponent = (props: Props) => {
 
   const addReply = useCallback(() => {
     addReplyMutation.mutate({
-      parent: commentQuery.data?.commentId ?? 0,
+      parent: commentWithReplies?.data?.commentId ?? 0,
       content: newReply,
       status: 'approve',
       meta: {
@@ -45,12 +42,14 @@ export const CommentComponent = (props: Props) => {
       author_user_agent: 'chrome',
       post: postId,
     })
-  }, [addReplyMutation, commentQuery.data?.commentId, newReply, postId])
+  }, [addReplyMutation, commentWithReplies?.data?.commentId, newReply, postId])
 
   return (
     <div>
-      <p>{commentQuery.data?.content}</p>
-      <p> {`Replies: ${commentQuery.data?.replies?.edges?.length ?? 0}`}</p>
+      <p>{commentWithReplies?.data?.content}</p>
+      <p>
+        {`Replies: ${commentWithReplies?.data?.replies?.edges?.length ?? 0}`}
+      </p>
       <textarea
         value={newReply}
         onChange={(e) => setNewReply(e.target.value)}

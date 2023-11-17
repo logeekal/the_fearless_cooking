@@ -87,6 +87,7 @@ export const ToolBarIcon = (props: PropsWithChildren<ToolbarIconProps>) => {
     } else if (
       ['block-quote', 'numbered-list', 'bulleted-list'].includes(type)
     ) {
+      // @ts-expect-error not sure of the error
       toggleBlock(editor, type)
     }
   }, [type, editor])

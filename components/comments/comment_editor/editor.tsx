@@ -15,7 +15,7 @@ import {
   withReact,
 } from 'slate-react'
 
-import { vars } from '../../styles/themes.css'
+import { vars } from '../../../styles/themes.css'
 import * as classes from './styles.css'
 import {
   ToolBarControl,
@@ -25,11 +25,11 @@ import {
 } from './toolbar'
 
 interface CommentEditorProps {
-  onSubmit: (text: string) => void
+  onSubmit?: (text: string) => void
 }
 import './types'
 
-const initialValue = [
+const initialValue: Descendant[] = [
   {
     type: 'paragraph',
     children: [{ text: '' }],
@@ -39,7 +39,7 @@ const initialValue = [
 export const CommentEditor = (props: CommentEditorProps) => {
   const { onSubmit } = props
 
-  const [, setCommentValue] = useLocalStorage<Descendant[]>(
+  const [commentValue, setCommentValue] = useLocalStorage<Descendant[]>(
     'current.comment.value',
     initialValue,
     {
@@ -47,6 +47,7 @@ export const CommentEditor = (props: CommentEditorProps) => {
       deserialize: JSON.parse,
     }
   )
+
   const commentsContainerRef = useRef<HTMLDivElement>(null)
   const [editor, setEditor] = useState<BaseEditor & ReactEditor>()
 
@@ -126,7 +127,7 @@ export const CommentEditor = (props: CommentEditorProps) => {
       {inView && editor ? (
         <Slate
           editor={editor}
-          initialValue={initialValue}
+          initialValue={commentValue}
           onChange={handleValueChange}
         >
           <div className={`comment-editor ${classes.commentEditorClass}`}>

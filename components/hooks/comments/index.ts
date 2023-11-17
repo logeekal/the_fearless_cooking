@@ -1,24 +1,15 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  UseQueryOptions,
+} from '@tanstack/react-query'
 import { useCallback } from 'react'
 
 import { ApiService } from '../../../services/ApiService'
 import { AddCommentArgs, CommentCreatedResponse } from '../../../services/types'
 import { Comment } from '../../../types/wp-graphql.types'
 import { queryKey } from './constants'
-
-export const useCommentReplies = (comment: Comment | undefined) => {
-  const apiService = new ApiService()
-  const replies = useQuery({
-    queryKey: [queryKey.COMMENT_REPLIES, comment?.id],
-    queryFn: () =>
-      comment?.id
-        ? apiService.getReplies({ commentInternalId: comment?.id })
-        : [],
-    initialData: comment,
-  })
-
-  return replies
-}
 
 export const useAddReply = (parentComment: Comment) => {
   const apiService = new ApiService()
@@ -44,7 +35,8 @@ export const useAddReply = (parentComment: Comment) => {
 export const useGetComments = (
   postId: number,
   page: number,
-  initialData?: CommentCreatedResponse[]
+  initialData?: CommentCreatedResponse[],
+  options?: UseQueryOptions<CommentCreatedResponse[]>
 ) => {
   const apiService = new ApiService()
 
@@ -53,9 +45,9 @@ export const useGetComments = (
     queryFn: () =>
       apiService.getAllCommentsPerPost({
         postId,
-        page,
       }),
     initialData,
+    ...options,
   })
 
   return comments
