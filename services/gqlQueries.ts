@@ -414,12 +414,11 @@ query GET_RECIPE_COMMENTS {
                 }
     }
   }
-}
 `
 
 export const GET_ALL_COMMENTS_PER_POST = (postId: number, first: number=100, after: string | null = null) =>`
 query GET_POST_COMMENTS {
-    recipe(id: ${postId}, idType: DATABASE_ID) {
+    post(id: ${postId}, idType: DATABASE_ID) {
                 commentCount
                 comments(first: ${first}, after: ${after}, where: {parent:0}) {
                   pageInfo {

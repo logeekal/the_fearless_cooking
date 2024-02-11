@@ -24,6 +24,14 @@ export const FAQSection = style({
   },
 })
 
+export const commentSection = style({
+  '@media': {
+    'screen and (max-width: 1000px)': {
+      ...bodyWidthRule,
+    },
+  },
+})
+
 export const recipeCategories = style({
   marginBottom: vars.space.normal,
   display: 'flex',

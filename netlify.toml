@@ -1,6 +1,6 @@
 [build]
   publish = 'out'
-  command = 'yarn export'
+  command = 'CI= yarn export'
 
 [functions]
   directory = './server/functions/'

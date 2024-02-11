@@ -16,6 +16,7 @@ import {
 } from 'react'
 
 import { LayoutProps } from '../components/layout'
+import { withFingerprint } from '../components/safe_fingerprint/with_fingerprint'
 
 export type NextPageWithLayout<P> = NextPage<P> & {
   getLayout?: (page: ReactElement, props: LayoutProps) => ReactNode
@@ -43,7 +44,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout<unknown>) {
    * only when there is relevant state change of router
    * */
   const CompWithPlausible = useMemo(
-    () => withQueryClient(withPlausible(Component)),
+    () => withFingerprint(withQueryClient(withPlausible(Component))),
     [router.pathname, router.isReady, router.locale, Component]
   )
 

@@ -2,6 +2,7 @@ import { useQuery, UseQueryOptions } from '@tanstack/react-query'
 
 import { ApiService } from '../../../services/ApiService'
 import { Comment } from '../../../types/wp-graphql.types'
+import { queryKey } from './constants'
 
 export const useGetCommentRepliesQuery = (
   options: Omit<
@@ -12,7 +13,7 @@ export const useGetCommentRepliesQuery = (
 ) => {
   const apiService = new ApiService()
   const commentQuery = useQuery({
-    queryKey: ['commentReplies', initialCommentData?.id],
+    queryKey: [queryKey.COMMENT_REPLIES, initialCommentData?.id],
     queryFn: () =>
       initialCommentData?.id
         ? apiService.getReplies({

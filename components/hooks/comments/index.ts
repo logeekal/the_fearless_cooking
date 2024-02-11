@@ -1,30 +1,30 @@
-import {
-  useMutation,
-  useQuery,
-  useQueryClient,
-  UseQueryOptions,
-} from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useCallback } from 'react'
 
 import { ApiService } from '../../../services/ApiService'
-import { AddCommentArgs, CommentCreatedResponse } from '../../../services/types'
-import { Comment } from '../../../types/wp-graphql.types'
+import { AddCommentArgs } from '../../../services/types'
+import { Comment, Maybe } from '../../../types/wp-graphql.types'
 import { queryKey } from './constants'
 
-export const useAddReply = (parentComment: Comment) => {
+export const useAddReply = (parentComment?: Comment) => {
   const apiService = new ApiService()
   const queryClient = useQueryClient()
   const addReplyMutation = useMutation({
     mutationFn: apiService.addComment,
-    onSuccess: () =>
-      queryClient.invalidateQueries({
-        queryKey: [queryKey.COMMENT_REPLIES, parentComment.id],
-      }),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: [queryKey.COMMENT_REPLIES, parentComment?.id],
+      })
+
+      await queryClient.invalidateQueries({
+        queryKey: [queryKey.ALL_COMMENTS_PER_POST],
+      })
+    },
   })
 
   const addReply = useCallback(
-    (args: AddCommentArgs) => {
-      addReplyMutation.mutate(args)
+    async (args: AddCommentArgs) => {
+      await addReplyMutation.mutateAsync(args)
     },
     [addReplyMutation]
   )
@@ -32,12 +32,17 @@ export const useAddReply = (parentComment: Comment) => {
   return addReply
 }
 
-export const useGetComments = (
-  postId: number,
-  page: number,
-  initialData?: CommentCreatedResponse[],
-  options?: UseQueryOptions<CommentCreatedResponse[]>
-) => {
+interface UseGetCommentsArgs {
+  postId: number
+  page?: number
+  initialData?: Maybe<Array<Maybe<Comment>>>
+}
+
+export const useGetComments = ({
+  postId,
+  page,
+  initialData,
+}: UseGetCommentsArgs) => {
   const apiService = new ApiService()
 
   const comments = useQuery({
@@ -47,8 +52,7 @@ export const useGetComments = (
         postId,
       }),
     initialData,
-    ...options,
   })
 
-  return comments
+  return comments.data
 }

@@ -1,14 +1,30 @@
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 
-import { Comment, Post } from '../types/wp-graphql.types'
+import { Comment, Post, Recipe } from '../types/wp-graphql.types'
 import { logger } from '../utils/logger'
 import { IWPGraphQL } from '../utils/types'
-import { GET_ALL_COMMENTS_PER_POST, GET_COMMENT_DETAILS } from './gqlQueries'
+import {
+  GET_ALL_COMMENTS_PER_POST,
+  GET_ALL_COMMENTS_PER_RECIPE,
+  GET_COMMENT_DETAILS,
+} from './gqlQueries'
 import {
   AddCommentArgs,
   CommentCreatedResponse,
   GetCommentsInputs,
 } from './types'
+
+const responseIsPost = (
+  response: AxiosResponse<IWPGraphQL<{ post: Post } | { recipe: Recipe }>>
+): response is AxiosResponse<IWPGraphQL<{ post: Post }>> => {
+  return 'post' in response.data.data
+}
+
+const responseIsRecipe = (
+  response: AxiosResponse<IWPGraphQL<{ post: Post } | { recipe: Recipe }>>
+): response is AxiosResponse<IWPGraphQL<{ recipe: Recipe }>> => {
+  return 'recipe' in response.data.data
+}
 
 export class CommentService {
   host: string
@@ -44,15 +60,30 @@ export class CommentService {
     }
   }
 
-  async getAllCommentsPerPost(args: GetCommentsInputs) {
-    logger.info('Getting comments for the post')
+  async getAllCommentsPerPost(
+    args: GetCommentsInputs,
+    postType: 'post' | 'recipe' = 'recipe'
+  ) {
+    logger.info('Getting comments for the post type : ', postType)
     const url = `${this.host}/graphql`
 
+    const query =
+      postType === 'post'
+        ? GET_ALL_COMMENTS_PER_POST(args.postId, args.first, args.after)
+        : GET_ALL_COMMENTS_PER_RECIPE(args.postId, args.first, args.after)
+
     try {
-      const response = await axios.post<IWPGraphQL<Post>>(
+      const response = await axios.post<
+        IWPGraphQL<
+          | {
+              post: Post
+            }
+          | { recipe: Recipe }
+        >
+      >(
         url,
         JSON.stringify({
-          query: GET_ALL_COMMENTS_PER_POST(args.postId, args.first, args.after),
+          query,
         }),
         {
           headers: {
@@ -69,13 +100,27 @@ export class CommentService {
         throw new Error(JSON.stringify(response.data.errors))
       }
 
-      const comments = response.data.data.comments?.nodes
+      if (responseIsPost(response)) {
+        const comments = response.data.data.post.comments?.nodes
 
-      return comments && Array.isArray(comments) && comments[0] !== null
-        ? (comments as Comment[])
-        : ([] as Comment[])
+        return comments && Array.isArray(comments) && comments[0] !== null
+          ? (comments as Comment[])
+          : ([] as Comment[])
+      } else if (responseIsRecipe(response)) {
+        const comments = response.data.data.recipe.comments?.nodes
+
+        return comments && Array.isArray(comments) && comments[0] !== null
+          ? (comments as Comment[])
+          : ([] as Comment[])
+      } else {
+        throw `Neither post nor recipe is found in response : ${JSON.stringify(
+          response.data,
+          undefined,
+          2
+        )}`
+      }
     } catch (e) {
-      console.error(e)
+      logger.error(e)
       throw e
     }
   }

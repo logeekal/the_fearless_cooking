@@ -5,6 +5,7 @@ import {
   GetRepliesControllerOutput,
 } from '../server/routes/controllers/comments'
 import { SearchResultType } from '../types/common'
+import { Comment } from '../types/wp-graphql.types'
 import {
   AddCommentArgs,
   CommentCreatedResponse,
@@ -33,7 +34,7 @@ export class ApiService {
   addComment = async (
     args: AddCommentArgs
   ): Promise<CommentCreatedResponse> => {
-    const addCommentURI = `${this.BASE_URL}/comments/add`
+    const addCommentURI = `${this.BASE_URL}/comments_add`
     try {
       const result = await axios.post<CommentCreatedResponse>(
         addCommentURI,
@@ -48,13 +49,10 @@ export class ApiService {
 
   getAllCommentsPerPost = async (
     args: GetCommentsInputs
-  ): Promise<CommentCreatedResponse[]> => {
-    const getAllCommentsPerPostUri = `${this.BASE_URL}/comments/all`
+  ): Promise<Comment[]> => {
+    const getAllCommentsPerPostUri = `${this.BASE_URL}/comments_all`
     try {
-      const result = await axios.post<CommentCreatedResponse[]>(
-        getAllCommentsPerPostUri,
-        args
-      )
+      const result = await axios.post<Comment[]>(getAllCommentsPerPostUri, args)
 
       return result.data
     } catch (err) {

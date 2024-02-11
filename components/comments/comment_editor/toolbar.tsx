@@ -1,4 +1,11 @@
-import { FC, forwardRef, PropsWithChildren, useCallback, useMemo } from 'react'
+import {
+  FC,
+  forwardRef,
+  MouseEventHandler,
+  PropsWithChildren,
+  useCallback,
+  useMemo,
+} from 'react'
 import {
   AiOutlineBold,
   AiOutlineItalic,
@@ -9,7 +16,7 @@ import {
 import { PiQuotes } from 'react-icons/pi'
 import { useSlate } from 'slate-react'
 
-import { toggleBlock, toggleMark } from './helper'
+import { isBlockActive, isMarkActive, toggleBlock, toggleMark } from './helper'
 import { toolbarControlClass, toolbarIconClass } from './styles.css'
 
 interface ToolbarIconProps {
@@ -80,23 +87,44 @@ export const ToolBarIcon = (props: PropsWithChildren<ToolbarIconProps>) => {
     }
   }, [type])
 
-  const handleMouseDown = useCallback(() => {
-    if (!type) return
+  const isActive = () => {
+    if (!type) return false
     if (['bold', 'italic', 'underlined'].includes(type)) {
-      toggleMark(editor, type)
+      return isMarkActive(editor, type)
     } else if (
       ['block-quote', 'numbered-list', 'bulleted-list'].includes(type)
     ) {
-      // @ts-expect-error not sure of the error
-      toggleBlock(editor, type)
+      return isBlockActive(editor, type)
     }
-  }, [type, editor])
+    return
+  }
+
+  const handleMouseDown: MouseEventHandler = useCallback(
+    (e) => {
+      e.stopPropagation()
+      e.preventDefault()
+      if (!type) return
+      if (['bold', 'italic', 'underlined'].includes(type)) {
+        toggleMark(editor, type)
+      } else if (
+        ['block-quote', 'numbered-list', 'bulleted-list'].includes(type)
+      ) {
+        // @ts-expect-error not sure of the error
+        toggleBlock(editor, type)
+      }
+    },
+    [type, editor]
+  )
 
   if (icon && type)
     return (
-      <div className={`${toolbarIconClass}`}>
-        <button onMouseDown={handleMouseDown}>{icon}</button>
-      </div>
+      <button
+        className={`${toolbarIconClass} ${isActive() ? 'active' : ''}`}
+        tabIndex={-1}
+        onClick={handleMouseDown}
+      >
+        {icon}
+      </button>
     )
 
   return <div>{children}</div>

@@ -22,6 +22,7 @@
   },
   "include": [
     "next-env.d.ts",
+    "types/loglevel-prefix.d.ts",
     "**/*.ts",
     "**/*.tsx"
   ],

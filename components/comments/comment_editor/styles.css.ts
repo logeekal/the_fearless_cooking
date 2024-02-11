@@ -1,6 +1,7 @@
 import { style } from '@vanilla-extract/css'
 import { calc } from '@vanilla-extract/css-utils'
 
+import { breakPoints } from '../../../styles/breakpoints.css'
 import { vars } from '../../../styles/themes.css'
 
 export const toolbarControlClass = style({
@@ -20,6 +21,20 @@ export const toolbarIconClass = style({
   display: 'inline-grid',
   placeItems: 'center',
   maxHeight: '48px',
+  height: '40px',
+  width: '40px',
+  '@media': {
+    [breakPoints.mobile]: {
+      height: '35px',
+      width: '35px',
+    },
+  },
+
+  selectors: {
+    '.active.&': {
+      backgroundColor: vars.colors.yellowLight,
+    },
+  },
 
   ':hover': {
     cursor: 'pointer',
@@ -32,29 +47,15 @@ export const toolbarIconClass = style({
 
   ':focus': {
     backgroundColor: vars.colors.yellowLight,
+    outline: `1px solid ${vars.colors.brand}`,
   },
 })
 
 export const commentEditorClass = style({
   position: 'relative',
-  border: `1px solid ${vars.colors.brand}`,
+  // border: `1px solid ${vars.colors.brand}`,
   padding: vars.space.normal,
   paddingBottom: calc.multiply(vars.space.normal, 4),
+  backgroundColor: vars.colors.greenLight,
   minHeight: '150px',
-})
-
-export const submitButton = style({
-  display: 'flex',
-  flexDirection: 'row',
-  justifyContent: 'center',
-  alignItems: 'center',
-  gap: vars.space.s,
-  backgroundColor: vars.colors.brand,
-  width: '100%',
-  color: vars.colors.card,
-  paddingBlock: vars.space.s,
-  paddingInline: vars.space.normal,
-  height: '48px',
-  minWidth: '100px',
-  cursor: 'pointer',
 })

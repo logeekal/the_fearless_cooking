@@ -2,9 +2,21 @@ import {
   useIntersectionObserver,
   useLocalStorage,
 } from '@react-hooks-library/core'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { BsFillSendPlusFill } from 'react-icons/bs'
-import { BaseEditor, createEditor, Descendant } from 'slate'
+import React, {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
+import {
+  createEditor,
+  Descendant,
+  Editor as SlateEditor,
+  Transforms,
+} from 'slate'
 import { withHistory } from 'slate-history'
 import {
   Editable,
@@ -16,6 +28,7 @@ import {
 } from 'slate-react'
 
 import { vars } from '../../../styles/themes.css'
+import { deserializeHtml, serializeHtml } from './sed_html'
 import * as classes from './styles.css'
 import {
   ToolBarControl,
@@ -25,7 +38,9 @@ import {
 } from './toolbar'
 
 interface CommentEditorProps {
-  onSubmit?: (text: string) => void
+  submitButton?: React.ReactNode
+  onChange?: (value: string) => void
+  value?: string
 }
 import './types'
 
@@ -36,35 +51,74 @@ const initialValue: Descendant[] = [
   },
 ]
 
-export const CommentEditor = (props: CommentEditorProps) => {
-  const { onSubmit } = props
+export interface CommentEditorRef {
+  clearEditor: () => void
+}
 
-  const [commentValue, setCommentValue] = useLocalStorage<Descendant[]>(
+export const CommentEditor = forwardRef<
+  CommentEditorRef | null,
+  CommentEditorProps
+>(function CommentEditor(props, ref) {
+  const { submitButton, value, onChange } = props
+
+  const [commentValue, setCommentValue] = useLocalStorage<string>(
     'current.comment.value',
-    initialValue,
-    {
-      serialize: JSON.stringify,
-      deserialize: JSON.parse,
+    value ?? serializeHtml(initialValue)
+  )
+  const commentsContainerRef = useRef<HTMLDivElement>(null)
+  const [editor, setEditor] = useState<SlateEditor>()
+
+  const clearEditor = useCallback(() => {
+    if (!editor) return
+
+    Transforms.select(editor, [])
+
+    Transforms.removeNodes(editor, { mode: 'highest', hanging: true })
+    // insert an empty paragraph
+    if (editor.children.length === 0) {
+      Transforms.insertNodes(editor, {
+        type: 'paragraph',
+        children: [{ text: '' }],
+      })
     }
+    return
+  }, [editor])
+
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        clearEditor: clearEditor,
+      }
+    },
+    [clearEditor]
   )
 
-  const commentsContainerRef = useRef<HTMLDivElement>(null)
-  const [editor, setEditor] = useState<BaseEditor & ReactEditor>()
+  const slateInitialValue = useMemo(() => {
+    if (typeof window === 'undefined' || !commentValue) return initialValue
+    const val = new window.DOMParser().parseFromString(
+      commentValue,
+      'text/html'
+    )
+    const result = deserializeHtml(val.body)
+    return result
+  }, [commentValue])
 
   const { inView, stop } = useIntersectionObserver(commentsContainerRef)
 
   useEffect(() => {
     if (editor || !inView) return
-
     setEditor(withReact(withHistory(createEditor())))
     stop()
   }, [editor, inView, stop])
 
   const handleValueChange = useCallback(
     (value: Descendant[]) => {
-      setCommentValue(value)
+      const serializedValue = serializeHtml(value)
+      if (onChange) onChange(serializedValue)
+      setCommentValue(serializedValue)
     },
-    [setCommentValue]
+    [setCommentValue, onChange]
   )
 
   const renderElement = useCallback(
@@ -122,12 +176,22 @@ export const CommentEditor = (props: CommentEditorProps) => {
     []
   )
 
+  const onEditableFocused = useCallback(() => {
+    if (!editor) return
+    ReactEditor.focus(editor)
+  }, [editor])
+
   return (
     <div ref={commentsContainerRef}>
+      <input
+        style={{ display: 'none' }}
+        type="text"
+        onFocus={onEditableFocused}
+      />
       {inView && editor ? (
         <Slate
           editor={editor}
-          initialValue={commentValue}
+          initialValue={slateInitialValue as Descendant[]}
           onChange={handleValueChange}
         >
           <div className={`comment-editor ${classes.commentEditorClass}`}>
@@ -141,15 +205,13 @@ export const CommentEditor = (props: CommentEditorProps) => {
                 <ToolBarIcon type="bulleted-list" />
               </ToolbarControlLeft>
               <ToolbarControlRight>
-                <ToolBarIcon>
-                  <button className={`${classes.submitButton}`}>
-                    <p> {'Submit'} </p>
-                    <BsFillSendPlusFill color={vars.colors.card} />
-                  </button>
-                </ToolBarIcon>
+                <ToolBarIcon>{submitButton}</ToolBarIcon>
               </ToolbarControlRight>
             </ToolBarControl>
             <Editable
+              value={commentValue}
+              onMouseDown={onEditableFocused}
+              onFocus={onEditableFocused}
               renderElement={renderElement}
               renderLeaf={renderLeaf}
               placeholder="Add your comment here 🎉"
@@ -159,4 +221,4 @@ export const CommentEditor = (props: CommentEditorProps) => {
       ) : null}
     </div>
   )
-}
+})

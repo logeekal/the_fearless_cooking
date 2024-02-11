@@ -4,7 +4,6 @@ import striptags from 'striptags'
 
 import BottomBar from '../../components/bottom_bar'
 import { cardCategory } from '../../components/card/card.css'
-import { CommentForm } from '../../components/comments/comment_form'
 import FAQs from '../../components/faq'
 import { useWindowSize } from '../../components/hooks/use_window_size'
 import RecipeCard from '../../components/recipe_card'
@@ -12,8 +11,9 @@ import { SEO } from '../../components/SEO'
 import { BREAKPOINTS } from '../../styles/vars.css'
 import { SiteMeta } from '../../utils/config'
 import { ICompleteRecipe } from '../../utils/types'
-import { CommentComponent } from '../comments'
+import { CommentSection } from '../comments'
 import {
+  commentSection,
   FAQSection,
   featuredImageContainer,
   featuredImageSquareContainer,
@@ -76,16 +76,6 @@ function RecipePage(props: RecipePageProps) {
           },
         ]}
       />
-      {props.recipe.post.comments?.nodes?.map(
-        (commentNode) =>
-          !commentNode?.parentDatabaseId && (
-            <CommentComponent
-              initialCommentData={commentNode}
-              postId={props.recipe.post.recipeId}
-              key={commentNode?.databaseId}
-            />
-          )
-      )}
 
       <div id="recipe-post" className={`recipe-post ${recipePost}`}>
         <div className="recipe__postHeader">
@@ -179,7 +169,12 @@ function RecipePage(props: RecipePageProps) {
           <FAQs faqs={recipe.faqs} />
         </div>
       ) : null}
-      <CommentForm />
+      <section className={`comment-section-container ${commentSection}`}>
+        <CommentSection
+          rootComments={recipe.post.comments?.nodes}
+          postId={recipe.post.recipeId}
+        />
+      </section>
 
       {width < BREAKPOINTS.mobile.max ? (
         <BottomBar recipe={recipeExists} faq={faqExists} />

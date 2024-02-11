@@ -5,16 +5,19 @@ export const Captcha = () => {
     const turnstileScriptEl = document.createElement('script')
     const callbackScriptEl = document.createElement('script')
     callbackScriptEl.src = `
-          function _turnstileOnLoadCallback() {
-          global.turnstile.render('#turnstile-container', {
-            sitekey: '0x4AAAAAAANKStAZSqyBCdYE',
-            callback: function (token: string) {
-              console.log('Challenge Success', token)
-            },
-          })
+          function _turnstileCb() {
+            console.debug('Rendering turnstile')
+            global.turnstile.render('#turnstile-container', {
+              sitekey: '0x4AAAAAAANKStAZSqyBCdYE',
+              theme: 'light',
+              callback: function (token: string) {
+                console.log('Challenge Success', token)
+              },
+            })
         } `
     turnstileScriptEl.src =
       'https://challenges.cloudflare.com/turnstile/v0/api.js'
+    turnstileScriptEl.defer = true
 
     turnstileScriptEl.async = true
 

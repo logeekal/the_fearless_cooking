@@ -1,6 +1,7 @@
 import { Handler, HandlerEvent } from '@netlify/functions'
 
 import { GetCommentsInputs } from '../../services/types'
+import { logger } from '../../utils/logger'
 import { getAllCommentsController } from '../routes/controllers/comments'
 import { getIfExists } from '../utils/func_utils'
 
@@ -19,6 +20,7 @@ export const handler: Handler = async (event: HandlerEvent) => {
     getIfExists(postId, 'postId')
 
     const output = await getAllCommentsController(parsedBody)
+    logger.debug({ output })
 
     return Promise.resolve({
       statusCode: 200,
