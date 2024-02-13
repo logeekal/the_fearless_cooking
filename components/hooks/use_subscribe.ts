@@ -31,7 +31,7 @@ export const useSubscribe = () => {
         }),
       })
 
-      const resJSON = (await response.json()) as unknown
+      const resJSON = (await response.json()) as { title: string }
       if (response.status === 200) {
         setSubmitReqState('SUCCESS')
         return
