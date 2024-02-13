@@ -1,3 +1,5 @@
+import { Duration } from 'tinyduration'
+
 import { IDuration } from '../types/common'
 import { RecipeContent } from './types'
 
@@ -89,4 +91,15 @@ export const calculateTotalDuration = (
     cookTimeInDurations,
     totalDuration,
   }
+}
+
+export const getMilliSecondsFromDuration = (time: Duration) => {
+  return (
+    ((time.weeks ?? 0) * 7 * 24 * 60 * 60 +
+      (time.days ?? 0) * 24 * 60 * 60 +
+      (time.hours ?? 0) * 60 * 60 +
+      (time.minutes ?? 0) * 60 +
+      (time.seconds ?? 0)) *
+    1000
+  )
 }

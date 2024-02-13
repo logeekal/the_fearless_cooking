@@ -2978,6 +2978,18 @@
   resolved "https://registry.npmjs.org/@popperjs/core/-/core-2.11.6.tgz"
   integrity sha512-50/17A98tWUfQ176raKiOGXuYpLyyVMkxxG6oylzL3BPOlA6ADGdK7EYunSa4I064xerltq9TGXs8HmOk5E+vw==
 
+"@react-hooks-library/core@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@react-hooks-library/core/-/core-0.6.0.tgz#c66c63f4466629ed2cc4041e941bc0880eda814f"
+  integrity sha512-GfkoQw82/rBrrj7Yv2oEP9V8IByBLRtfxzIs/cCwH3ZT7bUxcbD7B1hT1Au7AGrzSrGaLzKKJ61mc1a21VuK6g==
+  dependencies:
+    "@react-hooks-library/shared" "0.6.0"
+
+"@react-hooks-library/shared@0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@react-hooks-library/shared/-/shared-0.6.0.tgz#088144aeec89f8d7facaa3171e3fb45eb85ef2ae"
+  integrity sha512-3OV9hhZ3eNBYLGUn/SFJ4VQou9f72fuviNNX1Tj6Dfk1Ck6oeZ1HVI7omrRxrBaNEE0eKTyONwTPjEFhsUrZVg==
+
 "@repeaterjs/repeater@3.0.4":
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/@repeaterjs/repeater/-/repeater-3.0.4.tgz#a04d63f4d1bf5540a41b01a921c9a7fddc3bd1ca"
