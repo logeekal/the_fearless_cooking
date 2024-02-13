@@ -182,7 +182,7 @@ const Search = () => {
   const getLoadingRender = useCallback(() => {
     return (
       <div className={`search__loader ${searchLoader}`}>
-        <Loader />
+        <Loader status="loading" />
       </div>
     )
   }, [])
