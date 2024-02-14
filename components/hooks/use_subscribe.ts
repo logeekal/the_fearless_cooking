@@ -1,9 +1,8 @@
 import { useState } from 'react'
 
-type UseSubscribeArgs = {
-  email: string
-  tags?: string[]
-}
+import { SubscriberInfo } from '../../server/services/types'
+
+type UseSubscribeArgs = SubscriberInfo
 
 export const useSubscribe = () => {
   const [submitRequestState, setSubmitReqState] = useState<
@@ -11,24 +10,26 @@ export const useSubscribe = () => {
   >('IDLE')
 
   async function submitHandler(args: UseSubscribeArgs): Promise<void> {
-    const { email, tags } = args
+    const { email, tags, campaign, instance } = args
     if (typeof window === 'undefined') return
 
     setSubmitReqState('SUBMITTING')
 
+    const subscriberInfo: SubscriberInfo = {
+      email: email,
+      campaign,
+      instance,
+      tags: [
+        process.env.NODE_ENV,
+        typeof window === 'undefined' ? 'backend' : window.location.pathname,
+        ...(tags ?? []),
+      ],
+    }
+
     if (email) {
       const response = await fetch('/.netlify/functions/subscribe', {
         method: 'POST',
-        body: JSON.stringify({
-          email: email,
-          tags: [
-            process.env.NODE_ENV,
-            typeof window === 'undefined'
-              ? 'backend'
-              : window.location.pathname,
-            ...(tags ?? []),
-          ],
-        }),
+        body: JSON.stringify(subscriberInfo),
       })
 
       const resJSON = (await response.json()) as { title: string }
@@ -36,7 +37,7 @@ export const useSubscribe = () => {
         setSubmitReqState('SUCCESS')
         return
       } else {
-        if (resJSON.title === 'Member Exists') {
+        if ('title' in resJSON && resJSON.title === 'Member Exists') {
           setSubmitReqState('EXIST')
           return
         }

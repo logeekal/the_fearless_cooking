@@ -16,6 +16,7 @@ const MANDATORY_ENVS = [
   'EMAIL_SENDER',
   'EMAIL_RECIPIENTS',
   'FROM_NAME',
+  'MAILERLITE_KEY',
 ]
 
 const OPTIONAL_ENVS: string[] = ['LOG_LEVEL']
