@@ -1,18 +1,23 @@
-import MailchimpClient from '../services/MailChimpClient'
+import { MailerLiteClient } from '../services/MailerLiteClient'
 
 const handler = async (event) => {
-  const subscribeService = new MailchimpClient()
+  const subscribeService = new MailerLiteClient()
 
   try {
     if (event.httpMethod === 'POST') {
       //console.log(event.body)
-      const { email, tags } = JSON.parse(event.body)
+      const { email, campaign, instance, tags } = JSON.parse(event.body)
 
       //console.log('Subscribing to Mailchimp for email : ', email)
-      const response = await subscribeService.addMemberToList(email, tags)
+      const response = await subscribeService.addMemberToList({
+        email,
+        campaign,
+        instance,
+        tags,
+      })
       const resJson = await response.json()
-      //console.log(resJson)
-      if (response.status === 200) {
+
+      if ([200, 201].includes(response.status)) {
         return {
           statusCode: 200,
           body: JSON.stringify(resJson),

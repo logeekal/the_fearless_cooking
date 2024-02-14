@@ -6,7 +6,7 @@ import { Banner } from '../..'
 import * as styles from './styles.css'
 
 const stylePrefix = 'free-cookbook-banner'
-
+const CAMPAIGN_ID = 'free-salad-ebook'
 export const FreeCookbookBanner = () => {
   const [formSubmitStatus, setFormSubmitStatus] = useState<
     'idle' | 'pending' | 'success' | 'error'
@@ -14,7 +14,7 @@ export const FreeCookbookBanner = () => {
 
   const [userEmail, setUserEmail] = useState('')
 
-  const { submitHandler, submitRequestState } = useSubscribe()
+  const { submitHandler: subscribe, submitRequestState } = useSubscribe()
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = useCallback(
     (e) => {
@@ -22,7 +22,12 @@ export const FreeCookbookBanner = () => {
       if (formSubmitStatus !== 'idle') return
 
       setFormSubmitStatus('pending')
-      submitHandler({ email: userEmail, tags: ['free-salad-ebook'] })
+      subscribe({
+        email: userEmail,
+        campaign: CAMPAIGN_ID,
+        instance: process.env.NODE_ENV ?? 'production',
+        tags: [],
+      })
         .then(() => {
           setFormSubmitStatus('success')
         })
@@ -30,13 +35,13 @@ export const FreeCookbookBanner = () => {
           setFormSubmitStatus('success')
         })
     },
-    [formSubmitStatus, submitHandler, userEmail]
+    [formSubmitStatus, subscribe, userEmail]
   )
 
   return (
     <Banner
       isOpen={true}
-      bannerId="free-cookbook"
+      bannerId={CAMPAIGN_ID}
       maxHideDuration={{
         hours: 1,
       }}
