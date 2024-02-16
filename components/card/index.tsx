@@ -54,18 +54,26 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
     categories.push(post.categories.nodes[0] as Category)
   }
 
-  const thumbnailUrl = post.featuredImage?.node?.mediaDetails?.sizes?.filter(
-    (size) => size?.name === 'medium'
-  )[0]?.sourceUrl
+  const mediumThumbnailUrl =
+    post.featuredImage?.node?.mediaDetails?.sizes?.filter(
+      (size) => size?.name === 'medium'
+    )[0]?.sourceUrl
 
-  if (!thumbnailUrl) return <></>
+  const largeThumbnailUrl =
+    post.featuredImage?.node?.mediaDetails?.sizes?.filter(
+      (size) => size?.name === 'large'
+    )[0]?.sourceUrl
+
+  if (!mediumThumbnailUrl) throw new Error('medium image not found')
+  if (!largeThumbnailUrl) throw new Error('large image not found')
   return (
     <NextLink legacyBehavior prefetch={false} href={post.uri}>
       <div className={`link card ${cardContainer}`} {...restProps}>
         <div className={`${cardImageContainer}`}>
           <img
             className={`${cardImage} lazyload`}
-            data-src={thumbnailUrl}
+            data-src={mediumThumbnailUrl}
+            data-srcset={`${mediumThumbnailUrl} 200w, ${largeThumbnailUrl} 400w`}
             alt={`image of ${post.title as string}`}
           />
         </div>

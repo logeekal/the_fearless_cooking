@@ -4,15 +4,19 @@ import { loader, loaderContainer } from './loader.css'
 
 type LoaderProps = {
   full?: boolean
+  size?: string
+  status: 'loading' | 'success' | 'error'
 }
 
 const Loader = (props: LoaderProps) => {
-  const { full = false } = props
+  const { full = false, size = '30px', status } = props
   return (
     <div
       className={`loader__container ${full ? 'full' : ''} ${loaderContainer}`}
     >
-      <div className={`loader ${loader}`}></div>
+      <div style={{ width: size, height: size }}>
+        <div className={`loader ${loader} ${status}`}></div>
+      </div>
     </div>
   )
 }

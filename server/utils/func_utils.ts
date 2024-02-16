@@ -2,6 +2,7 @@ import { randomInt } from 'crypto'
 
 export function getIfExists(val: unknown | undefined, name: string) {
   if (!val) {
+    console.debug({ name: val })
     throw new Error(`Missing mandatory param : ${name}`)
   }
   return val as string

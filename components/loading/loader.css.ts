@@ -6,11 +6,48 @@ const loadingAnimation = keyframes({
   '0%': {
     transform: 'rotate(0deg)',
   },
-  '50%': {
+  '100%': {
     transform: 'rotate(360deg)',
   },
+})
+
+const tickBaseGrow = keyframes({
+  '0%': {
+    width: 0,
+  },
+  '90%': {
+    width: 0,
+  },
   '100%': {
-    transform: 'rotate(0deg)',
+    width: '2.5rem',
+  },
+})
+
+const tickTipGrow = keyframes({
+  '0%': {
+    width: '0px',
+    left: 0,
+    top: 0,
+  },
+  '25%': {
+    width: '0px',
+    left: 0,
+    top: 0,
+  },
+  '50%': {
+    top: '0',
+    left: 0,
+    width: 0,
+  },
+  '75%': {
+    top: 0,
+    left: 0,
+    width: '0rem',
+  },
+  '100%': {
+    top: '65%',
+    left: '50%',
+    width: '1.5rem',
   },
 })
 
@@ -32,6 +69,7 @@ export const loaderContainer = style({
 
 export const loader = style({
   borderTop: vars.colors.brand,
+  borderRight: vars.colors.brand,
   borderRadius: vars.border.circular,
   borderTopWidth: '2px',
   borderStyle: 'solid',
@@ -39,8 +77,44 @@ export const loader = style({
   height: '100%',
   maxWidth: '50px',
   maxHeight: '50px',
-  animationName: loadingAnimation,
-  animationDuration: '0.5s',
-  animationIterationCount: 'infinite',
-  animationDirection: 'initial',
+  position: 'relative',
+  selectors: {
+    '&.loading': {
+      animationName: loadingAnimation,
+      animationDuration: '1s',
+      animationIterationCount: 'infinite',
+      animationDirection: 'initial',
+      animationTimingFunction: 'ease',
+    },
+    '&.success': {
+      backgroundColor: vars.colors.brand,
+      borderWidth: 0,
+    },
+    '&.success::before': {
+      height: '4px',
+      width: '2.5rem',
+      position: 'absolute',
+      top: '65%',
+      left: '44%',
+      backgroundColor: vars.colors.card,
+      transform: 'rotate(-45deg)',
+      transformOrigin: '0% 50%',
+      borderRadius: '5px',
+      animation: `${tickBaseGrow} 1s`,
+      content: '',
+    },
+    '&.success::after': {
+      height: '4px',
+      width: '1rem',
+      position: 'absolute',
+      top: '65%',
+      left: '50%',
+      backgroundColor: vars.colors.card,
+      transform: 'rotate(-135deg)',
+      transformOrigin: '0% 50%',
+      borderRadius: '5px',
+      animation: `${tickTipGrow} 1s`,
+      content: '',
+    },
+  },
 })
