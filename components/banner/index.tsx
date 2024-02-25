@@ -10,10 +10,11 @@ import { Duration } from 'tinyduration'
 
 import { getMilliSecondsFromDuration } from '../../utils/time_utils'
 import {
-  bannerBackground,
-  bannerContainer,
-  bannerContent,
-  bannerContentCloseBtn,
+  rootBannerBackground,
+  rootBannerContainer,
+  rootBannerContent,
+  rootBannerContentCloseBtn,
+  rootBannerContentCloseBtnContainer,
 } from './banner.css'
 
 type BannerProps = {
@@ -88,19 +89,25 @@ export function Banner({
 
   return (
     <div
-      className={`banner__container ${bannerContainer} ${
+      className={`rootBanner__container ${rootBannerContainer} ${
         bannerVisibilityState ?? ''
       }`}
     >
-      <div className={`banner__background ${bannerBackground}`}>
-        <div className={`banner__content ${bannerContent}`}>
-          <div
-            className={`banner__content-close ${bannerContentCloseBtn}`}
-            onClick={handleClose}
-          >
-            {'✚'}
+      <div className={`rootBanner__background ${rootBannerBackground}`}>
+        <div className={`rootBanner__content ${rootBannerContent}`}>
+          <div style={{ position: 'relative' }}>
+            <div
+              className={`rootBanner__content-close-container ${rootBannerContentCloseBtnContainer}`}
+            >
+              <div
+                className={`rootBanner__content-close ${rootBannerContentCloseBtn}`}
+                onClick={handleClose}
+              >
+                {'x'}
+              </div>
+            </div>
+            {children}
           </div>
-          {children}
         </div>
       </div>
     </div>
