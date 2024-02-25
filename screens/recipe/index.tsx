@@ -2,6 +2,7 @@ import Link from 'next/link'
 import React, { Fragment, useMemo } from 'react'
 import striptags from 'striptags'
 
+import { FreeCookbookBannerContent } from '../../components/banner/banners/free_cookbook_feb_2024/content'
 import BottomBar from '../../components/bottom_bar'
 import { cardCategory } from '../../components/card/card.css'
 import FAQs from '../../components/faq'
@@ -15,6 +16,7 @@ import {
   FAQSection,
   featuredImageContainer,
   featuredImageSquareContainer,
+  pageFreeCookbookContainer,
   recipeCategories,
   recipeContainer,
   recipePost,
@@ -149,6 +151,11 @@ function RecipePage(props: RecipePageProps) {
         ) : (
           <div style={{ height: '3rem' }}></div>
         )}
+        <div
+          className={`pageFreeCookBookContainer ${pageFreeCookbookContainer}`}
+        >
+          <FreeCookbookBannerContent />
+        </div>
         {recipeExists ? (
           <div id="recipe-card" className="recipe__card">
             <RecipeCard recipe={recipe.content} recipePost={recipe.post} />
