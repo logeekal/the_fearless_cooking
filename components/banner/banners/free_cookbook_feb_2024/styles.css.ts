@@ -119,24 +119,3 @@ export const emailInput = style({
     },
   },
 })
-
-export const submitButton = style({
-  width: '100%',
-  backgroundColor: vars.colors.brand,
-  padding: vars.space.s,
-  color: vars.colors.card,
-  cursor: 'pointer',
-  border: `1px solid ${vars.colors.card}`,
-  transition: '0.4s ease-in-out',
-  transform: 'rotate(0deg)',
-  selectors: {
-    '&:hover': {
-      border: `1px solid ${vars.colors.brand}`,
-      backgroundColor: vars.colors.card,
-    },
-
-    '&.pending': {
-      backgroundColor: vars.colors.lightgray,
-    },
-  },
-})

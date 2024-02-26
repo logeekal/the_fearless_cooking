@@ -1,5 +1,6 @@
 import React, { FormEventHandler, useCallback, useState } from 'react'
 
+import { Button } from '../../../button'
 import { useSubscribe } from '../../../hooks/use_subscribe'
 import Loader from '../../../loading'
 import { CAMPAIGN_ID, stylePrefix } from './common'
@@ -85,12 +86,7 @@ export const FreeCookbookBannerContent = () => {
               ? 'Yayyy 🥳. Please check your inbox.'
               : null}
             {formSubmitStatus === 'idle' ? (
-              <button
-                className={`${styles.submitButton} ${formSubmitStatus}`}
-                type="submit"
-              >
-                {'Send me the free E-book'}
-              </button>
+              <Button type="submit">{'Send me the free E-book'}</Button>
             ) : null}
           </form>
         </div>
