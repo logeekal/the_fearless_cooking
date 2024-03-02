@@ -2,6 +2,7 @@ import { style } from '@vanilla-extract/css'
 
 import { breakPoints } from '../../styles/breakpoints.css'
 import { vars } from '../../styles/themes.css'
+import { colFlex, flexCenter } from '../../styles/vars.css'
 
 export const sideBar = style({
   '@media': {
@@ -59,4 +60,26 @@ export const cookbook = style({
 
 export const cookbookText = style({
   color: vars.colors.textSecondary,
+})
+
+export const cookbookList = style({
+  marginBlock: vars.space.normal,
+})
+
+export const cookbookListItem = style({
+  listStyle: 'none',
+  fontWeight: 700,
+  color: vars.colors.text,
+  selectors: {
+    '&:not(:last-child)': {
+      marginBottom: vars.space.s,
+    },
+  },
+})
+
+export const cookbookFooter = style({
+  ...colFlex,
+  ...flexCenter,
+  width: '100%',
+  gap: vars.space.s,
 })
