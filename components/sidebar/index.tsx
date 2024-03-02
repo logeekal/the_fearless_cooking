@@ -85,10 +85,18 @@ const Sidebar = () => {
             </p>
           </div>
           <div className={`cookbook__footer heading ${cookbookFooter}`}>
-            <Button href="https://google.com" target="_blank" variant="ghost">
+            <Button
+              href="https://thefearlesscooking.gumroad.com/l/fallinlovewithsalads/SALAD"
+              target="_blank"
+              variant="ghost"
+            >
               Buy E-book
             </Button>
-            <Button href="https://amazon.com" target="_blank" variant="ghost">
+            <Button
+              href="https://www.flipkart.com/fall-love-salads/p/itm8e09ce3716858?pid=9788196474515"
+              target="_blank"
+              variant="ghost"
+            >
               Buy Hardcover
             </Button>
           </div>
