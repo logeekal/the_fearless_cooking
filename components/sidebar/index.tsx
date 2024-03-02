@@ -68,7 +68,7 @@ const Sidebar = () => {
             Level up your salad game
           </div>
           <div className={`cookbook__text text_center ${cookbookText}`}>
-            <p>
+            <div>
               Our new Salad book <b>{'"Fall in love with Salads"'}</b> is out
               now. With this book you get:
               <ul className={`${cookbookList}`}>
@@ -82,7 +82,7 @@ const Sidebar = () => {
                   A Salad Guide which helps you create 100s of new salads.
                 </li>
               </ul>
-            </p>
+            </div>
           </div>
           <div className={`cookbook__footer heading ${cookbookFooter}`}>
             <Button
