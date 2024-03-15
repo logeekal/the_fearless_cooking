@@ -110,7 +110,7 @@ globalStyle('.upper', {
 globalStyle('a', {
   textDecoration: 'none',
   color: vars.colors.brand,
-  fontWeight: 700,
+  fontWeight: 600,
 })
 
 globalStyle('.btn', {

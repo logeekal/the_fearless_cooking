@@ -11,6 +11,7 @@ export const bottomBar = style({
   minHeight: '10px',
   background: vars.colors.card,
   bottom: 0,
+  zIndex: vars.zIndex.highest,
   paddingBlock: vars.space.normal,
   // borderTopLeftRadius: '10px',
   // borderTopRightRadius: '10px',
