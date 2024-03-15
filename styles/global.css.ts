@@ -1,5 +1,6 @@
 import { globalFontFace, globalStyle } from '@vanilla-extract/css'
 
+import { breakPoints } from './breakpoints.css'
 import { vars } from './themes.css'
 import { bodyWidthRule } from './vars.css'
 
@@ -77,7 +78,14 @@ globalStyle('li', {
 })
 
 globalStyle('h1', {
-  marginBlock: vars.space.l,
+  '@media': {
+    [breakPoints.tablet]: {
+      marginTop: vars.space.l,
+    },
+  },
+  marginBottom: vars.space.l,
+  fontSize: '3rem',
+  lineHeight: '3.5rem',
 })
 
 globalStyle('h2', {
@@ -88,13 +96,11 @@ globalStyle('h2', {
 globalStyle('h3', {
   marginBlockStart: vars.space.normal,
   fontSize: vars.fontSize.heading,
-  fontStyle: 'italic',
 })
 
 globalStyle('h4', {
   marginBlockStart: vars.space.normal,
   fontSize: vars.fontSize.para,
-  fontStyle: 'italic',
 })
 
 globalStyle('.upper', {
@@ -104,6 +110,7 @@ globalStyle('.upper', {
 globalStyle('a', {
   textDecoration: 'none',
   color: vars.colors.brand,
+  fontWeight: 600,
 })
 
 globalStyle('.btn', {
@@ -112,7 +119,6 @@ globalStyle('.btn', {
 
 globalStyle('p', {
   fontSize: vars.fontSize.para,
-  lineHeight: '2rem',
 })
 
 globalStyle('p.subtext', {

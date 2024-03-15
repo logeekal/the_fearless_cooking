@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 
+import { SiteMeta } from '../../utils/config'
 import { Button } from '../button'
 import SubscribeBanner from '../subscribe/banner'
 import SupportBanner from '../support/banner'
@@ -86,14 +87,14 @@ const Sidebar = () => {
           </div>
           <div className={`cookbook__footer heading ${cookbookFooter}`}>
             <Button
-              href="https://thefearlesscooking.gumroad.com/l/fallinlovewithsalads/SALAD"
+              href={SiteMeta.books.loveSalad.gumroad}
               target="_blank"
               variant="ghost"
             >
               Buy E-book
             </Button>
             <Button
-              href="https://www.flipkart.com/fall-love-salads/p/itm8e09ce3716858?pid=9788196474515"
+              href={SiteMeta.books.loveSalad.amazonIndia}
               target="_blank"
               variant="ghost"
             >

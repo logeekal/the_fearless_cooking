@@ -1,4 +1,8 @@
 div#post {
+  a{
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+  }
   img {
     width: 100%;
     height: auto;
@@ -11,11 +15,13 @@ div#post {
   }
 
   ol {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     li {
       list-style: decimal;
-      margin-left: 15px;
+      margin-left: 2.5rem;
       vertical-align: top;
-
       &::marker {
         vertical-align: top;
       }
@@ -27,9 +33,10 @@ div#post {
 
   ul {
     li {
-      list-style: none;
+      list-style: inherit;
       //transform: translateX(15px);
       margin-block: 7px;
+      margin-left: 2.5rem;
       //&:before {
         ////content: '🍀 ';
         //content: '🥑';

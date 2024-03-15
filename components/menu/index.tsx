@@ -6,6 +6,7 @@ import React, {
   useContext,
 } from 'react'
 
+import { PropsWithAs } from '../../types/common'
 import { menuClass, menuCloseIcon, menuTitleClass } from './menu.css'
 
 type MenuProps = {
@@ -46,10 +47,9 @@ Menu.displayName = 'Menu'
 //---------------------------------------------
 //---------------------------------------------
 
-type MenuItemProps = {
-  as: React.ElementType
+type MenuItemProps = PropsWithAs<{
   className?: string
-}
+}>
 
 export const MenuTitle = forwardRef<
   ComponentRef<MenuItemProps['as']>,
