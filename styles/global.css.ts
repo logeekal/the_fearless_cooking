@@ -5,42 +5,42 @@ import { vars } from './themes.css'
 import { bodyWidthRule } from './vars.css'
 
 globalFontFace('quicksand', {
-  src: 'url(/fonts/_quicksand/Quicksand-Bold.woff2) format("woff2")',
+  src: 'url(/fonts/_quicksand/quicksand_bold.woff2) format("woff2")',
   fontStyle: 'normal',
   fontWeight: 700,
   fontDisplay: 'swap',
 })
 
 globalFontFace('quicksand', {
-  src: 'url(/fonts/_quicksand/Quicksand-SemiBold.woff2) format("woff2")',
+  src: 'url(/fonts/_quicksand/quicksand_semibold.woff2) format("woff2")',
   fontStyle: 'normal',
   fontWeight: 600,
   fontDisplay: 'swap',
 })
 
 globalFontFace('quicksand', {
-  src: 'url(/fonts/_quicksand/Quicksand-Medium.woff2) format("woff2")',
+  src: 'url(/fonts/_quicksand/quicksand_medium.woff2) format("woff2")',
   fontStyle: 'normal',
   fontWeight: 500,
   fontDisplay: 'swap',
 })
 
 globalFontFace('quicksand', {
-  src: 'url(/fonts/_quicksand/Quicksand-Regular.woff2) format("woff2")',
+  src: 'url(/fonts/_quicksand/quicksand_regular.woff2) format("woff2")',
   fontStyle: 'normal',
   fontWeight: 400,
   fontDisplay: 'swap',
 })
 
 globalFontFace('quicksand', {
-  src: 'url(/fonts/_quicksand/Quicksand-Light.woff2) format("woff2")',
+  src: 'url(/fonts/_quicksand/quicksand_light.woff2) format("woff2")',
   fontStyle: 'normal',
   fontWeight: 300,
   fontDisplay: 'swap',
 })
 
 globalFontFace('bilbo', {
-  src: 'url(/fonts/bilbo-swash-caps/BilboSwashCaps-Regular.ttf)',
+  src: 'url(/fonts/bilbo-swash-caps/bilbo_swash_caps_regular.ttf)',
   fontStyle: 'normal',
   fontWeight: 300,
   fontDisplay: 'swap',
