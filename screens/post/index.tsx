@@ -34,7 +34,6 @@ export default function PostPage(props: PostProps) {
       <div id="post" className={`post ${postContent}`}>
         <div className="postHeader">
           <h1
-            style={{ lineHeight: '3rem' }}
             dangerouslySetInnerHTML={{
               __html: post.post.title as string,
             }}

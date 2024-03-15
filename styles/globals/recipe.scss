@@ -1,4 +1,8 @@
 div#recipe-post {
+  a{
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+  }
   img {
     width: 100%;
     height: auto;
@@ -19,7 +23,7 @@ div#recipe-post {
   ol {
     li {
       list-style: decimal;
-      margin-left: 15px;
+      margin-left: 2.5rem;
       vertical-align: top;
 
       &::marker {
@@ -33,7 +37,8 @@ div#recipe-post {
 
   ul {
     li {
-      list-style: none;
+      margin-left: 2.5rem;
+      list-style: inherit;
       //transform: translateX(15px);
       margin-block: 7px;
       //&:before {

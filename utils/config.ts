@@ -18,6 +18,15 @@ export const SiteMeta = {
     fb: 'marriedfriends',
     youtube: 'marriedfriends',
   },
+  books: {
+    loveSalad: {
+      amazonIndia:
+        'https://www.amazon.in/Fall-Love-Salads-Richa-Gupta/dp/8196474512',
+      flipkart:
+        'https://www.flipkart.com/fall-love-salads/p/itm8e09ce3716858?pid=9788196474515',
+      gumroad: 'https://thefearlesscooking.gumroad.com/l/fallinlovewithsalads',
+    },
+  },
   description:
     'We at The Fearless Cooking are making \
         world food more tastier and more healthy. \

@@ -71,7 +71,6 @@ function RecipePage(props: RecipePageProps) {
       <div id="recipe-post" className={`recipe-post ${recipePost}`}>
         <div className="recipe__postHeader">
           <h1
-            style={{ lineHeight: '3rem' }}
             dangerouslySetInnerHTML={{
               __html: recipe.post.title as string,
             }}

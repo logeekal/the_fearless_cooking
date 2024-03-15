@@ -113,7 +113,7 @@ const Search = () => {
   const onSearchTermChange: KeyboardEventHandler<HTMLInputElement> =
     useCallback(
       (e) => {
-        const term = e.target.value
+        const term = (e.target as HTMLInputElement).value
         urlQueryChangeHandler(term)
         debouncedSearch(term)
         setLoading(true)
