@@ -6,7 +6,7 @@ import { vars } from '../../styles/themes.css'
 
 export const rootBannerContainer = style({
   position: 'fixed',
-  zIndex: vars.zIndex.highest,
+  zIndex: calc.add(vars.zIndex.highest, 1),
   width: '100vw',
   height: '100vh',
   transition: '0.3s ease-in-out',

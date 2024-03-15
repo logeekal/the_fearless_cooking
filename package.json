@@ -5,8 +5,7 @@
   "scripts": {
     "clean": "rm -rf /tmp/.cache/",
     "dev:ui": "yarn pre-build && DEBUG=true next dev",
-    "dev:api": "netlify functions:serve",
-    "dev:stack": "yarn load-env-dev concurrently \"yarn dev:ui\" \"yarn dev:api\"",
+    "dev": "yarn load-env-dev concurrently \"yarn dev:ui\"",
     "build": "yarn load-env-dev npm run pre-build && next build",
     "start": "next start",
     "lint": "eslint",
@@ -23,7 +22,6 @@
     "ts": "ts-node"
   },
   "dependencies": {
-    "@netlify/functions": "^1.6.0",
     "@popperjs/core": "^2.11.6",
     "@react-hooks-library/core": "^0.6.0",
     "@types/jest": "^29.2.0",
@@ -44,8 +42,6 @@
     "jsonschema": "^1.4.1",
     "lunr": "^2.3.9",
     "mini-debounce": "^1.0.8",
-    "netlify": "^13.1.0",
-    "netlify-cli": "^17.19.3",
     "next": "12.3.4",
     "next-plausible": "^3.7.2",
     "nodemailer": "^6.9.1",
@@ -66,7 +62,6 @@
     "@graphql-cli/codegen": "^2.4.0",
     "@graphql-codegen/cli": "^2.16.2",
     "@graphql-codegen/typescript": "^2.8.6",
-    "@netlify/serverless-functions-api": "^1.14.0",
     "@swc/core": "^1.2.231",
     "@swc/helpers": "^0.4.6",
     "@types/isomorphic-fetch": "^0.0.36",
