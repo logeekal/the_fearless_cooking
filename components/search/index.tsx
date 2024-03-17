@@ -86,6 +86,10 @@ const Search = () => {
 
   const asyncSearch = useCallback(
     (term: string) => {
+      if (term.length === 0) {
+        setResults([])
+        return
+      }
       apiService
         .search(term)
         .then((response) => {
@@ -106,7 +110,7 @@ const Search = () => {
   }, [])
 
   const debouncedSearch = useMemo(
-    () => debounce(asyncSearch, 200),
+    () => debounce(asyncSearch, 500),
     [asyncSearch]
   )
 

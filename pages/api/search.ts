@@ -1,27 +1,38 @@
-import { Handler } from '@netlify/functions'
 import lunr from 'lunr'
+import { NextApiRequest, NextApiResponse } from 'next'
 
-import { IndexableRecipeObj } from '../../types/common'
-import recipeIndex from '../assets/recipe_index.json'
-import recipes from '../assets/recipes.json'
-import { NO_OF_RESULTS } from '../constants'
-import { ResultMetadata } from '../types'
+import recipeIndex from '../../server/assets/recipe_index.json'
+import recipes from '../../server/assets/recipes.json'
+import { NO_OF_RESULTS } from '../../server/constants'
+import { FieldResultMetadata } from '../../server/types'
+import { ResultMetadata } from '../../server/types'
 import {
   convertToFieldResults,
   pruneMetaData,
   removeTermClassification,
-} from '../utils/search'
+} from '../../server/utils/search'
+import { IndexableRecipeObj } from '../../types/common'
 
-export const handler: Handler = async (event) => {
+type SearchResult = {
+  id: string
+  score: number
+  title: string
+  excerpt: string
+  uri: string
+  position: FieldResultMetadata
+}
+
+export default function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<Array<SearchResult> | string>
+) {
   try {
-    if (event.httpMethod === 'GET') {
-      const query = event.queryStringParameters
+    if (req.method === 'GET') {
+      const query = req.query
 
       if (!query || !('term' in query)) {
-        return Promise.resolve({
-          statusCode: 402,
-          message: 'Bad Request',
-        })
+        res.status(402)
+        return
       }
 
       const originalSearchQuery = query['term'] as string
@@ -63,23 +74,22 @@ export const handler: Handler = async (event) => {
             'title' in resultWithFieldData
               ? resultWithFieldData['title']
               : recipeObj[result.ref]['title'],
-          excerpt: recipeObj[result.ref]['excerpt'],
+          excerpt: recipeObj[result.ref]['excerpt'] ?? '',
           uri: recipeObj[result.ref]['uri'],
           position: resultWithFieldData,
         }
       })
 
-      return Promise.resolve({
-        statusCode: 200,
-        body: JSON.stringify(finalResults),
-      })
+      res.status(200).json(finalResults)
+
+      return
     }
-    return Promise.resolve({
-      statusCode: 402,
-      body: 'Method not allowed',
-    })
+
+    res.status(200).send('Method not allowed')
+    return
   } catch (err) {
     console.error(err)
+    res.status(500).send(String(err))
     return Promise.resolve({
       statusCode: 500,
       body: String(err),
