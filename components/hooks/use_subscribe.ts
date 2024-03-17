@@ -4,6 +4,8 @@ import { SubscriberInfo } from '../../server/services/types'
 
 type UseSubscribeArgs = SubscriberInfo
 
+const BASE_URL = '/api'
+
 export const useSubscribe = () => {
   const [submitRequestState, setSubmitReqState] = useState<
     'IDLE' | 'SUBMITTING' | 'ERROR' | 'SUCCESS' | 'EXIST'
@@ -27,7 +29,7 @@ export const useSubscribe = () => {
     }
 
     if (email) {
-      const response = await fetch('/.netlify/functions/subscribe', {
+      const response = await fetch(`${BASE_URL}/subscribe`, {
         method: 'POST',
         body: JSON.stringify(subscriberInfo),
       })

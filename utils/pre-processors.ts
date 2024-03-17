@@ -94,13 +94,6 @@ export function makeIframeLazy(html: string) {
   logger.debug('Making IFrame Lazy')
 
   return makeElLazyLoad(html, 'iframe.youtube-player', ['src'])
-  const $ = Cheerio.load(html)
-
-  //$('iframe.youtube-player').addClass('lazyload')
-  //const src = $('iframe.youtube-player.lazyload').attr('src')
-  //$('iframe.youtube-player.lazyload').removeAttr('src')
-  //$('iframe.youtube-player.lazyload').attr('data-src', src)
-  //return $.html()
 }
 
 function makeElLazyLoad(

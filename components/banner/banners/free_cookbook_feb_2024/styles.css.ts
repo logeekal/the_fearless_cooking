@@ -25,14 +25,21 @@ const buttonRotateAnimation = keyframes({
   },
 })
 
-export const container = style({
+export const freeCookbookBannerContainer = style({
+  position: 'relative',
   backgroundColor: vars.colors.card,
+})
+
+export const container = style({
+  background: 'transparent',
+  width: '100%',
+  height: '100%',
   display: 'flex',
-  gap: vars.space.s,
+  gap: vars.space.l,
   '@media': {
     [breakPoints.tablet]: {
-      height: '600px',
-      width: '300px',
+      maxHeight: '600px',
+      minWidth: '300px',
       flexDirection: 'column',
     },
     [breakPoints.desktop]: {
@@ -58,20 +65,21 @@ export const artworkContainer = style({
 })
 
 export const artworkImg = style({
+  width: '100% !important',
+  height: '100% !important',
   objectFit: 'cover',
 })
 
 export const artworkContent = style({
-  flex: '0.5 1 50%',
   display: 'inline-flex',
   flexDirection: 'column',
   gap: vars.space.s,
 })
 
 export const content = style({
+  flex: '1 1 50%',
   display: 'flex',
   flexDirection: 'column',
-  width: '95%',
   justifyContent: 'center',
   alignItems: 'center',
   '@media': {
@@ -108,27 +116,6 @@ export const emailInput = style({
 
     '&:focus:invalid': {
       border: '2px solid red',
-    },
-  },
-})
-
-export const submitButton = style({
-  width: '100%',
-  backgroundColor: vars.colors.brand,
-  padding: vars.space.s,
-  color: vars.colors.card,
-  cursor: 'pointer',
-  border: `1px solid ${vars.colors.card}`,
-  transition: '0.4s ease-in-out',
-  transform: 'rotate(0deg)',
-  selectors: {
-    '&:hover': {
-      border: `1px solid ${vars.colors.brand}`,
-      backgroundColor: vars.colors.card,
-    },
-
-    '&.pending': {
-      backgroundColor: vars.colors.lightgray,
     },
   },
 })

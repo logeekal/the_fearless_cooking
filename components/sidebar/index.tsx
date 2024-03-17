@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import React from 'react'
 
+import { SiteMeta } from '../../utils/config'
+import { Button } from '../button'
 import SubscribeBanner from '../subscribe/banner'
 import SupportBanner from '../support/banner'
 import {
@@ -9,6 +11,9 @@ import {
   aboutImage,
   aboutText,
   cookbook,
+  cookbookFooter,
+  cookbookList,
+  cookbookListItem,
   cookbookText,
   genericContent,
   sideBar,
@@ -44,7 +49,7 @@ const Sidebar = () => {
               . You will love it.
             </p>
             <p className={'about__text--section'}>
-              And then we can learn more about each other. Afterall, everything
+              And then we can learn more about each other. After all, everything
               feels good after a happy meal 😁
             </p>
           </div>
@@ -60,17 +65,41 @@ const Sidebar = () => {
             />
           </div>
           <div className="cookbook__heading cursive heading text_center">
-            Oh yeah! I have a cookbook for you ✌🏽
+            ☝🏼🥗 🎮 <br />
+            Level up your salad game
           </div>
           <div className={`cookbook__text text_center ${cookbookText}`}>
-            <p>
-              This is my first recipe book which is a collection of 30 delicious
-              and addictive vegetarian/vegan salads. And it is my guarantee that
-              these recipes will make you fall in love with salads.
-            </p>
+            <div>
+              Our new Salad book <b>{'"Fall in love with Salads"'}</b> is out
+              now. With this book you get:
+              <ul className={`${cookbookList}`}>
+                <li className={`${cookbookListItem}`}>
+                  30 unique Salad recipes.
+                </li>
+                <li className={`${cookbookListItem}`}>
+                  30 all natural Salad dressings. No Chemicals!
+                </li>
+                <li className={`${cookbookListItem}`}>
+                  A Salad Guide which helps you create 100s of new salads.
+                </li>
+              </ul>
+            </div>
           </div>
-          <div className="cookbook__footer cursive heading text_center">
-            Coming Soon
+          <div className={`cookbook__footer heading ${cookbookFooter}`}>
+            <Button
+              href={SiteMeta.books.loveSalad.gumroad}
+              target="_blank"
+              variant="ghost"
+            >
+              Buy E-book
+            </Button>
+            <Button
+              href={SiteMeta.books.loveSalad.amazonIndia}
+              target="_blank"
+              variant="ghost"
+            >
+              Buy Hardcover
+            </Button>
           </div>
         </div>
       </section>

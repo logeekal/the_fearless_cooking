@@ -18,3 +18,5 @@ pre-commit:
    linting:
      glob: "*.{js,ts,jsx,tsx}"
      run: yarn lint {staged_files}
+   build:
+     run: yarn build

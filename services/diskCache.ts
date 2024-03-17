@@ -21,7 +21,6 @@ export default class DiskCacheService implements ICacheService {
     if (!fs.existsSync(fileHandler)) {
       logger.trace(`Setting cache for ${name}`)
       fs.writeFileSync(fileHandler, value, {})
-      logger.debug
     }
   }
 

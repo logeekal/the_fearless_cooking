@@ -50,6 +50,10 @@ export type ThemeType = {
     cursiveHeading: string
     subHeading: string
     subText: string
+    h1?: string
+    h2?: string
+    h3?: string
+    h4?: string
   }
   space: {
     xs: string
@@ -81,4 +85,10 @@ export type SearchResultType = {
 export type AnalyticsEvents = {
   BottomTab: { id: string }
   Search: { uri: string; keyword: string }
+}
+
+export type As<P = any> = React.ElementType<P>
+
+export type PropsWithAs<P> = P & {
+  as: As
 }

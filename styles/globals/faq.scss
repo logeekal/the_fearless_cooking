@@ -1,4 +1,8 @@
 div#faq {
+  a{
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+  }
   li {
     list-style: none;
     margin-block: 7px;

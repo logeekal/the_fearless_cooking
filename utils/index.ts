@@ -116,7 +116,7 @@ export const preProcessRecipeContent = (
   return newPostContent
 }
 
-export const getMandatoryProp = <T, K extends keyof T>(
+export const getMandatoryProp = <T extends object, K extends keyof T>(
   obj: T,
   key: Extract<K, string>
 ): T[K] => {

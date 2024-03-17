@@ -23,6 +23,7 @@ const baseTheme: ThemeType = {
     subHeading: '1.2rem',
     cursiveHeading: '2.5rem',
     subText: '10px',
+    h1: '3.6rem',
   },
   space: {
     xs: '0.5rem',

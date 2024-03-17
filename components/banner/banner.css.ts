@@ -1,10 +1,12 @@
 import { style } from '@vanilla-extract/css'
+import { calc } from '@vanilla-extract/css-utils'
 
+import { breakPoints } from '../../styles/breakpoints.css'
 import { vars } from '../../styles/themes.css'
 
-export const bannerContainer = style({
-  position: 'absolute',
-  zIndex: vars.zIndex.highest,
+export const rootBannerContainer = style({
+  position: 'fixed',
+  zIndex: calc.add(vars.zIndex.highest, 1),
   width: '100vw',
   height: '100vh',
   transition: '0.3s ease-in-out',
@@ -26,22 +28,44 @@ export const bannerContainer = style({
   },
 })
 
-export const bannerBackground = style({
+export const rootBannerBackground = style({
   position: 'relative',
   backgroundColor: vars.colors.lightgray,
   width: '100%',
   height: '100%',
 })
 
-export const bannerContentCloseBtn = style({
+export const rootBannerContentCloseBtnContainer = style({
   cursor: 'pointer',
   position: 'absolute',
-  right: vars.space.s,
-  top: vars.space.xs,
-  transform: 'rotate(45deg)',
+  right: '-38px',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'flex-end',
+  alignItems: 'center',
+  width: calc.multiply(1, vars.space.xl),
+  height: calc.multiply(1, vars.space.xl),
+  padding: vars.space.xs,
+  backgroundColor: vars.colors.card,
+  transform: 'translateX(-50%)',
+  fontWeight: 800,
+  borderRadius: vars.border.circular,
+  '@media': {
+    [breakPoints.tablet]: {
+      top: '-30px',
+    },
+    [breakPoints.desktop]: {
+      top: '-30px',
+    },
+  },
 })
 
-export const bannerContent = style({
+export const rootBannerContentCloseBtn = style({
+  fontSize: vars.fontSize.heading,
+  color: vars.colors.brand,
+})
+
+export const rootBannerContent = style({
   backgroundColor: 'white',
   position: 'absolute',
   left: '50%',

@@ -54,3 +54,11 @@ export const featuredImageSquareContainer = style({
   paddingBottom: '100%', // 9/16 of width
   backgroundColor: vars.colors.greenLight,
 })
+
+export const pageFreeCookbookContainer = style({
+  paddingBlock: vars.space.normal,
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+})

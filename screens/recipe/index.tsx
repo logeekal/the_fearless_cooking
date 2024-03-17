@@ -80,7 +80,6 @@ function RecipePage(props: RecipePageProps) {
       <div id="recipe-post" className={`recipe-post ${recipePost}`}>
         <div className="recipe__postHeader">
           <h1
-            style={{ lineHeight: '3rem' }}
             dangerouslySetInnerHTML={{
               __html: recipe.post.title as string,
             }}
@@ -169,12 +168,14 @@ function RecipePage(props: RecipePageProps) {
           <FAQs faqs={recipe.faqs} />
         </div>
       ) : null}
-      <section className={`comment-section-container ${commentSection}`}>
-        <CommentSection
-          rootComments={recipe.post.comments?.nodes}
-          postId={recipe.post.recipeId}
-        />
-      </section>
+      {recipe.post.comments?.nodes ? (
+        <section className={`comment-section-container ${commentSection}`}>
+          <CommentSection
+            rootComments={recipe.post.comments?.nodes}
+            postId={recipe.post.recipeId}
+          />
+        </section>
+      ) : null}
 
       {width < BREAKPOINTS.mobile.max ? (
         <BottomBar recipe={recipeExists} faq={faqExists} />

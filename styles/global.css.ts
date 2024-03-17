@@ -1,45 +1,46 @@
 import { globalFontFace, globalStyle } from '@vanilla-extract/css'
 
+import { breakPoints } from './breakpoints.css'
 import { vars } from './themes.css'
 import { bodyWidthRule } from './vars.css'
 
 globalFontFace('quicksand', {
-  src: 'url(/fonts/_quicksand/Quicksand-Bold.woff2) format("woff2")',
+  src: 'url(/fonts/_quicksand/quicksand_bold.woff2) format("woff2")',
   fontStyle: 'normal',
   fontWeight: 700,
   fontDisplay: 'swap',
 })
 
 globalFontFace('quicksand', {
-  src: 'url(/fonts/_quicksand/Quicksand-SemiBold.woff2) format("woff2")',
+  src: 'url(/fonts/_quicksand/quicksand_semibold.woff2) format("woff2")',
   fontStyle: 'normal',
   fontWeight: 600,
   fontDisplay: 'swap',
 })
 
 globalFontFace('quicksand', {
-  src: 'url(/fonts/_quicksand/Quicksand-Medium.woff2) format("woff2")',
+  src: 'url(/fonts/_quicksand/quicksand_medium.woff2) format("woff2")',
   fontStyle: 'normal',
   fontWeight: 500,
   fontDisplay: 'swap',
 })
 
 globalFontFace('quicksand', {
-  src: 'url(/fonts/_quicksand/Quicksand-Regular.woff2) format("woff2")',
+  src: 'url(/fonts/_quicksand/quicksand_regular.woff2) format("woff2")',
   fontStyle: 'normal',
   fontWeight: 400,
   fontDisplay: 'swap',
 })
 
 globalFontFace('quicksand', {
-  src: 'url(/fonts/_quicksand/Quicksand-Light.woff2) format("woff2")',
+  src: 'url(/fonts/_quicksand/quicksand_light.woff2) format("woff2")',
   fontStyle: 'normal',
   fontWeight: 300,
   fontDisplay: 'swap',
 })
 
 globalFontFace('bilbo', {
-  src: 'url(/fonts/bilbo-swash-caps/BilboSwashCaps-Regular.ttf)',
+  src: 'url(/fonts/bilbo-swash-caps/bilbo_swash_caps_regular.ttf)',
   fontStyle: 'normal',
   fontWeight: 300,
   fontDisplay: 'swap',
@@ -77,7 +78,14 @@ globalStyle('li', {
 })
 
 globalStyle('h1', {
-  marginBlock: vars.space.l,
+  '@media': {
+    [breakPoints.tablet]: {
+      marginTop: vars.space.l,
+    },
+  },
+  marginBottom: vars.space.l,
+  fontSize: '3rem',
+  lineHeight: '3.5rem',
 })
 
 globalStyle('h2', {
@@ -88,13 +96,11 @@ globalStyle('h2', {
 globalStyle('h3', {
   marginBlockStart: vars.space.normal,
   fontSize: vars.fontSize.heading,
-  fontStyle: 'italic',
 })
 
 globalStyle('h4', {
   marginBlockStart: vars.space.normal,
   fontSize: vars.fontSize.para,
-  fontStyle: 'italic',
 })
 
 globalStyle('.upper', {
@@ -104,6 +110,7 @@ globalStyle('.upper', {
 globalStyle('a', {
   textDecoration: 'none',
   color: vars.colors.brand,
+  fontWeight: 600,
 })
 
 globalStyle('.btn', {
@@ -112,7 +119,6 @@ globalStyle('.btn', {
 
 globalStyle('p', {
   fontSize: vars.fontSize.para,
-  lineHeight: '2rem',
 })
 
 globalStyle('p.subtext', {

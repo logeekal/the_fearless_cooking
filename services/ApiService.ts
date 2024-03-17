@@ -16,7 +16,7 @@ export class ApiService {
   BASE_URL: string
 
   constructor() {
-    this.BASE_URL = '/.netlify/functions'
+    this.BASE_URL = '/api'
   }
 
   async search(term: string): Promise<Array<SearchResultType>> {

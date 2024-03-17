@@ -86,6 +86,10 @@ const Search = () => {
 
   const asyncSearch = useCallback(
     (term: string) => {
+      if (term.length === 0) {
+        setResults([])
+        return
+      }
       apiService
         .search(term)
         .then((response) => {
@@ -106,14 +110,14 @@ const Search = () => {
   }, [])
 
   const debouncedSearch = useMemo(
-    () => debounce(asyncSearch, 200),
+    () => debounce(asyncSearch, 500),
     [asyncSearch]
   )
 
   const onSearchTermChange: KeyboardEventHandler<HTMLInputElement> =
     useCallback(
       (e) => {
-        const term = e.target.value
+        const term = (e.target as HTMLInputElement).value
         urlQueryChangeHandler(term)
         debouncedSearch(term)
         setLoading(true)
