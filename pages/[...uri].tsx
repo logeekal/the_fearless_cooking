@@ -19,8 +19,8 @@ import { PAGE_LENGTH } from '../utils/config'
 import { logger } from '../utils/logger'
 import { genCompleteRecipeObject } from '../utils/recipe'
 import { genFAQSchema } from '../utils/schema/faqSchema'
-import { genPostSchema } from '../utils/schema/post'
-import genRecipeSchema from '../utils/schema/recipe'
+import { genCombinedPostSchema } from '../utils/schema/post'
+import { genCombinedRecipeSchema } from '../utils/schema/recipe'
 import { ICompletePost, ICompleteRecipe, LocalPageInfo } from '../utils/types'
 import { NextPageWithLayout } from './_app'
 import { POST_PAGE_LENGTH } from './blog/page/[page]'
@@ -328,7 +328,7 @@ export const getStaticProps: GetStaticProps<
     logger.debug('Generating Schema')
 
     const selectedRecipeSchema = selectedRecipeContent
-      ? genRecipeSchema(
+      ? genCombinedRecipeSchema(
           selectedRecipePost,
           selectedRecipeContent,
           relatedYTId ?? undefined
@@ -390,7 +390,7 @@ export const getStaticProps: GetStaticProps<
         },
         completePost: {
           post: selectedPost,
-          schema: genPostSchema(selectedPost),
+          schema: genCombinedPostSchema(selectedPost),
         },
         layoutProps: {
           courseSummary: coursesSummary,

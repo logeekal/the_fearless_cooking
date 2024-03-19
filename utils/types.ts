@@ -52,7 +52,7 @@ export type LocalPageInfo = {
 
 export type ICompletePost = {
   post: Post
-  schema: Record<string, unknown>
+  schema: string
 }
 
 export type ICompletePostObj = {
