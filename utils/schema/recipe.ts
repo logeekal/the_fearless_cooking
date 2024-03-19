@@ -1,9 +1,70 @@
 import striptags from 'striptags'
 import { Duration } from 'tinyduration'
 
-import { Recipe } from '../../types/wp-graphql.types'
+import { Maybe, Recipe } from '../../types/wp-graphql.types'
 import { devLogger } from '../logger'
 import { ICompleteRecipe, RecipeContent } from '../types'
+
+const genBreadcrumbSchemaBasedOnCuisinesAndCourses = (
+  cuisineOrCourseObject: Array<{
+    name: Maybe<string>
+    uri: Maybe<string>
+  }>,
+  post: Recipe
+) => {
+  return cuisineOrCourseObject
+    ?.filter((cuisine) => !!cuisine.uri)
+    .map((cuisine) => ({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Home',
+          item: 'https://thefearlesscooking.com',
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: cuisine?.name ?? '',
+          item: `https://thefearlesscooking.com${cuisine?.uri ?? ''}`,
+        },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: post.title,
+        },
+      ],
+    }))
+}
+
+const genRecipeBreadcrumbSchema = (post: Recipe) => {
+  if (post.uri === undefined) throw Error('Recipe URI is undefined')
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://thefearlesscooking.com',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Recipes',
+        item: 'https://thefearlesscooking.com/recipes',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: post.title,
+      },
+    ],
+  }
+}
 
 const genRecipeSchema = (
   post: Recipe,
@@ -67,7 +128,7 @@ const genRecipeSchema = (
     resultSchema['video'] = {
       ...getVideoSegment(videoId, post, recipe),
     }
-  return JSON.stringify(resultSchema)
+  return resultSchema
 }
 
 function getVideoSegment(videoId: string, post: Recipe, recipe: RecipeContent) {
@@ -179,4 +240,33 @@ export const getStepURL = (
   return stepURL
 }
 
-export default genRecipeSchema
+export const genCombinedRecipeSchema = (
+  post: Recipe,
+  recipe: ICompleteRecipe['content'],
+  recipeVideoId: string | undefined,
+  convertTime = true
+) => {
+  const cuisines = [
+    ...(post.recipeCuisines?.nodes
+      ?.filter((cuisine) => !!cuisine?.name && !!cuisine?.uri)
+      .map((cuisine) => ({
+        name: String(cuisine?.name),
+        uri: String(cuisine?.uri),
+      })) ?? []),
+  ]
+  const courses = [
+    ...(post.recipeCourses?.nodes?.map((course) => ({
+      name: String(course?.name),
+      uri: String(course?.uri),
+    })) ?? []),
+  ]
+
+  return JSON.stringify([
+    genRecipeSchema(post, recipe, recipeVideoId, convertTime) ?? {},
+    genRecipeBreadcrumbSchema(post) ?? {},
+    ...genBreadcrumbSchemaBasedOnCuisinesAndCourses(
+      [...cuisines, ...courses],
+      post
+    ),
+  ])
+}

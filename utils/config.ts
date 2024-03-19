@@ -9,6 +9,7 @@ export const SOCIALS = {
 export const SiteMeta = {
   logo: 'https://wp-backend.thefearlesscooking.com/wp-content/uploads/2023/01/final_logo_transparent.png',
   title: 'Welcome to The Fearless Cooking',
+  name: 'The Fearless Cooking',
   favicon: '/images/favicon.png',
   image: '',
   canonicalUrl: 'https://thefearlesscooking.com',
@@ -26,6 +27,10 @@ export const SiteMeta = {
         'https://www.flipkart.com/fall-love-salads/p/itm8e09ce3716858?pid=9788196474515',
       gumroad: 'https://thefearlesscooking.gumroad.com/l/fallinlovewithsalads',
     },
+  },
+  author: {
+    name: 'Richa Gupta',
+    aboutLink: 'https://www.instagram.com/thefearlesscooking',
   },
   description:
     'We at The Fearless Cooking are making \

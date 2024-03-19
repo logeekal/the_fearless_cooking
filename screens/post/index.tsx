@@ -9,7 +9,7 @@ import { featuredImageContainer, postContainer, postContent } from './post.css'
 type PostProps = {
   post: {
     post: Post
-    schema: Record<string, unknown>
+    schema: string
   }
 }
 
@@ -27,7 +27,7 @@ export default function PostPage(props: PostProps) {
         schemas={[
           {
             type: 'article',
-            schema: JSON.stringify(post.schema),
+            schema: post.schema,
           },
         ]}
       />
