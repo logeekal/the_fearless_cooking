@@ -1,11 +1,14 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import React, { useCallback } from 'react'
 
+import { Avatar } from '../../components/avatar'
 import {
   CommentFormInputs,
   CommentFormProps,
 } from '../../components/comments/comment_form'
+import { ratingComponent } from '../../components/comments/styles.css'
 import { useGetCommentRepliesQuery } from '../../components/hooks/comments/use_get_comment_replies_query'
+import { Rating } from '../../components/rating'
 import { ApiService } from '../../services/ApiService'
 import { Comment, Maybe } from '../../types/wp-graphql.types'
 import { singleCommentContainerStyle } from './single_comment.css'
@@ -54,7 +57,36 @@ export const SingleComment = (props: Props) => {
   )
 
   return (
-    <div className={`comment-container ${singleCommentContainerStyle}`}>
+    <div className={`comment__container ${singleCommentContainerStyle}`}>
+      <div className="comment__header">
+        <div className="comment__header--avatar">
+          <Avatar
+            src={`https://robohash.org/${
+              commentWithReplies.data?.author?.node?.email ?? 'Dev'
+            }`}
+            alt={
+              commentWithReplies.data?.author?.node?.name
+                ? `Avatar of ${commentWithReplies?.data?.author?.node?.name}`
+                : undefined
+            }
+          />
+        </div>
+        <div className="comment__header-left">
+          <p className={'comment__header-name'}>
+            {commentWithReplies.data?.author?.node?.name}
+          </p>
+          <p className="heading">{commentWithReplies.data?.dateGmt}</p>
+        </div>
+        <div className="comment__header-right">
+          <div>
+            <Rating
+              className={ratingComponent}
+              value={commentWithReplies.data?.rating ?? 5}
+              readonly
+            />
+          </div>
+        </div>
+      </div>
       <span
         dangerouslySetInnerHTML={{
           __html: commentWithReplies?.data?.content ?? '',

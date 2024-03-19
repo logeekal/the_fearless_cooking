@@ -124,7 +124,7 @@ export const ratingFieldsWidgetLabel = style({
 export const ratingComponent = style({
   ...rowFlex,
   width: '100%',
-  justifyContent: 'space-around',
+  justifyContent: 'flex-start',
   alignItems: 'center',
 })
 

@@ -168,14 +168,12 @@ function RecipePage(props: RecipePageProps) {
           <FAQs faqs={recipe.faqs} />
         </div>
       ) : null}
-      {recipe.post.comments?.nodes ? (
-        <section className={`comment-section-container ${commentSection}`}>
-          <CommentSection
-            rootComments={recipe.post.comments?.nodes}
-            postId={recipe.post.recipeId}
-          />
-        </section>
-      ) : null}
+      <section className={`comment-section-container ${commentSection}`}>
+        <CommentSection
+          rootComments={recipe.post.comments?.nodes ?? []}
+          postId={recipe.post.recipeId}
+        />
+      </section>
 
       {width < BREAKPOINTS.mobile.max ? (
         <BottomBar recipe={recipeExists} faq={faqExists} />

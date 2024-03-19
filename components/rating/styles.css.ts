@@ -18,6 +18,11 @@ export const starLabel = style({
   cursor: 'pointer',
   display: 'grid',
   placeItems: 'center',
+  selectors: {
+    '&.readonly': {
+      cursor: 'initial',
+    },
+  },
 })
 
 export const animatedStar = style({

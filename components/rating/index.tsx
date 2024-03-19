@@ -1,11 +1,11 @@
-import { useLocalStorage } from '@react-hooks-library/core'
-import React, { ReactElement, useCallback } from 'react'
+import React, { ReactElement, useCallback, useState } from 'react'
 import { FaStar } from 'react-icons/fa'
 
 import * as styles from './styles.css'
 
 interface RatingProps {
   value?: number
+  readonly?: boolean
   onChange?: (value: number) => void
   className?: string
 }
@@ -13,23 +13,16 @@ interface RatingProps {
 const DEFAULT_RATING = 5
 
 export const Rating = (props: RatingProps) => {
-  const { value: initialValue, onChange } = props
-  const [rating, setRating] = useLocalStorage(
-    'current.comment.rating',
-    initialValue ?? DEFAULT_RATING,
-    {
-      serialize: String,
-      deserialize: parseInt,
-    }
-  )
-
+  const { value: initialValue, onChange, readonly = false } = props
+  const [rating, setRating] = useState(initialValue ?? 5)
   const handleRatingChange = useCallback(
     (value: number) => {
+      if (readonly) return
       const newRating = value + 1
       setRating(newRating)
       onChange?.(newRating)
     },
-    [onChange, setRating]
+    [onChange, setRating, readonly]
   )
 
   return (
@@ -37,12 +30,14 @@ export const Rating = (props: RatingProps) => {
       {[...(Array(5) as Array<ReactElement>)].map((_, i) => {
         return (
           <label
-            className={styles.starLabel}
+            className={`${styles.starLabel} ${String(initialValue)} ${
+              readonly ? 'readonly' : ''
+            } `}
             key={`label-${i}`}
             onMouseOver={handleRatingChange.bind(null, i)}
           >
             <input
-              className={styles.starInput}
+              className={`${styles.starInput}`}
               type="radio"
               name="rating"
               value={i + 1}

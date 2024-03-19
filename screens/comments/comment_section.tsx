@@ -8,6 +8,7 @@ import {
 import { useAddReply, useGetComments } from '../../components/hooks/comments'
 import { useFingerprint } from '../../components/safe_fingerprint/context'
 import { Comment, Maybe } from '../../types/wp-graphql.types'
+import { singleCommentContainer } from './index.css'
 import { SingleComment } from './single_comment'
 
 type CommentSectionProps = {
@@ -52,11 +53,12 @@ export const CommentSection = ({
     <div className="comment-section">
       {postComments?.map((comment) => {
         return (
-          <SingleComment
+          <div
             key={comment?.databaseId}
-            initialCommentData={comment}
-            postId={postId}
-          />
+            className={`single__comment-container ${singleCommentContainer}`}
+          >
+            <SingleComment initialCommentData={comment} postId={postId} />
+          </div>
         )
       })}
       <CommentForm onSubmit={onCommentSubmit} />

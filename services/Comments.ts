@@ -97,8 +97,11 @@ export class CommentService {
       )
 
       if (response.data.errors) {
-        throw new Error(JSON.stringify(response.data.errors))
+        logger.error(response.data.errors)
+        throw new Error(String(response.data.errors))
       }
+
+      logger.trace({ res: response.data })
 
       if (responseIsPost(response)) {
         const comments = response.data.data.post.comments?.nodes

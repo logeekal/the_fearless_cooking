@@ -408,6 +408,7 @@ query GET_RECIPE_COMMENTS {
                     }
                     content
                     rating
+                    dateGmt
                     parentId
                     parentDatabaseId
                   }
@@ -438,6 +439,7 @@ query GET_POST_COMMENTS {
                     }
                     content
                     rating
+                    dateGmt
                     parentId
                     parentDatabaseId
                   }

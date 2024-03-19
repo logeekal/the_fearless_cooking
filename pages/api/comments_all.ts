@@ -15,7 +15,7 @@ export default async function handler(
   }
 
   try {
-    const parsedBody = JSON.parse(String(req.body) ?? '{}') as GetCommentsInputs
+    const parsedBody = req.body as GetCommentsInputs
 
     const { postId } = parsedBody
 
