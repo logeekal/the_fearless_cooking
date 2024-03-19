@@ -27,6 +27,9 @@ export const SiteMeta = {
       gumroad: 'https://thefearlesscooking.gumroad.com/l/fallinlovewithsalads',
     },
   },
+  author: {
+    name: 'Richa Gupta',
+  },
   description:
     'We at The Fearless Cooking are making \
         world food more tastier and more healthy. \
