@@ -30,7 +30,6 @@ export function SEO({
     <>
       <NextHead>
         {/* General Tags */}
-        <html lang="en" />
         <title>{title || siteMetadata.title}</title>
         <meta
           name="description"
