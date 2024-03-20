@@ -9,14 +9,18 @@ type Sitemap = {
   exclude: Array<string>
   nextExportDir: Array<string>
   format: string
+  dest: Array<string>
   baseUrl: string
+  genRobotsTxt?: boolean
 }
 
 const defaultConfig: Sitemap = {
   exclude: ['_next', 'fonts', 'images', '404.html'],
-  nextExportDir: ['out'],
+  nextExportDir: ['.next/server/pages/en'],
+  dest: ['public'],
   format: 'txt',
   baseUrl: SiteMeta.canonicalUrl,
+  genRobotsTxt: true,
 }
 
 export const collectSSGURLs = (config: Sitemap) => {
@@ -29,7 +33,7 @@ export const collectSSGURLs = (config: Sitemap) => {
   const EXCLUDED_DIRS = config.exclude
   const rootRelativeURLs = walkDir(OUT_DIR, EXCLUDED_DIRS)
   const relativeURLs = rootRelativeURLs.map((url) =>
-    url.replace(`${OUT_DIR}/`, '')
+    url.replace(`${OUT_DIR}`, '')
   )
   return relativeURLs
 }
@@ -49,7 +53,9 @@ const walkDir = function (dir: string, ignore_dir: string[], level = 0) {
           walkDir(completeFilePath, ignore_dir, level + 1)
         )
       } else {
-        results.push(relativePath.replace('.html', ''))
+        if (relativePath.endsWith('.html')) {
+          results.push(relativePath.replace('.html', ''))
+        }
       }
     } else {
       logger.info(`Ignoring ${file}`)
@@ -81,7 +87,12 @@ export const combineConfig = (config: Sitemap): Sitemap => {
         ? config['nextExportDir']
         : defaultConfig.nextExportDir,
     format: 'format' in config ? config.format : defaultConfig.format,
+    dest: 'dest' in config ? config.dest : defaultConfig.dest,
     baseUrl,
+    genRobotsTxt:
+      'genRobotsTxt' in config
+        ? config.genRobotsTxt
+        : defaultConfig.genRobotsTxt,
   }
 }
 
@@ -115,7 +126,20 @@ const writeSiteMap = (
     const filePath = path.join(outDir, fileName)
     const f = fs.openSync(filePath, 'w')
     fs.writeFileSync(f, content)
-    logger.info(`Sitemap written successfuly at ${filePath}`)
+    logger.info(`Sitemap written successfully at ${filePath}`)
+  } else {
+    throw Error(
+      `Cannot find outDir : ${outDir}. Please make sure it is already created`
+    )
+  }
+}
+
+const writeRobotsTxt = (outDir: string, content: string) => {
+  if (fs.existsSync(outDir)) {
+    const filePath = path.join(outDir, 'robots.txt')
+    const f = fs.openSync(filePath, 'w')
+    fs.writeFileSync(f, content)
+    logger.info(`Robots.txt written successfully at ${filePath}`)
   } else {
     throw Error(
       `Cannot find outDir : ${outDir}. Please make sure it is already created`
@@ -129,7 +153,16 @@ export const run = () => {
   const urls = genSiteMapwithRelativeURLs(config, relativeURLs)
   if (config.format === 'txt') {
     const siteMapText = convertURLsToTextSitemap(urls)
-    const outDir = path.join(...config.nextExportDir)
+    const outDir = path.join(...config.dest)
     writeSiteMap(outDir, config.format, siteMapText)
+    /*eslint-disable-next-line */
+    const robotTxtContent: string = `User-agent: *
+Disallow: /_next/
+Disallow: /fonts/
+Disallow: /images/
+Disallow: /404.html
+Sitemap: ${config.baseUrl}/sitemap.txt
+    `
+    writeRobotsTxt(outDir, robotTxtContent)
   }
 }
