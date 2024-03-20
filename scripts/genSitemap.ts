@@ -16,7 +16,7 @@ type Sitemap = {
 
 const defaultConfig: Sitemap = {
   exclude: ['_next', 'fonts', 'images', '404.html'],
-  nextExportDir: ['.next/server/pages'],
+  nextExportDir: ['.next/server/pages/en'],
   dest: ['public'],
   format: 'txt',
   baseUrl: SiteMeta.canonicalUrl,
@@ -33,7 +33,7 @@ export const collectSSGURLs = (config: Sitemap) => {
   const EXCLUDED_DIRS = config.exclude
   const rootRelativeURLs = walkDir(OUT_DIR, EXCLUDED_DIRS)
   const relativeURLs = rootRelativeURLs.map((url) =>
-    url.replace(`${OUT_DIR}/`, '')
+    url.replace(`${OUT_DIR}`, '')
   )
   return relativeURLs
 }
