@@ -36,7 +36,7 @@ export class RSS {
   recipeObj: ICompleteRecipeObj | undefined
   version = '2.0'
   baseURL = 'https://thefearlesscooking.com'
-  outDir = 'out'
+  outDir = 'public'
   rssFileName = 'rss.xml'
 
   async getRecipeObject() {

@@ -42,3 +42,4 @@ test_tsc
 public/rss.xml
 
 public/sitemap.*
+public/robots.*

@@ -24,6 +24,7 @@ export const GEN_GET_RECIPE_POSTS_DETAIL_QUERY = (
               excerpt
               date
               dateGmt
+              modifiedGmt
               recipeId
               title
               featuredImage {
@@ -311,6 +312,7 @@ export const GEN_GET_POSTS_DETAIL_QUERY = (
               excerpt
               date
               dateGmt
+              modifiedGmt
               postId
               title
               featuredImage {
