@@ -8,12 +8,13 @@ interface RatingProps {
   readonly?: boolean
   onChange?: (value: number) => void
   className?: string
+  size?: 'small' | 'normal'
 }
 
 const DEFAULT_RATING = 5
 
 export const Rating = (props: RatingProps) => {
-  const { value: initialValue, onChange, readonly = false } = props
+  const { value: initialValue, onChange, readonly = false, size= 'normal' } = props
   const [rating, setRating] = useState(initialValue ?? 5)
   const handleRatingChange = useCallback(
     (value: number) => {
@@ -48,9 +49,9 @@ export const Rating = (props: RatingProps) => {
                 rating - 1 === i ? 'selected' : ''
               }`}
               color={i <= rating - 1 ? '#fec400' : 'gray'}
-              size={25}
+              size={size=="normal" ? 25: 15}
             />
-            <FaStar color={i <= rating - 1 ? '#fec400' : 'gray'} size={25} />
+            <FaStar color={i <= rating - 1 ? '#fec400' : 'gray'} size={size=="normal" ? 25: 15} />
           </label>
         )
       })}

@@ -3,8 +3,8 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import {
   getRepliesController,
   GetRepliesControllerInput,
-} from '../../server/routes/controllers/comments'
-import { getIfExists } from '../../server/utils/func_utils'
+} from '../../../server/routes/controllers/comments'
+import { getIfExists } from '../../../server/utils/func_utils'
 
 export default async function handler(
   req: NextApiRequest,

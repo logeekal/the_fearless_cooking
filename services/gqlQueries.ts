@@ -74,7 +74,6 @@ export const GEN_GET_RECIPE_POSTS_DETAIL_QUERY = (
                   author{
                     node { 
                       name, 
-                      email
                     }
                   }
                   content
@@ -341,7 +340,6 @@ export const GEN_GET_POSTS_DETAIL_QUERY = (
                   author{
                     node { 
                       name, 
-                      email
                     }
                   }
                   content
@@ -359,6 +357,7 @@ export const GET_COMMENT_DETAILS = (commentInternalId: string) => `
     comment(id: "${commentInternalId}") {
       commentId
       content
+      dateGmt
       author {
         node {
           name
@@ -371,8 +370,7 @@ export const GET_COMMENT_DETAILS = (commentInternalId: string) => `
           startCursor
           hasPreviousPage
         }
-        edges {
-          node {
+        nodes {
             id
             content
             rating
@@ -381,7 +379,6 @@ export const GET_COMMENT_DETAILS = (commentInternalId: string) => `
                 name
               }
             }
-          }
         }
       }
     }
@@ -405,7 +402,6 @@ query GET_RECIPE_COMMENTS {
                     author{
                       node { 
                         name, 
-                        email
                       }
                     }
                     content
@@ -436,7 +432,6 @@ query GET_POST_COMMENTS {
                     author{
                       node { 
                         name, 
-                        email
                       }
                     }
                     content
@@ -448,4 +443,4 @@ query GET_POST_COMMENTS {
                 }
     }
   }
-` 
+`
