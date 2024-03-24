@@ -78,6 +78,7 @@ globalStyle('a', {
   textDecoration: 'none',
   color: vars.colors.brand,
   fontWeight: 600,
+  cursor: 'pointer',
 })
 
 globalStyle('.btn', {

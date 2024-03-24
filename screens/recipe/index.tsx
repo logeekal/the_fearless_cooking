@@ -1,7 +1,7 @@
-import Link from 'next/link'
 import React, { Fragment, useMemo } from 'react'
 import striptags from 'striptags'
 
+import { Badge } from '../../components/badge'
 import BottomBar from '../../components/bottom_bar'
 import { cardCategory } from '../../components/card/card.css'
 import FAQs from '../../components/faq'
@@ -76,19 +76,16 @@ function RecipePage(props: RecipePageProps) {
             }}
           ></h1>
           <div className={`recipe__categories ${recipeCategories}`}>
-            {categories.map((cat, idx) => {
+            {categories.map((cat) => {
               return (
                 <Fragment key={cat?.slug}>
-                  {idx > 0 ? (
-                    <span className="card__category--saperator">/</span>
-                  ) : null}
                   <span
                     className={`card__category ${cardCategory}`}
                     key={cat?.uri}
                   >
-                    <Link prefetch={false} href={cat?.uri as string}>
-                      {cat?.name}
-                    </Link>
+                    <a href={cat?.uri as string}>
+                      <Badge>{cat?.name}</Badge>
+                    </a>
                   </span>
                 </Fragment>
               )
