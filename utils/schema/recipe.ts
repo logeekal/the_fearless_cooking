@@ -261,12 +261,12 @@ export const genCombinedRecipeSchema = (
     })) ?? []),
   ]
 
-  return JSON.stringify([
+  return [
     genRecipeSchema(post, recipe, recipeVideoId, convertTime) ?? {},
     genRecipeBreadcrumbSchema(post) ?? {},
     ...genBreadcrumbSchemaBasedOnCuisinesAndCourses(
       [...cuisines, ...courses],
       post
     ),
-  ])
+  ]
 }
