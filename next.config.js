@@ -40,6 +40,20 @@ const nextConfig = {
     locales: ['en'],
     defaultLocale: 'en',
   },
+  async redirects() {
+    return [
+      {
+        source: '/about',
+        destination: 'https://instagram.com/thefearlesscooking',
+        permanent: true,
+      },
+      {
+        source: '/recipes',
+        destination: '/',
+        permanent: true,
+      },
+    ]
+  },
   async rewrites() {
     const functionsRewrite =
       process.env.NODE_ENV === 'development'
