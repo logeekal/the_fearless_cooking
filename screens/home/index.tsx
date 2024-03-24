@@ -7,17 +7,22 @@ import { homeContainerClass } from './home.css'
 
 type Props = LocalPageInfo & {
   recipes: Recipe[] | Post[]
+  title?: string
 }
 
 const Home = (props: Props) => {
-  const { recipes } = props
+  const { recipes, title } = props
 
   return (
     <div className={`${homeContainerClass}`}>
       <div>
         {/* eslint-disable-next-line */}
         {/* @ts-ignore */}
-        <ArticleGrid recipes={recipes} pageInfo={props.pageInfo} />
+        <ArticleGrid
+          recipes={recipes}
+          pageInfo={props.pageInfo}
+          title={title}
+        />
       </div>
     </div>
   )

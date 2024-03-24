@@ -4,6 +4,7 @@ import { Duration } from 'tinyduration'
 
 import { Recipe } from '../../types/wp-graphql.types'
 import { ICompleteRecipe } from '../../utils/types'
+import { Badge } from '../badge'
 import Checkbox from '../checkbox'
 import { getStepURL } from '../utils'
 import {
@@ -146,9 +147,8 @@ const RecipeCard = forwardRef<HTMLDivElement, RecipeCardProps>(
                     >
                       {recipeCourses.map((course, idx) => (
                         <React.Fragment key={course?.id}>
-                          {idx > 0 ? <p className="brand"> / </p> : null}
                           <a href={course?.uri}>
-                            <p className="brand">{course?.name} </p>
+                            <Badge> {course?.name} </Badge>
                           </a>
                         </React.Fragment>
                       ))}
@@ -167,9 +167,8 @@ const RecipeCard = forwardRef<HTMLDivElement, RecipeCardProps>(
                     >
                       {recipeCuisines.map((cuisine, idx) => (
                         <React.Fragment key={cuisine?.id}>
-                          {idx > 0 ? <p className="brand"> / </p> : null}
                           <a href={cuisine?.uri}>
-                            <p className="brand">{cuisine?.name} </p>
+                            <Badge>{cuisine?.name} </Badge>
                           </a>
                         </React.Fragment>
                       ))}

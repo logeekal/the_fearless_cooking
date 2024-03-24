@@ -1,7 +1,9 @@
-import Link from 'next/link'
 import React, { Fragment, useMemo } from 'react'
+import { BsFillCalendar2DateFill } from 'react-icons/bs'
+import { ImPencil2 } from 'react-icons/im'
 import striptags from 'striptags'
 
+import { Badge } from '../../components/badge'
 import BottomBar from '../../components/bottom_bar'
 import { cardCategory } from '../../components/card/card.css'
 import FAQs from '../../components/faq'
@@ -17,7 +19,9 @@ import {
   featuredImageSquareContainer,
   recipeCategories,
   recipeContainer,
+  recipeMeta,
   recipePost,
+  recipePostHeader,
 } from './recipe.css'
 
 type RecipePageProps = {
@@ -69,26 +73,39 @@ function RecipePage(props: RecipePageProps) {
         ]}
       />
       <div id="recipe-post" className={`recipe-post ${recipePost}`}>
-        <div className="recipe__postHeader">
+        <div className={`recipe__postHeader ${recipePostHeader}`}>
           <h1
             dangerouslySetInnerHTML={{
               __html: recipe.post.title as string,
             }}
           ></h1>
+          <div className={`recipe__postMeta ${recipeMeta}`}>
+            {/* Badge with author name*/}
+            <a
+              href={'https://instagram.com/thefearlesscooking'}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Badge icon={<ImPencil2 size={'1.2rem'} />} negative>
+                {recipe.post.author?.node?.name ?? 'Richa Gupta'}
+              </Badge>
+            </a>
+            {/* Badge with date */}
+            <Badge icon={<BsFillCalendar2DateFill size={'1.2rem'} />} negative>
+              {new Date(recipe.post.dateGmt ?? Date.now()).toDateString()}
+            </Badge>
+          </div>
           <div className={`recipe__categories ${recipeCategories}`}>
-            {categories.map((cat, idx) => {
+            {categories.map((cat) => {
               return (
                 <Fragment key={cat?.slug}>
-                  {idx > 0 ? (
-                    <span className="card__category--saperator">/</span>
-                  ) : null}
                   <span
                     className={`card__category ${cardCategory}`}
                     key={cat?.uri}
                   >
-                    <Link prefetch={false} href={cat?.uri as string}>
-                      {cat?.name}
-                    </Link>
+                    <a href={cat?.uri as string}>
+                      <Badge>{cat?.name}</Badge>
+                    </a>
                   </span>
                 </Fragment>
               )
@@ -117,7 +134,7 @@ function RecipePage(props: RecipePageProps) {
           </blockquote>
         )}
         <div
-          className={`${
+          className={`featuredImage ${
             isAI ? featuredImageSquareContainer : featuredImageContainer
           }`}
         >

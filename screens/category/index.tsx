@@ -16,6 +16,9 @@ type CategoryPageProps = LocalPageInfo & {
 }
 
 function Category(props: CategoryPageProps) {
+  const tagLine = props.category.name
+    ? `Latest ${props.category.name} Recipes`
+    : 'Latest Recipes'
   return (
     <>
       <SEO
@@ -29,6 +32,7 @@ function Category(props: CategoryPageProps) {
       <Home
         recipes={props.category.recipes?.nodes as Recipe[]}
         pageInfo={props.pageInfo}
+        title={tagLine}
       />
     </>
   )

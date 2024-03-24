@@ -17,6 +17,10 @@ const withPlausibleCustomizations = withPlausibleProxy({
   customDomain: 'https://analytics.logeekal.eu',
 })
 
+if (!process.env.MF_HOST) {
+  throw new Error('MF_HOST environment variable is required')
+}
+
 const remotePatterns = [
   {
     protocol: 'https',

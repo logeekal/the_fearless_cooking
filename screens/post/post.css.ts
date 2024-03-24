@@ -7,6 +7,22 @@ export const postContainer = style({
   color: vars.colors.text,
 })
 
+export const postHeader = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: vars.space.normal,
+  alignItems: 'flex-start',
+  justifyContent: 'center',
+})
+
+export const postMeta = style({
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'center',
+  alignItems: 'center',
+  gap: vars.space.xs,
+})
+
 export const postContent = style({
   color: vars.colors.text,
   '@media': {
