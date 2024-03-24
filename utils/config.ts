@@ -16,8 +16,9 @@ export const SiteMeta = {
   titleSuffix: 'from a Fearless Cook',
   social: {
     twitter: 'marriedfriendss',
-    fb: 'marriedfriends',
-    youtube: 'marriedfriends',
+    fb: 'thefearlesscooking',
+    youtube: 'thefearlesscooking',
+    insta: 'thefearlesscooking',
   },
   books: {
     loveSalad: {
