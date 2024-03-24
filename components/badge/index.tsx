@@ -10,6 +10,7 @@ export interface BadgeProps {
   color?: string
   icon?: React.ReactNode
   negative?: boolean
+  compact?: boolean
 }
 
 export const Badge: React.FC<PropsWithChildren<BadgeProps>> = (props) => {
@@ -19,6 +20,7 @@ export const Badge: React.FC<PropsWithChildren<BadgeProps>> = (props) => {
     children,
     icon,
     negative = false,
+    compact = false,
   } = props
   return (
     <span
@@ -26,6 +28,8 @@ export const Badge: React.FC<PropsWithChildren<BadgeProps>> = (props) => {
         border: `1px solid ${backgroundColor}`,
         backgroundColor: !negative ? vars.colors.card : backgroundColor,
         color: !negative ? color : vars.colors.card,
+        fontSize: compact ? '1rem' : '1.3rem',
+        lineHeight: compact ? '1rem' : '2rem',
       }}
       className={`badge ${badgeContainer}`}
     >

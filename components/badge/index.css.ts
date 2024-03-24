@@ -3,8 +3,6 @@ import { style } from '@vanilla-extract/css'
 export const badgeContainer = style({
   // react style attribute for badge component
   borderRadius: '0.5rem',
-  fontSize: '1.3rem',
-  lineHeight: '1.3rem',
   fontWeight: 300,
   display: 'inline-flex',
   textAlign: 'center',
@@ -21,6 +19,7 @@ export const badgeContainer = style({
 
 export const badgeContent = style({
   paddingInline: '0.5rem',
+  lineHeight: 'inherit',
 })
 
 export const badgeIcon = style({
