@@ -1,4 +1,4 @@
-import './fonts/inter'
+import './fonts/inter.css'
 
 import { globalFontFace, globalStyle } from '@vanilla-extract/css'
 
@@ -85,14 +85,14 @@ globalStyle('h1', {
       marginTop: vars.space.l,
     },
   },
-  marginBottom: vars.space.xl,
+  // marginBottom: vars.space.xl,
   fontWeight: 600,
   fontSize: vars.fontSize.h1,
   lineHeight: vars.lineHeights.h1,
 })
 
 globalStyle('h2', {
-  marginBlock: vars.space.xl,
+  // marginBlock: vars.space.xl,
   fontWeight: 600,
   letterSpacing: '-0.02em',
   fontSize: vars.fontSize.h2,
@@ -100,7 +100,7 @@ globalStyle('h2', {
 })
 
 globalStyle('h3', {
-  marginBlock: vars.space.normal,
+  // marginBlock: vars.space.l,
   fontWeight: 600,
   fontSize: vars.fontSize.h3,
   lineHeight: vars.lineHeights.h3,
@@ -108,7 +108,7 @@ globalStyle('h3', {
 })
 
 globalStyle('h4', {
-  marginBlockStart: vars.space.normal,
+  // marginBlockStart: vars.space.l,
   fontSize: vars.fontSize.para,
 })
 
@@ -147,7 +147,7 @@ globalStyle('.bold', {
 })
 
 globalStyle('.heavy-bold', {
-  fontWeight: 700,
+  fontWeight: 600,
 })
 
 globalStyle('.brand', {
@@ -268,4 +268,8 @@ globalStyle('figcaption a', {
 
 globalStyle('ol', {
   marginBlock: vars.space.s,
+})
+
+globalStyle('article', {
+  marginBottom: vars.space.xl,
 })

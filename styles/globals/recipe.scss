@@ -1,57 +1,113 @@
 div#recipe-post {
-  a {
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
+  .featuredImage {
+    margin-top: 3rem;
   }
 
-  img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    object-position: center;
-  }
+  article {
 
-  p {
-    &:not(:last-child) {
-      margin-top: 3rem
+    h1,
+    h2,
+    h3,
+    h4 {
+      margin-top: 3rem;
     }
+
+
+    a {
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+    }
+
+    figure {
+      margin-top: 3rem;
+    }
+
+    ul,
+    ol {
+      margin-top: 3rem;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      object-position: center;
+
+    }
+
+    p {
+      &:not(:last-child) {
+        margin-top: 3rem
+      }
+    }
+
+    ol {
+      li {
+        list-style: decimal;
+        margin-left: 2.5rem;
+        vertical-align: top;
+
+        &::marker {
+          vertical-align: top;
+        }
+
+        p {
+          display: inline-block;
+        }
+      }
+    }
+
+    ul {
+      li {
+        margin-left: 2.5rem;
+        list-style: inherit;
+        //transform: translateX(15px);
+        margin-block: 7px;
+        //&:before {
+        ////content: '🍀 ';
+        //content: '🥑';
+        //margin-right: 7px;
+        //}
+      }
+    }
+
   }
 
   #recipe-card {
     p {
       margin: 0
     }
-  }
 
-  ol {
-    li {
-      list-style: decimal;
-      margin-left: 2.5rem;
-      vertical-align: top;
-
-      &::marker {
+    ol {
+      li {
+        list-style: decimal;
         vertical-align: top;
-      }
+        margin-left: 2rem;
 
-      p {
-        display: inline-block;
+        &::marker {
+          vertical-align: top;
+        }
+
+        p {
+          display: inline-block;
+        }
+      }
+    }
+
+    ul {
+      li {
+        list-style: inherit;
+        //transform: translateX(15px);
+        margin-block: 7px;
+        //&:before {
+        ////content: '🍀 ';
+        //content: '🥑';
+        //margin-right: 7px;
+        //}
       }
     }
   }
 
-  ul {
-    li {
-      margin-left: 2.5rem;
-      list-style: inherit;
-      //transform: translateX(15px);
-      margin-block: 7px;
-      //&:before {
-      ////content: '🍀 ';
-      //content: '🥑';
-      //margin-right: 7px;
-      //}
-    }
-  }
 
   span.embed-youtube {
     width: 100%;

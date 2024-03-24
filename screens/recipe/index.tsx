@@ -117,7 +117,7 @@ function RecipePage(props: RecipePageProps) {
           </blockquote>
         )}
         <div
-          className={`${
+          className={`featuredImage ${
             isAI ? featuredImageSquareContainer : featuredImageContainer
           }`}
         >

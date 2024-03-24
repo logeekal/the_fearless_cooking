@@ -25,7 +25,7 @@ export const FAQSection = style({
 })
 
 export const recipeCategories = style({
-  marginBottom: vars.space.normal,
+  marginBlock: vars.space.normal,
   display: 'flex',
   flexDirection: 'row',
   gap: vars.space.xs,

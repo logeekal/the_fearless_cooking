@@ -1,73 +1,98 @@
 div#post {
-  a {
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-  }
 
-  img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    object-position: center;
-  }
-
-  p {
-    &:not(:last-child) {
-      margin-top: 3rem
+  article {
+    .featuredImage {
+      margin-top: 3rem;
     }
-  }
 
-  ol {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-
-    li {
-      list-style: decimal;
-      margin-left: 2.5rem;
-      vertical-align: top;
-
-      &::marker {
-        vertical-align: top;
-      }
-
-      p {
-        display: inline-block;
-      }
+    h1,
+    h2,
+    h3,
+    h4 {
+      margin-top: 3rem;
     }
-  }
 
-  ul {
-    li {
-      list-style: inherit;
-      //transform: translateX(15px);
-      margin-block: 7px;
-      margin-left: 2.5rem;
-      //&:before {
-      ////content: '🍀 ';
-      //content: '🥑';
-      //margin-right: 7px;
-      //}
+    a {
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
     }
-  }
 
-  figcaption {
-    display: none;
-  }
 
-  span.embed-youtube {
-    width: 100%;
-    padding-bottom: calc(100% * (9 / 16));
-    position: relative;
-    margin-block: 15px;
+    ul,
+    ol {
+      margin-top: 3rem;
+    }
 
-    iframe {
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
+    figure {
+      margin-top: 3rem;
+    }
+
+    img {
       width: 100%;
-      height: 100%;
+      height: auto;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    p {
+      &:not(:last-child) {
+        margin-top: 3rem
+      }
+    }
+
+    ol {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      li {
+        list-style: decimal;
+        margin-left: 2.5rem;
+        vertical-align: top;
+
+        &::marker {
+          vertical-align: top;
+        }
+
+        p {
+          display: inline-block;
+        }
+      }
+    }
+
+    ul {
+      li {
+        list-style: inherit;
+        //transform: translateX(15px);
+        margin-block: 7px;
+        margin-left: 2.5rem;
+        //&:before {
+        ////content: '🍀 ';
+        //content: '🥑';
+        //margin-right: 7px;
+        //}
+      }
+    }
+
+    figcaption {
+      display: none;
+    }
+
+    span.embed-youtube {
+      width: 100%;
+      padding-bottom: calc(100% * (9 / 16));
+      position: relative;
+      margin-block: 15px;
+
+      iframe {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
     }
   }
 }

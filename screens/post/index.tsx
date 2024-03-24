@@ -39,7 +39,7 @@ export default function PostPage(props: PostProps) {
             }}
           ></h1>
         </div>
-        <div className={`${featuredImageContainer}`}>
+        <div className={`featuredImage ${featuredImageContainer}`}>
           <img
             alt={`${
               post.post.featuredImage?.node?.altText ?? post.post.title ?? ''
