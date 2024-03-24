@@ -157,10 +157,6 @@ export const run = () => {
     writeSiteMap(outDir, config.format, siteMapText)
     /*eslint-disable-next-line */
     const robotTxtContent: string = `User-agent: *
-Disallow: /_next/
-Disallow: /fonts/
-Disallow: /images/
-Disallow: /404.html
 Sitemap: ${config.baseUrl}/sitemap.txt
     `
     writeRobotsTxt(outDir, robotTxtContent)
