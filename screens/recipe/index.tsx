@@ -60,11 +60,11 @@ function RecipePage(props: RecipePageProps) {
         schemas={[
           {
             type: 'recipe',
-            schema: recipe.recipeSchema || '',
+            schema: recipe.recipeSchema || {},
           },
           {
             type: 'FAQ',
-            schema: recipe.faqSchema ?? '',
+            schema: recipe.faqSchema ?? {},
           },
         ]}
       />

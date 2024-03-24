@@ -9,7 +9,7 @@ import { featuredImageContainer, postContainer, postContent } from './post.css'
 type PostProps = {
   post: {
     post: Post
-    schema: string
+    schema: object
   }
 }
 

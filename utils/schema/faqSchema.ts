@@ -18,5 +18,5 @@ export const genFAQSchema = (
     }),
   }
 
-  return JSON.stringify(finalSchema)
+  return finalSchema
 }

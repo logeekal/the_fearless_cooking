@@ -58,5 +58,5 @@ const genPostSchema = (post: Post) => {
 }
 
 export const genCombinedPostSchema = (post: Post) => {
-  return JSON.stringify([genPostSchema(post), genPostBreadcrumbSchema(post)])
+  return [genPostSchema(post), genPostBreadcrumbSchema(post)]
 }
