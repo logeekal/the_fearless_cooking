@@ -25,7 +25,7 @@ const baseTheme: ThemeType = {
     subText: '1rem',
     // source: https://ui.shadcn.com/docs/components/typography
     h1: '3rem',
-    h2: '1.875rem',
+    h2: '2.25rem',
     h3: '1.875rem',
     h4: '1.2rem',
   },
@@ -36,7 +36,7 @@ const baseTheme: ThemeType = {
     subHeading: '1.5rem',
     subText: '1.5rem',
     h1: '3.5rem',
-    h2: '2.25rem',
+    h2: '3rem',
     h3: '2rem',
     h4: '1.75rem',
   },

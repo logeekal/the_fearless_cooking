@@ -1,52 +1,10 @@
-import './fonts/inter.css'
+import './fonts/fonts.css'
 
-import { globalFontFace, globalStyle } from '@vanilla-extract/css'
+import { globalStyle } from '@vanilla-extract/css'
 
 import { breakPoints } from './breakpoints.css'
 import { vars } from './themes.css'
 import { bodyWidthRule } from './vars.css'
-
-globalFontFace('quicksand', {
-  src: 'url(/fonts/_quicksand/quicksand_bold.woff2) format("woff2")',
-  fontStyle: 'normal',
-  fontWeight: 700,
-  fontDisplay: 'swap',
-})
-
-globalFontFace('quicksand', {
-  src: 'url(/fonts/_quicksand/quicksand_semibold.woff2) format("woff2")',
-  fontStyle: 'normal',
-  fontWeight: 600,
-  fontDisplay: 'swap',
-})
-
-globalFontFace('quicksand', {
-  src: 'url(/fonts/_quicksand/quicksand_medium.woff2) format("woff2")',
-  fontStyle: 'normal',
-  fontWeight: 500,
-  fontDisplay: 'swap',
-})
-
-globalFontFace('quicksand', {
-  src: 'url(/fonts/_quicksand/quicksand_regular.woff2) format("woff2")',
-  fontStyle: 'normal',
-  fontWeight: 400,
-  fontDisplay: 'swap',
-})
-
-globalFontFace('quicksand', {
-  src: 'url(/fonts/_quicksand/quicksand_light.woff2) format("woff2")',
-  fontStyle: 'normal',
-  fontWeight: 300,
-  fontDisplay: 'swap',
-})
-
-globalFontFace('bilbo', {
-  src: 'url(/fonts/bilbo-swash-caps/bilbo_swash_caps_regular.ttf)',
-  fontStyle: 'normal',
-  fontWeight: 300,
-  fontDisplay: 'swap',
-})
 
 globalStyle('html', {
   fontFamily: 'inter',
@@ -93,7 +51,7 @@ globalStyle('h1', {
 
 globalStyle('h2', {
   // marginBlock: vars.space.xl,
-  fontWeight: 600,
+  fontWeight: 500,
   letterSpacing: '-0.02em',
   fontSize: vars.fontSize.h2,
   lineHeight: vars.lineHeights.h2,

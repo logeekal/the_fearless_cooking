@@ -13,17 +13,3 @@ globalFontFace('glass', {
   fontWeight: '400',
   fontDisplay: 'swap',
 })
-
-globalFontFace('geist', {
-  src: 'url(/fonts/Geist/GeistVariableVF.ttf)',
-  fontStyle: 'normal',
-  fontWeight: '100 900',
-  fontDisplay: 'swap',
-})
-
-globalFontFace('madimi', {
-  src: 'url(/fonts/madimi/MadimiOne-Regular.ttf)',
-  fontStyle: 'normal',
-  fontWeight: '400',
-  fontDisplay: 'swap',
-})
