@@ -1,19 +1,14 @@
 import { style } from '@vanilla-extract/css'
 
-import { vars } from '../../styles/themes.css'
-
 export const badgeContainer = style({
   // react style attribute for badge component
-
-  padding: '0.5rem 0.5rem',
   borderRadius: '0.5rem',
-  fontSize: vars.fontSize.para,
+  fontSize: '1.3rem',
+  lineHeight: '1.3rem',
   fontWeight: 300,
-  display: 'inline-block',
+  display: 'inline-flex',
   textAlign: 'center',
   minWidth: '1.5rem',
-  minHeight: '1.5rem',
-  lineHeight: '1.5rem',
   verticalAlign: 'middle',
   selectors: {
     '&:hover': {
@@ -22,4 +17,16 @@ export const badgeContainer = style({
       boxShadow: '0 0 0.5rem rgba(0, 0, 0, 0.1)',
     },
   },
+})
+
+export const badgeContent = style({
+  paddingInline: '0.5rem',
+})
+
+export const badgeIcon = style({
+  display: 'grid',
+  placeItems: 'center',
+  paddingInline: '0.5rem',
+  borderRightWidth: '1px',
+  borderRightStyle: 'solid',
 })

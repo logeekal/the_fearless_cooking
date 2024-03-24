@@ -1,4 +1,6 @@
 import React, { Fragment, useMemo } from 'react'
+import { BsFillCalendar2DateFill } from 'react-icons/bs'
+import { ImPencil2 } from 'react-icons/im'
 import striptags from 'striptags'
 
 import { Badge } from '../../components/badge'
@@ -17,7 +19,9 @@ import {
   featuredImageSquareContainer,
   recipeCategories,
   recipeContainer,
+  recipeMeta,
   recipePost,
+  recipePostHeader,
 } from './recipe.css'
 
 type RecipePageProps = {
@@ -69,12 +73,28 @@ function RecipePage(props: RecipePageProps) {
         ]}
       />
       <div id="recipe-post" className={`recipe-post ${recipePost}`}>
-        <div className="recipe__postHeader">
+        <div className={`recipe__postHeader ${recipePostHeader}`}>
           <h1
             dangerouslySetInnerHTML={{
               __html: recipe.post.title as string,
             }}
           ></h1>
+          <div className={`recipe__postMeta ${recipeMeta}`}>
+            {/* Badge with author name*/}
+            <a
+              href={'https://instagram.com/thefearlesscooking'}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Badge icon={<ImPencil2 size={'1.2rem'} />} negative>
+                {recipe.post.author?.node?.name ?? 'Richa Gupta'}
+              </Badge>
+            </a>
+            {/* Badge with date */}
+            <Badge icon={<BsFillCalendar2DateFill size={'1.2rem'} />} negative>
+              {new Date(recipe.post.date ?? Date.now()).toDateString()}
+            </Badge>
+          </div>
           <div className={`recipe__categories ${recipeCategories}`}>
             {categories.map((cat) => {
               return (
