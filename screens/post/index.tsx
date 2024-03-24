@@ -61,7 +61,7 @@ export default function PostPage(props: PostProps) {
             </a>
             {/* Badge with date */}
             <Badge icon={<BsFillCalendar2DateFill size={'1.2rem'} />} negative>
-              {new Date(post.post.date ?? Date.now()).toDateString()}
+              {new Date(post.post.dateGmt ?? Date.now()).toDateString()}
             </Badge>
           </div>
         </div>

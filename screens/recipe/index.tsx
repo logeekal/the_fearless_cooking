@@ -92,7 +92,7 @@ function RecipePage(props: RecipePageProps) {
             </a>
             {/* Badge with date */}
             <Badge icon={<BsFillCalendar2DateFill size={'1.2rem'} />} negative>
-              {new Date(recipe.post.date ?? Date.now()).toDateString()}
+              {new Date(recipe.post.dateGmt ?? Date.now()).toDateString()}
             </Badge>
           </div>
           <div className={`recipe__categories ${recipeCategories}`}>
