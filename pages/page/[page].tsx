@@ -29,7 +29,11 @@ const PaginatedHomePage: NextPageWithLayout<HomeProps> = (props) => {
   return (
     <div className={`${currTheme} ${styleClass}`}>
       <SEO isArticle={false} />
-      <Home recipes={props.recipes} pageInfo={props.pageInfo} />
+      <Home
+        recipes={props.recipes}
+        pageInfo={props.pageInfo}
+        title="Latest Recipes"
+      />
       <button style={{ display: 'none' }} onClick={() => toggleTheme()}>
         Switch Theme
       </button>
