@@ -1,8 +1,9 @@
 div#post {
-  a{
+  a {
     text-decoration: underline;
     text-decoration-thickness: 2px;
   }
+
   img {
     width: 100%;
     height: auto;
@@ -11,20 +12,25 @@ div#post {
   }
 
   p {
-    margin-block: 10px;
+    &:not(:last-child) {
+      margin-top: 3rem
+    }
   }
 
   ol {
     display: flex;
     flex-direction: column;
     gap: 8px;
+
     li {
       list-style: decimal;
       margin-left: 2.5rem;
       vertical-align: top;
+
       &::marker {
         vertical-align: top;
       }
+
       p {
         display: inline-block;
       }
@@ -38,9 +44,9 @@ div#post {
       margin-block: 7px;
       margin-left: 2.5rem;
       //&:before {
-        ////content: '🍀 ';
-        //content: '🥑';
-        //margin-right: 7px;
+      ////content: '🍀 ';
+      //content: '🥑';
+      //margin-right: 7px;
       //}
     }
   }
@@ -54,6 +60,7 @@ div#post {
     padding-bottom: calc(100% * (9 / 16));
     position: relative;
     margin-block: 15px;
+
     iframe {
       display: block;
       position: absolute;

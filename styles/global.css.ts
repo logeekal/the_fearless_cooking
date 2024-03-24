@@ -1,3 +1,5 @@
+import './fonts/inter'
+
 import { globalFontFace, globalStyle } from '@vanilla-extract/css'
 
 import { breakPoints } from './breakpoints.css'
@@ -47,7 +49,7 @@ globalFontFace('bilbo', {
 })
 
 globalStyle('html', {
-  fontFamily: 'quicksand',
+  fontFamily: 'inter',
 })
 
 // css RESET
@@ -83,19 +85,26 @@ globalStyle('h1', {
       marginTop: vars.space.l,
     },
   },
-  marginBottom: vars.space.l,
-  fontSize: '3rem',
-  lineHeight: '3.5rem',
+  marginBottom: vars.space.xl,
+  fontWeight: 600,
+  fontSize: vars.fontSize.h1,
+  lineHeight: vars.lineHeights.h1,
 })
 
 globalStyle('h2', {
-  marginBlockStart: vars.space.normal,
-  fontSize: vars.fontSize.heading,
+  marginBlock: vars.space.xl,
+  fontWeight: 600,
+  letterSpacing: '-0.02em',
+  fontSize: vars.fontSize.h2,
+  lineHeight: vars.lineHeights.h2,
 })
 
 globalStyle('h3', {
-  marginBlockStart: vars.space.normal,
-  fontSize: vars.fontSize.heading,
+  marginBlock: vars.space.normal,
+  fontWeight: 600,
+  fontSize: vars.fontSize.h3,
+  lineHeight: vars.lineHeights.h3,
+  letterSpacing: '-0.02em',
 })
 
 globalStyle('h4', {

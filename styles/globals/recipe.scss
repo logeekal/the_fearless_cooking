@@ -1,8 +1,9 @@
 div#recipe-post {
-  a{
+  a {
     text-decoration: underline;
     text-decoration-thickness: 2px;
   }
+
   img {
     width: 100%;
     height: auto;
@@ -11,12 +12,14 @@ div#recipe-post {
   }
 
   p {
-    margin-block: 10px;
+    &:not(:last-child) {
+      margin-top: 3rem
+    }
   }
 
   #recipe-card {
     p {
-      margin:0
+      margin: 0
     }
   }
 
@@ -29,6 +32,7 @@ div#recipe-post {
       &::marker {
         vertical-align: top;
       }
+
       p {
         display: inline-block;
       }
@@ -42,9 +46,9 @@ div#recipe-post {
       //transform: translateX(15px);
       margin-block: 7px;
       //&:before {
-        ////content: '🍀 ';
-        //content: '🥑';
-        //margin-right: 7px;
+      ////content: '🍀 ';
+      //content: '🥑';
+      //margin-right: 7px;
       //}
     }
   }
@@ -54,6 +58,7 @@ div#recipe-post {
     padding-bottom: calc(100% * (9 / 16));
     position: relative;
     margin-block: 15px;
+
     iframe {
       display: block;
       position: absolute;
