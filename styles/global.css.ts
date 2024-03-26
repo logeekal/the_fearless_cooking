@@ -1,53 +1,13 @@
-import { globalFontFace, globalStyle } from '@vanilla-extract/css'
+import './fonts/fonts.css'
+
+import { globalStyle } from '@vanilla-extract/css'
 
 import { breakPoints } from './breakpoints.css'
 import { vars } from './themes.css'
 import { bodyWidthRule } from './vars.css'
 
-globalFontFace('quicksand', {
-  src: 'url(/fonts/_quicksand/quicksand_bold.woff2) format("woff2")',
-  fontStyle: 'normal',
-  fontWeight: 700,
-  fontDisplay: 'swap',
-})
-
-globalFontFace('quicksand', {
-  src: 'url(/fonts/_quicksand/quicksand_semibold.woff2) format("woff2")',
-  fontStyle: 'normal',
-  fontWeight: 600,
-  fontDisplay: 'swap',
-})
-
-globalFontFace('quicksand', {
-  src: 'url(/fonts/_quicksand/quicksand_medium.woff2) format("woff2")',
-  fontStyle: 'normal',
-  fontWeight: 500,
-  fontDisplay: 'swap',
-})
-
-globalFontFace('quicksand', {
-  src: 'url(/fonts/_quicksand/quicksand_regular.woff2) format("woff2")',
-  fontStyle: 'normal',
-  fontWeight: 400,
-  fontDisplay: 'swap',
-})
-
-globalFontFace('quicksand', {
-  src: 'url(/fonts/_quicksand/quicksand_light.woff2) format("woff2")',
-  fontStyle: 'normal',
-  fontWeight: 300,
-  fontDisplay: 'swap',
-})
-
-globalFontFace('bilbo', {
-  src: 'url(/fonts/bilbo-swash-caps/bilbo_swash_caps_regular.ttf)',
-  fontStyle: 'normal',
-  fontWeight: 300,
-  fontDisplay: 'swap',
-})
-
 globalStyle('html', {
-  fontFamily: 'quicksand',
+  fontFamily: 'inter',
 })
 
 // css RESET
@@ -83,23 +43,30 @@ globalStyle('h1', {
       marginTop: vars.space.l,
     },
   },
-  marginBottom: vars.space.l,
-  fontSize: '3rem',
-  lineHeight: '3.5rem',
+  // marginBottom: vars.space.xl,
+  fontWeight: 600,
+  fontSize: vars.fontSize.h1,
+  lineHeight: vars.lineHeights.h1,
 })
 
 globalStyle('h2', {
-  marginBlockStart: vars.space.normal,
-  fontSize: vars.fontSize.heading,
+  // marginBlock: vars.space.xl,
+  fontWeight: 500,
+  letterSpacing: '-0.02em',
+  fontSize: vars.fontSize.h2,
+  lineHeight: vars.lineHeights.h2,
 })
 
 globalStyle('h3', {
-  marginBlockStart: vars.space.normal,
-  fontSize: vars.fontSize.heading,
+  // marginBlock: vars.space.l,
+  fontWeight: 600,
+  fontSize: vars.fontSize.h3,
+  lineHeight: vars.lineHeights.h3,
+  letterSpacing: '-0.02em',
 })
 
 globalStyle('h4', {
-  marginBlockStart: vars.space.normal,
+  // marginBlockStart: vars.space.l,
   fontSize: vars.fontSize.para,
 })
 
@@ -111,6 +78,7 @@ globalStyle('a', {
   textDecoration: 'none',
   color: vars.colors.brand,
   fontWeight: 600,
+  cursor: 'pointer',
 })
 
 globalStyle('.btn', {
@@ -138,7 +106,7 @@ globalStyle('.bold', {
 })
 
 globalStyle('.heavy-bold', {
-  fontWeight: 700,
+  fontWeight: 600,
 })
 
 globalStyle('.brand', {
@@ -259,4 +227,8 @@ globalStyle('figcaption a', {
 
 globalStyle('ol', {
   marginBlock: vars.space.s,
+})
+
+globalStyle('article', {
+  marginBottom: vars.space.xl,
 })

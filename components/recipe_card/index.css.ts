@@ -151,7 +151,6 @@ export const recipeCardDetailValue = style({
 })
 
 export const recipeCardDetailLabel = style({
-  fontSize: vars.fontSize.heading,
   textAlign: 'center',
   fontWeight: 500,
 })
@@ -205,7 +204,7 @@ export const recipeCardBodyTitle = style({
   color: vars.colors.brand,
   fontWeight: 400,
   margin: '0px',
-  marginBottom: vars.space.normal,
+  marginBottom: vars.space.l,
 })
 
 export const recipeLists = style({

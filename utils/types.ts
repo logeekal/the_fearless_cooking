@@ -16,7 +16,7 @@ export interface ICompleteRecipeObj {
   [k: string]: {
     post: Recipe
     content: IRecipeContent['data'][number]['recipe_metas'] | null
-    recipeSchema?: string | null
+    recipeSchema?: object | null
     faqs: IFAQRestContent[]
     YTId: string | null | undefined
   }
@@ -27,8 +27,8 @@ export interface ICompleteRecipe {
   content: IRecipeContent['data'][number]['recipe_metas'] | null
   faqs: IFAQRestContent[]
   YTId: string | null | undefined
-  recipeSchema?: string | null
-  faqSchema?: string | null
+  recipeSchema?: object | null
+  faqSchema?: object | null
 }
 
 export interface IFAQObj {
@@ -53,7 +53,7 @@ export type LocalPageInfo = {
 
 export type ICompletePost = {
   post: Post
-  schema: string
+  schema: object
 }
 
 export type ICompletePostObj = {

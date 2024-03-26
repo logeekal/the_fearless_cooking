@@ -17,6 +17,10 @@ const withPlausibleCustomizations = withPlausibleProxy({
   customDomain: 'https://analytics.logeekal.eu',
 })
 
+if (!process.env.MF_HOST) {
+  throw new Error('MF_HOST environment variable is required')
+}
+
 const remotePatterns = [
   {
     protocol: 'https',
@@ -39,6 +43,20 @@ const nextConfig = {
   i18n: {
     locales: ['en'],
     defaultLocale: 'en',
+  },
+  async redirects() {
+    return [
+      {
+        source: '/about',
+        destination: 'https://instagram.com/thefearlesscooking',
+        permanent: true,
+      },
+      {
+        source: '/recipes',
+        destination: '/',
+        permanent: true,
+      },
+    ]
   },
   async rewrites() {
     const functionsRewrite =

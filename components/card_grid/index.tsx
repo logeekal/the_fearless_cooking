@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useMemo, useState } from 'react'
 
-import { Recipe } from '../../types/wp-graphql.types'
+import { Post, Recipe } from '../../types/wp-graphql.types'
 import { LocalPageInfo } from '../../utils/types'
 import Card from '../card'
 import {
@@ -15,11 +15,12 @@ import {
 } from './grid.css'
 
 export interface ArticleGridProps extends LocalPageInfo {
-  recipes: Recipe[]
+  recipes: Recipe[] | Post[]
+  title?: string
 }
 
 const ArticleGrid: React.FC<ArticleGridProps> = (props) => {
-  const { recipes: posts, pageInfo } = props
+  const { recipes: posts, pageInfo, title } = props
 
   const [currentURL, setCurrentURL] = useState('')
   const router = useRouter()
@@ -58,9 +59,12 @@ const ArticleGrid: React.FC<ArticleGridProps> = (props) => {
 
   return (
     <div className={`article-grid-container ${gridContainer}`}>
-      <div className={`grid__header ${gridHeading} cursive heading`}>
-        The Latest
-      </div>
+      <h1
+        style={{ margin: 0 }}
+        className={`grid__header ${gridHeading} cursive heading`}
+      >
+        {title ? title : 'Latest'}
+      </h1>
       <div className={`grid ${grid}`}>
         {relevantArticles?.map((article, index) => {
           return <Card key={index} post={article} itemProp="itemListElement" />

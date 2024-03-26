@@ -16,6 +16,22 @@ export const recipePost = style({
   },
 })
 
+export const recipePostHeader = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: vars.space.normal,
+  alignItems: 'flex-start',
+  justifyContent: 'center',
+})
+
+export const recipeMeta = style({
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'center',
+  alignItems: 'center',
+  gap: vars.space.xs,
+})
+
 export const FAQSection = style({
   '@media': {
     'screen and (max-width: 1000px)': {
@@ -33,7 +49,6 @@ export const commentSection = style({
 })
 
 export const recipeCategories = style({
-  marginBottom: vars.space.normal,
   display: 'flex',
   flexDirection: 'row',
   gap: vars.space.xs,

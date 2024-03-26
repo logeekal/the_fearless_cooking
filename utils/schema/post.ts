@@ -1,6 +1,5 @@
 import { Post } from '../../types/wp-graphql.types'
 import { SiteMeta } from '../config'
-import { logger } from '../logger'
 
 const genPostBreadcrumbSchema = (post: Post) => {
   if (post.uri === undefined) throw Error('Post URI is undefined')
@@ -31,7 +30,6 @@ const genPostBreadcrumbSchema = (post: Post) => {
 }
 
 const genPostSchema = (post: Post) => {
-  logger.warn({ dateGmt: post.dateGmt, modifiedGmt: post.modifiedGmt })
   if (!post) return {}
 
   return {
@@ -58,5 +56,5 @@ const genPostSchema = (post: Post) => {
 }
 
 export const genCombinedPostSchema = (post: Post) => {
-  return JSON.stringify([genPostSchema(post), genPostBreadcrumbSchema(post)])
+  return [genPostSchema(post), genPostBreadcrumbSchema(post)]
 }

@@ -9,6 +9,7 @@ import {
   RecipeCourse,
   RecipeCuisine,
 } from '../../types/wp-graphql.types'
+import { Badge } from '../badge'
 import {
   cardArticle,
   cardCategory,
@@ -100,15 +101,16 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
               {categories.map((cat, idx) => {
                 return (
                   <React.Fragment key={cat.slug}>
-                    {idx > 0 ? (
-                      <span className="card__category--saperator">/</span>
-                    ) : null}
                     <span
                       className={`card__category ${cardCategory}`}
                       key={cat.uri}
                     >
                       <NextLink prefetch={false} href={cat.uri}>
-                        <span className="link">{cat.name}</span>
+                        <Badge compact negative>
+                          <span style={{ lineHeight: '1.5rem' }}>
+                            {cat.name}
+                          </span>
+                        </Badge>
                       </NextLink>
                     </span>
                   </React.Fragment>
