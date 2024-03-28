@@ -188,7 +188,7 @@ export const CommentForm = (props: CommentFormProps) => {
               id="comment_name"
               type="text"
               required
-              placeholder="Name"
+              placeholder="Name (required)"
               {...register('name', { required: true })}
             />
           </div>
@@ -197,7 +197,7 @@ export const CommentForm = (props: CommentFormProps) => {
               className={`${emailInputClass} ${styles.input}`}
               id="comment_email"
               type="email"
-              placeholder="Email (will not be published)"
+              placeholder="Email (required)"
               {...register('email')}
             />
           </div>

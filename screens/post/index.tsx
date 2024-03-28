@@ -7,6 +7,8 @@ import BottomBar from '../../components/bottom_bar'
 import { SEO } from '../../components/SEO'
 import { Post } from '../../types/wp-graphql.types'
 import { SiteMeta } from '../../utils/config'
+import { CommentSection } from '../comments'
+import { commentSection } from '../recipe/recipe.css'
 import {
   featuredImageContainer,
   postContainer,
@@ -87,6 +89,15 @@ export default function PostPage(props: PostProps) {
             __html: post.post.content as string,
           }}
         ></article>
+        <section className={`comment-section-container ${commentSection}`}>
+          <p className={'cursive heading'} style={{ marginBottom: '2rem' }}>
+            Tell us what you think
+          </p>
+          <CommentSection
+            rootComments={post.post.comments?.nodes ?? []}
+            postId={post.post.databaseId}
+          />
+        </section>
       </div>
       <BottomBar recipe={false} faq={false} />
     </div>

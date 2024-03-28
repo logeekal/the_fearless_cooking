@@ -7,7 +7,6 @@ import { colFlex, rowFlex } from '../../styles/vars.css'
 export const commentRepliesContainer = style({
   ...colFlex,
   // gap: vars.space.s,
-  maxWidth: '400px',
   backgroundColor: vars.colors.card,
   position: 'relative',
   selectors: {

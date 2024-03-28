@@ -171,6 +171,9 @@ function RecipePage(props: RecipePageProps) {
         </div>
       ) : null}
       <section className={`comment-section-container ${commentSection}`}>
+        <p className={'cursive heading'} style={{ marginBottom: '2rem' }}>
+          Tell us what you think
+        </p>
         <CommentSection
           rootComments={recipe.post.comments?.nodes ?? []}
           postId={recipe.post.recipeId}

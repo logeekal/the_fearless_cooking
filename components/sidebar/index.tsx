@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 import { SiteMeta } from '../../utils/config'
 import { Button } from '../button'
@@ -19,7 +19,7 @@ import {
   sideBar,
 } from './index.css'
 
-const Sidebar = () => {
+const Sidebar = (props: { children?: ReactNode }) => {
   return (
     <div className={`full-width ${sideBar}`}>
       <section className={`about full-width ${about}`}>
@@ -105,6 +105,7 @@ const Sidebar = () => {
       </section>
       <SupportBanner />
       <SubscribeBanner />
+      {props.children}
     </div>
   )
 }
