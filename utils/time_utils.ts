@@ -103,3 +103,40 @@ export const getMilliSecondsFromDuration = (time: Duration) => {
     1000
   )
 }
+
+export const convertWPtimeToReadabletime = (gmtDateTime: string) => {
+  const date = new Date(gmtDateTime)
+  const now = Date.now()
+
+  const diff = now - date.getTime()
+
+  const diffInYears = Math.floor(diff / (1000 * 60 * 60 * 24 * 365))
+  if (diffInYears > 0) {
+    return `${diffInYears} years ago`
+  }
+
+  const diffInMonths = Math.floor(diff / (1000 * 60 * 60 * 24 * 30))
+  if (diffInMonths > 0) {
+    return `${diffInMonths} months ago`
+  }
+
+  const diffInDays = Math.floor(diff / (1000 * 60 * 60 * 24))
+  if (diffInDays > 0) {
+    return `${diffInDays} days ago`
+  }
+
+  const diffInHours = Math.floor(diff / (1000 * 60 * 60))
+  if (diffInHours > 0) {
+    return `${diffInHours} hours ago`
+  }
+
+  const diffInMinutes = Math.floor(diff / (1000 * 60))
+  if (diffInMinutes < 5) {
+    return 'Just now'
+  }
+  if (diffInMinutes > 0) {
+    return `${diffInMinutes} minutes ago`
+  }
+
+  return date.toDateString()
+}

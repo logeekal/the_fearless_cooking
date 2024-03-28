@@ -7,6 +7,7 @@ checkEnvs({})
 
 downloadData()
   .then(() => {
+    logger.info('Starting to index')
     return genIndex()
   })
   .then(() => logger.info('Index generation complete'))

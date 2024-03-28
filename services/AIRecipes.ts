@@ -37,7 +37,7 @@ export class AIRecipes {
 
   constructor(
     private openAIService: OpenAI,
-    private emailService: EmailService
+    private emailService?: EmailService
   ) {}
 
   singleRecipe = async (
@@ -57,7 +57,7 @@ export class AIRecipes {
       if (!validatorResult.isValid && validatorResult.error) {
         const msg = 'Invalid JSON Schema - Errors in Body'
         if (process.env.NODE_ENV !== 'development')
-          await this.emailService.send({
+          await this.emailService?.send({
             subject: msg,
             text: validatorResult.error,
           })

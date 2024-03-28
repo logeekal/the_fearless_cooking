@@ -1,5 +1,3 @@
-/*eslint-disable max-len */
-
 export type Maybe<T> = T | null
 export type InputMaybe<T> = Maybe<T>
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -94,6 +92,8 @@ export type Category = DatabaseIdentifier &
     isRestricted?: Maybe<Scalars['Boolean']>
     /** The link to the term */
     link?: Maybe<Scalars['String']>
+    /** Connection between the category type and the mediaItem type */
+    mediaItems?: Maybe<CategoryToMediaItemConnection>
     /** The human friendly name of the object. */
     name?: Maybe<Scalars['String']>
     /** Connection between the category type and the category type */
@@ -156,6 +156,15 @@ export type CategoryEnqueuedStylesheetsArgs = {
   before?: InputMaybe<Scalars['String']>
   first?: InputMaybe<Scalars['Int']>
   last?: InputMaybe<Scalars['Int']>
+}
+
+/** The category type */
+export type CategoryMediaItemsArgs = {
+  after?: InputMaybe<Scalars['String']>
+  before?: InputMaybe<Scalars['String']>
+  first?: InputMaybe<Scalars['Int']>
+  last?: InputMaybe<Scalars['Int']>
+  where?: InputMaybe<CategoryToMediaItemConnectionWhereArgs>
 }
 
 /** The category type */
@@ -287,6 +296,80 @@ export type CategoryToContentNodeConnectionEdge = {
 
 /** Arguments for filtering the CategoryToContentNodeConnection connection */
 export type CategoryToContentNodeConnectionWhereArgs = {
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars['Boolean']>
+  /** Specific ID of the object */
+  id?: InputMaybe<Scalars['Int']>
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars['String']>
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars['ID']>
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars['String']>
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars['String']>
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>
+  /** Title of the object */
+  title?: InputMaybe<Scalars['String']>
+}
+
+/** Connection between the category type and the mediaItem type */
+export type CategoryToMediaItemConnection = {
+  __typename?: 'CategoryToMediaItemConnection'
+  /** Edges for the CategoryToMediaItemConnection connection */
+  edges?: Maybe<Array<Maybe<CategoryToMediaItemConnectionEdge>>>
+  /** The nodes of the connection, without the edges */
+  nodes?: Maybe<Array<Maybe<MediaItem>>>
+  /** Information about pagination in a connection. */
+  pageInfo?: Maybe<WpPageInfo>
+}
+
+/** An edge in a connection */
+export type CategoryToMediaItemConnectionEdge = {
+  __typename?: 'CategoryToMediaItemConnectionEdge'
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']>
+  /** The item at the end of the edge */
+  node?: Maybe<MediaItem>
+}
+
+/** Arguments for filtering the CategoryToMediaItemConnection connection */
+export type CategoryToMediaItemConnectionWhereArgs = {
+  /** The user that's connected as the author of the object. Use the userId for the author object. */
+  author?: InputMaybe<Scalars['Int']>
+  /** Find objects connected to author(s) in the array of author's userIds */
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>
+  /** Find objects connected to the author by the author's nicename */
+  authorName?: InputMaybe<Scalars['String']>
+  /** Find objects NOT connected to author(s) in the array of author's userIds */
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>
+  /** Category ID */
+  categoryId?: InputMaybe<Scalars['Int']>
+  /** Array of category IDs, used to display objects from one category OR another */
+  categoryIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>
+  /** Use Category Slug */
+  categoryName?: InputMaybe<Scalars['String']>
+  /** Array of category IDs, used to display objects from one category OR another */
+  categoryNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>
   /** Filter the connection based on dates */
   dateQuery?: InputMaybe<DateQueryInput>
   /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
@@ -462,6 +545,8 @@ export type Comment = DatabaseIdentifier &
     parentDatabaseId?: Maybe<Scalars['Int']>
     /** The globally unique identifier of the parent comment node. */
     parentId?: Maybe<Scalars['ID']>
+    /** Custom field for user mutations */
+    rating?: Maybe<Scalars['Int']>
     /** Connection between the Comment type and the Comment type */
     replies?: Maybe<CommentToCommentConnection>
     /** Type of comment. This field is equivalent to WP_Comment-&gt;comment_type and the value matching the &quot;comment_type&quot; column in SQL. */
@@ -2406,6 +2491,8 @@ export type MediaItem = ContentNode &
     authorId?: Maybe<Scalars['ID']>
     /** The caption for the resource */
     caption?: Maybe<Scalars['String']>
+    /** Connection between the mediaItem type and the category type */
+    categories?: Maybe<MediaItemToCategoryConnection>
     /** Connection between the HierarchicalContentNode type and the ContentNode type */
     children?: Maybe<HierarchicalContentNodeToContentNodeChildrenConnection>
     /** The number of comments. Even though WPGraphQL denotes this field as an integer, in WordPress this field should be saved as a numeric string for compatibility. */
@@ -2487,6 +2574,8 @@ export type MediaItem = ContentNode &
     status?: Maybe<Scalars['String']>
     /** The template assigned to a node of content */
     template?: Maybe<ContentTemplate>
+    /** Connection between the mediaItem type and the TermNode type */
+    terms?: Maybe<MediaItemToTermNodeConnection>
     /** The title of the post. This is currently just the raw title. An amendment to support rendered title needs to be made. */
     title?: Maybe<Scalars['String']>
     /** URI path for the resource */
@@ -2505,6 +2594,15 @@ export type MediaItemAncestorsArgs = {
 /** The mediaItem type */
 export type MediaItemCaptionArgs = {
   format?: InputMaybe<PostObjectFieldFormatEnum>
+}
+
+/** The mediaItem type */
+export type MediaItemCategoriesArgs = {
+  after?: InputMaybe<Scalars['String']>
+  before?: InputMaybe<Scalars['String']>
+  first?: InputMaybe<Scalars['Int']>
+  last?: InputMaybe<Scalars['Int']>
+  where?: InputMaybe<MediaItemToCategoryConnectionWhereArgs>
 }
 
 /** The mediaItem type */
@@ -2567,8 +2665,37 @@ export type MediaItemSrcSetArgs = {
 }
 
 /** The mediaItem type */
+export type MediaItemTermsArgs = {
+  after?: InputMaybe<Scalars['String']>
+  before?: InputMaybe<Scalars['String']>
+  first?: InputMaybe<Scalars['Int']>
+  last?: InputMaybe<Scalars['Int']>
+  where?: InputMaybe<MediaItemToTermNodeConnectionWhereArgs>
+}
+
+/** The mediaItem type */
 export type MediaItemTitleArgs = {
   format?: InputMaybe<PostObjectFieldFormatEnum>
+}
+
+/** Set relationships between the mediaItem to categories */
+export type MediaItemCategoriesInput = {
+  /** If true, this will append the category to existing related categories. If false, this will replace existing relationships. Default true. */
+  append?: InputMaybe<Scalars['Boolean']>
+  /** The input list of items to set. */
+  nodes?: InputMaybe<Array<InputMaybe<MediaItemCategoriesNodeInput>>>
+}
+
+/** List of categories to connect the mediaItem to. If an ID is set, it will be used to create the connection. If not, it will look for a slug. If neither are valid existing terms, and the site is configured to allow terms to be created during post mutations, a term will be created using the Name if it exists in the input, then fallback to the slug if it exists. */
+export type MediaItemCategoriesNodeInput = {
+  /** The description of the category. This field is used to set a description of the category if a new one is created during the mutation. */
+  description?: InputMaybe<Scalars['String']>
+  /** The ID of the category. If present, this will be used to connect to the mediaItem. If no existing category exists with this ID, no connection will be made. */
+  id?: InputMaybe<Scalars['ID']>
+  /** The name of the category. This field is used to create a new term, if term creation is enabled in nested mutations, and if one does not already exist with the provided slug or ID or if a slug or ID is not provided. If no name is included and a term is created, the creation will fallback to the slug field. */
+  name?: InputMaybe<Scalars['String']>
+  /** The slug of the category. If no ID is present, this field will be used to make a connection. If no existing term exists with this slug, this field will be used as a fallback to the Name field when creating a new term to connect to, if term creation is enabled as a nested mutation. */
+  slug?: InputMaybe<Scalars['String']>
 }
 
 /** The Type of Identifier used to fetch a single resource. Default is ID. */
@@ -2670,6 +2797,70 @@ export enum MediaItemStatusEnum {
   Trash = 'TRASH',
 }
 
+/** Connection between the mediaItem type and the category type */
+export type MediaItemToCategoryConnection = {
+  __typename?: 'MediaItemToCategoryConnection'
+  /** Edges for the MediaItemToCategoryConnection connection */
+  edges?: Maybe<Array<Maybe<MediaItemToCategoryConnectionEdge>>>
+  /** The nodes of the connection, without the edges */
+  nodes?: Maybe<Array<Maybe<Category>>>
+  /** Information about pagination in a connection. */
+  pageInfo?: Maybe<WpPageInfo>
+}
+
+/** An edge in a connection */
+export type MediaItemToCategoryConnectionEdge = {
+  __typename?: 'MediaItemToCategoryConnectionEdge'
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']>
+  /** The item at the end of the edge */
+  node?: Maybe<Category>
+}
+
+/** Arguments for filtering the MediaItemToCategoryConnection connection */
+export type MediaItemToCategoryConnectionWhereArgs = {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars['String']>
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars['Int']>
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars['Boolean']>
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars['String']>
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars['Boolean']>
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars['Boolean']>
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars['String']>
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars['Boolean']>
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars['Int']>
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars['String']>
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>
+}
+
 /** Connection between the mediaItem type and the Comment type */
 export type MediaItemToCommentConnection = {
   __typename?: 'MediaItemToCommentConnection'
@@ -2750,6 +2941,72 @@ export type MediaItemToCommentConnectionWhereArgs = {
   status?: InputMaybe<Scalars['String']>
   /** Include comments for a specific user ID. */
   userId?: InputMaybe<Scalars['ID']>
+}
+
+/** Connection between the mediaItem type and the TermNode type */
+export type MediaItemToTermNodeConnection = {
+  __typename?: 'MediaItemToTermNodeConnection'
+  /** Edges for the MediaItemToTermNodeConnection connection */
+  edges?: Maybe<Array<Maybe<MediaItemToTermNodeConnectionEdge>>>
+  /** The nodes of the connection, without the edges */
+  nodes?: Maybe<Array<Maybe<TermNode>>>
+  /** Information about pagination in a connection. */
+  pageInfo?: Maybe<WpPageInfo>
+}
+
+/** An edge in a connection */
+export type MediaItemToTermNodeConnectionEdge = {
+  __typename?: 'MediaItemToTermNodeConnectionEdge'
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']>
+  /** The item at the end of the edge */
+  node?: Maybe<TermNode>
+}
+
+/** Arguments for filtering the MediaItemToTermNodeConnection connection */
+export type MediaItemToTermNodeConnectionWhereArgs = {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars['String']>
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars['Int']>
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars['Boolean']>
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars['String']>
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars['Boolean']>
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars['Boolean']>
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars['String']>
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars['Boolean']>
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars['Int']>
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars['String']>
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>
+  /** The Taxonomy to filter terms by */
+  taxonomies?: InputMaybe<Array<InputMaybe<TaxonomyEnum>>>
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>
 }
 
 /** Details of an available size for a media item */
@@ -4764,8 +5021,14 @@ export type PostTypeLabelDetails = {
 /** The reading setting type */
 export type ReadingSettings = {
   __typename?: 'ReadingSettings'
+  /** The ID of the page that should display the latest posts */
+  pageForPosts?: Maybe<Scalars['Int']>
+  /** The ID of the page that should be displayed on the front page */
+  pageOnFront?: Maybe<Scalars['Int']>
   /** Blog pages show at most. */
   postsPerPage?: Maybe<Scalars['Int']>
+  /** What to show on the front page */
+  showOnFront?: Maybe<Scalars['String']>
 }
 
 /** The recipe type */
@@ -7778,6 +8041,14 @@ export type RootQueryToMediaItemConnectionWhereArgs = {
   authorName?: InputMaybe<Scalars['String']>
   /** Find objects NOT connected to author(s) in the array of author's userIds */
   authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>
+  /** Category ID */
+  categoryId?: InputMaybe<Scalars['Int']>
+  /** Array of category IDs, used to display objects from one category OR another */
+  categoryIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>
+  /** Use Category Slug */
+  categoryName?: InputMaybe<Scalars['String']>
+  /** Array of category IDs, used to display objects from one category OR another */
+  categoryNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>
   /** Filter the connection based on dates */
   dateQuery?: InputMaybe<DateQueryInput>
   /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
@@ -8656,8 +8927,14 @@ export type Settings = {
   generalSettingsTitle?: Maybe<Scalars['String']>
   /** Site URL. */
   generalSettingsUrl?: Maybe<Scalars['String']>
+  /** The ID of the page that should display the latest posts */
+  readingSettingsPageForPosts?: Maybe<Scalars['Int']>
+  /** The ID of the page that should be displayed on the front page */
+  readingSettingsPageOnFront?: Maybe<Scalars['Int']>
   /** Blog pages show at most. */
   readingSettingsPostsPerPage?: Maybe<Scalars['Int']>
+  /** What to show on the front page */
+  readingSettingsShowOnFront?: Maybe<Scalars['String']>
   /** Default post category. */
   writingSettingsDefaultCategory?: Maybe<Scalars['Int']>
   /** Default post format. */
@@ -10526,8 +10803,14 @@ export type UpdateSettingsInput = {
   generalSettingsTitle?: InputMaybe<Scalars['String']>
   /** Site URL. */
   generalSettingsUrl?: InputMaybe<Scalars['String']>
+  /** The ID of the page that should display the latest posts */
+  readingSettingsPageForPosts?: InputMaybe<Scalars['Int']>
+  /** The ID of the page that should be displayed on the front page */
+  readingSettingsPageOnFront?: InputMaybe<Scalars['Int']>
   /** Blog pages show at most. */
   readingSettingsPostsPerPage?: InputMaybe<Scalars['Int']>
+  /** What to show on the front page */
+  readingSettingsShowOnFront?: InputMaybe<Scalars['String']>
   /** Default post category. */
   writingSettingsDefaultCategory?: InputMaybe<Scalars['Int']>
   /** Default post format. */
@@ -10838,6 +11121,8 @@ export enum UserRoleEnum {
   /** User role with specific capabilities */
   RecipeEditor = 'RECIPE_EDITOR',
   /** User role with specific capabilities */
+  RecipeSubscriber = 'RECIPE_SUBSCRIBER',
+  /** User role with specific capabilities */
   SeoEditor = 'SEO_EDITOR',
   /** User role with specific capabilities */
   SeoManager = 'SEO_MANAGER',
@@ -11123,6 +11408,14 @@ export type UserToMediaItemConnectionWhereArgs = {
   authorName?: InputMaybe<Scalars['String']>
   /** Find objects NOT connected to author(s) in the array of author's userIds */
   authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>
+  /** Category ID */
+  categoryId?: InputMaybe<Scalars['Int']>
+  /** Array of category IDs, used to display objects from one category OR another */
+  categoryIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>
+  /** Use Category Slug */
+  categoryName?: InputMaybe<Scalars['String']>
+  /** Array of category IDs, used to display objects from one category OR another */
+  categoryNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>
   /** Filter the connection based on dates */
   dateQuery?: InputMaybe<DateQueryInput>
   /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */

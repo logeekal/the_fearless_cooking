@@ -60,6 +60,28 @@ export const GEN_GET_RECIPE_POSTS_DETAIL_QUERY = (
                   parentId
                 }
               }
+              commentCount
+              comments(first: 100) {
+                pageInfo {
+                  endCursor
+                  startCursor
+                  hasNextPage
+                  hasPreviousPage
+                }
+                nodes {
+                  id
+                  commentId
+                  author{
+                    node { 
+                      name, 
+                    }
+                  }
+                  content
+                  rating
+                  parentId
+                  parentDatabaseId
+                }
+              }
             }
           }
         }
@@ -305,8 +327,121 @@ export const GEN_GET_POSTS_DETAIL_QUERY = (
                   }
                 }
               }
+              commentCount
+              comments(first: 100) {
+                pageInfo {
+                  endCursor
+                  startCursor
+                  hasNextPage
+                  hasPreviousPage
+                }
+                nodes {
+                  commentId
+                  author{
+                    node { 
+                      name, 
+                    }
+                  }
+                  content
+                  rating
+                }
+              }
             }
           }
         }
     `
 
+
+export const GET_COMMENT_DETAILS = (commentInternalId: string) => `
+  query GET_COMMENT_BY_ID {
+    comment(id: "${commentInternalId}") {
+      commentId
+      content
+      dateGmt
+      author {
+        node {
+          name
+        }
+      }
+      replies(first: 100, where: {orderby: COMMENT_DATE_GMT, order: ASC}) {
+        pageInfo {
+          hasNextPage
+          endCursor
+          startCursor
+          hasPreviousPage
+        }
+        nodes {
+            id
+            content
+            dateGmt
+            rating
+            author {
+              node {
+                name
+              }
+            }
+        }
+      }
+    }
+  }`
+
+
+export const GET_ALL_COMMENTS_PER_RECIPE = (recipeId:number, first: number = 100, after: string | null = null ) =>`
+query GET_RECIPE_COMMENTS {
+    recipe(id: ${recipeId}, idType: DATABASE_ID) {
+                commentCount
+                comments(first: ${first}, after: ${after}, where: {parent:0, orderby: COMMENT_DATE, order:ASC}) {
+                  pageInfo {
+                    endCursor
+                    startCursor
+                    hasNextPage
+                    hasPreviousPage
+                  }
+                  nodes {
+                    id
+                    commentId
+                    author{
+                      node { 
+                        name, 
+                      }
+                    }
+                    content
+                    rating
+                    dateGmt
+                    parentId
+                    parentDatabaseId
+                  }
+                }
+    }
+  }
+`
+
+export const GET_ALL_COMMENTS_PER_POST = (postId: number, first: number=100, after: string | null = null) =>`
+query GET_POST_COMMENTS {
+    post(id: ${postId}, idType: DATABASE_ID) {
+                commentCount
+                comments(first: ${first}, after: ${after}, where: {parent:0, orderby: COMMENT_DATE, order:ASC}) {
+                  pageInfo {
+                    endCursor
+                    startCursor
+                    hasNextPage
+                    hasPreviousPage
+                  }
+                  nodes {
+                    id
+                    commentId
+                    author{
+                      node { 
+                        name, 
+                      }
+                    }
+                    content
+                    rating
+                    dateGmt
+                    parentId
+                    parentDatabaseId
+                  }
+                }
+    }
+  }
+`

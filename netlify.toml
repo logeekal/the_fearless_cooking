@@ -1,0 +1,33 @@
+[build]
+  publish = 'out'
+  command = 'CI= yarn export'
+
+[functions]
+  directory = './server/functions/'
+  included_files = ["server/**/*.*","services/**/*.*", "utils/**/*.ts"]
+  node_bundler = "esbuild"
+  external_node_modules = ["axios"]
+
+[dev]
+  functionsPort = 9999
+
+[[redirects]]
+  from = '/'
+  to = '/page/1'
+  status = 200
+
+
+[[redirects]]
+  from = '/blog'
+  to = '/blog/page/1'
+  status = 200
+
+[[redirects]]
+from = '/analytics/js/*'
+to = 'https://analytics.logeekal.eu/js/script.hash.js'
+status = 200
+
+[[redirects]]
+from = 'analytics/api/event'
+to = 'https://analytics.logeekal.eu/api/event'
+status = 200
