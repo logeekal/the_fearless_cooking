@@ -1,7 +1,4 @@
-import {
-  useIntersectionObserver,
-  useLocalStorage,
-} from '@react-hooks-library/core'
+import { useIntersectionObserver } from '@react-hooks-library/core'
 import React, {
   forwardRef,
   useCallback,
@@ -17,7 +14,7 @@ import {
   Editor as SlateEditor,
   Transforms,
 } from 'slate'
-import { withHistory } from 'slate-history'
+import { withHistory as withSlateHistory } from 'slate-history'
 import {
   Editable,
   ReactEditor,
@@ -61,8 +58,7 @@ export const CommentEditor = forwardRef<
 >(function CommentEditor(props, ref) {
   const { submitButton, value, onChange } = props
 
-  const [commentValue, setCommentValue] = useLocalStorage<string>(
-    'current.comment.value',
+  const [commentValue, setCommentValue] = useState<string>(
     value ?? serializeHtml(initialValue)
   )
   const commentsContainerRef = useRef<HTMLDivElement>(null)
@@ -108,7 +104,7 @@ export const CommentEditor = forwardRef<
 
   useEffect(() => {
     if (editor || !inView) return
-    setEditor(withReact(withHistory(createEditor())))
+    setEditor(withReact(withSlateHistory(createEditor())))
     stop()
   }, [editor, inView, stop])
 
@@ -200,9 +196,6 @@ export const CommentEditor = forwardRef<
                 <ToolBarIcon type="bold" />
                 <ToolBarIcon type="italic" />
                 <ToolBarIcon type="underlined" />
-                <ToolBarIcon type="block-quote" />
-                <ToolBarIcon type="numbered-list" />
-                <ToolBarIcon type="bulleted-list" />
               </ToolbarControlLeft>
               <ToolbarControlRight>
                 <ToolBarIcon>{submitButton}</ToolBarIcon>

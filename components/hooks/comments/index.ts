@@ -29,7 +29,7 @@ export const useAddReply = (parentComment?: Comment) => {
     [addReplyMutation]
   )
 
-  return addReply
+  return { addReply, addReplyMutation } as const
 }
 
 interface UseGetCommentsArgs {

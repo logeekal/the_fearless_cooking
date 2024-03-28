@@ -1,9 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { IoIosChatbubbles } from 'react-icons/io'
+import { MdReply } from 'react-icons/md'
 
 import { Avatar } from '../../components/avatar'
+import { Button } from '../../components/button'
 import {
+  CommentForm,
   CommentFormInputs,
   CommentFormProps,
 } from '../../components/comments/comment_form'
@@ -14,13 +17,15 @@ import { ApiService } from '../../services/ApiService'
 import { Comment, Maybe } from '../../types/wp-graphql.types'
 import { convertWPtimeToReadabletime } from '../../utils/time_utils'
 import {
+  commentActions,
+  commentActionsLeft,
+  commentActionsRight,
   commentHeader,
   commentHeaderBody,
   commentHeaderDate,
   commentHeaderLeft,
   commentHeaderName,
   commentHeaderReplies,
-  commentHeaderRight,
   commentRepliesContainer,
   repliesContainer,
   singleCommentContainerStyle,
@@ -30,34 +35,49 @@ type Props = {
   initialCommentData: Maybe<Comment>
   postId: number
   isLeaf?: boolean
+  showReplies?: boolean
 }
 
 export const SingleComment = (props: Props) => {
+  const { showReplies = true } = props
   const apiService = new ApiService()
-  const [showReplies, setShowReplies] = React.useState(false)
+  const [shouldShowReplies, setShouldShowReplies] = React.useState(showReplies)
   const queryClient = useQueryClient()
   const { initialCommentData, postId } = props
+  const [isReplying, setIsReplying] = React.useState(false)
+
+  useEffect(() => {
+    setShouldShowReplies(showReplies)
+  }, [showReplies])
 
   const commentWithReplies = useGetCommentRepliesQuery(
     {},
-    initialCommentData ?? undefined
+    initialCommentData ?? undefined,
+    props.isLeaf
   )
 
   const addReplyMutation = useMutation({
     mutationFn: apiService.addComment,
-    onSuccess: () =>
-      queryClient.invalidateQueries({
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
         queryKey: ['commentReplies'],
-      }),
+      })
+      toggleReplying()
+      setShouldShowReplies(true)
+    },
   })
 
   const handleToggleReplies = useCallback(() => {
-    setShowReplies((prev) => !prev)
+    setShouldShowReplies((prev) => !prev)
+  }, [])
+
+  const toggleReplying = useCallback(() => {
+    setIsReplying((prev) => !prev)
   }, [])
 
   const addReply: CommentFormProps['onSubmit'] = useCallback(
-    (data: CommentFormInputs) => {
-      addReplyMutation.mutate({
+    async (data: CommentFormInputs) => {
+      await addReplyMutation.mutateAsync({
         parent: commentWithReplies?.data?.commentId ?? 0,
         content: data.comment,
         status: 'approve',
@@ -71,13 +91,56 @@ export const SingleComment = (props: Props) => {
         author_user_agent: 'chrome',
         post: postId,
       })
+      if (addReplyMutation.isError) {
+        throw new Error(addReplyMutation.error.message)
+      }
+      if (addReplyMutation.isSuccess) {
+        toggleReplying()
+      }
     },
-    [addReplyMutation, commentWithReplies?.data?.commentId, postId]
+    [
+      addReplyMutation,
+      commentWithReplies?.data?.commentId,
+      postId,
+      toggleReplying,
+    ]
   )
+
+  const [commentPostedDate, setCommentPostedDate] = React.useState<
+    string | null
+  >(null)
+
+  const getCommentPostedDate = useCallback(() => {
+    if (commentWithReplies.data?.dateGmt) {
+      return convertWPtimeToReadabletime(`${commentWithReplies.data?.dateGmt}Z`)
+    }
+    return null
+  }, [commentWithReplies])
+
+  useEffect(() => {
+    setCommentPostedDate(getCommentPostedDate())
+    const intervalId = setInterval(() => {
+      setCommentPostedDate(getCommentPostedDate())
+    }, 1000 * 60)
+
+    return () => clearInterval(intervalId)
+  }, [getCommentPostedDate])
+
+  const commentContent = commentWithReplies.data?.content
+    ? `${commentWithReplies?.data?.content}`
+    : null
+
+  if (!commentContent) {
+    return null
+  }
 
   return (
     <div className={`commentReply__container ${commentRepliesContainer}`}>
-      <div className={`comment__container ${singleCommentContainerStyle}`}>
+      <div
+        className={`comment__container ${
+          props.isLeaf ? 'leaf' : ''
+        } ${singleCommentContainerStyle}`}
+      >
         <div className={`comment__header ${commentHeader}`}>
           <div className="comment__header--avatar">
             <Avatar
@@ -98,54 +161,76 @@ export const SingleComment = (props: Props) => {
             >
               {commentWithReplies.data?.author?.node?.name}
             </span>
+          </div>
+          <div className="comment__header-right">
             <span
               style={{ lineHeight: '2rem' }}
               className={`${commentHeaderDate}`}
             >
-              {convertWPtimeToReadabletime(
-                `${commentWithReplies.data?.dateGmt ?? Date.now()}Z`
-              )}
+              {commentPostedDate}
             </span>
-          </div>
-          <div className={`comment__header-right ${commentHeaderRight}`}>
-            <div>
-              <Rating
-                className={ratingComponent}
-                value={commentWithReplies.data?.rating ?? 5}
-                readonly
-                size="small"
-              />
-            </div>
-            <div
-              className={`comment__header-replies ${commentHeaderReplies}`}
-              onClick={handleToggleReplies}
-            >
-              <div style={{ display: 'flex', margin: 'auto' }}>
-                <IoIosChatbubbles size={15} />
-              </div>
-              <div>{commentWithReplies?.data?.replies?.nodes?.length ?? 0}</div>
-            </div>
           </div>
         </div>
         <div className={`comment__body ${commentHeaderBody}`}>
           <span
+            id="comment-body"
             dangerouslySetInnerHTML={{
-              __html: commentWithReplies?.data?.content ?? '',
+              __html: commentContent,
             }}
-          ></span>
+          />
         </div>
+
+        {!props.isLeaf ? (
+          <div className={`comment__actions ${commentActions}`}>
+            <div className={`comment__actions-left ${commentActionsLeft}`}>
+              <div className="comment__actions-reply">
+                <Button
+                  variant="text"
+                  icon={<MdReply />}
+                  onClick={toggleReplying}
+                >
+                  Reply
+                </Button>
+              </div>
+            </div>
+            <div className={`comment__actions-right ${commentActionsRight}`}>
+              <div>
+                <Rating
+                  className={ratingComponent}
+                  value={commentWithReplies.data?.rating ?? 5}
+                  readonly
+                  size="small"
+                />
+              </div>
+              <div
+                className={`comment__header-replies ${commentHeaderReplies}`}
+                onClick={handleToggleReplies}
+              >
+                <div style={{ display: 'flex', margin: 'auto' }}>
+                  <IoIosChatbubbles size={15} />
+                </div>
+                <div>
+                  {commentWithReplies?.data?.replies?.nodes?.length ?? 0}
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : null}
+        {isReplying ? <CommentForm onSubmit={addReply} isReply /> : null}
       </div>
-      {showReplies && (
+      {shouldShowReplies &&
+      (commentWithReplies?.data?.replies?.nodes?.length ?? -1 > 0) ? (
         <div className={`comment__replies ${repliesContainer}`}>
           {commentWithReplies?.data?.replies?.nodes?.map((comment) => (
             <SingleComment
               key={comment?.commentId}
               initialCommentData={comment}
               postId={postId}
+              isLeaf
             />
           ))}
         </div>
-      )}
+      ) : null}
     </div>
   )
 }

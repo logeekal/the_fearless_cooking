@@ -14,7 +14,12 @@ export const useGetCommentRepliesQuery = (
 ) => {
   const apiService = new ApiService()
   const commentQuery = useQuery({
-    queryKey: [queryKey.COMMENT_REPLIES, initialCommentData?.id],
+    queryKey: [
+      queryKey.COMMENT_REPLIES,
+      initialCommentData?.id,
+      isLeaf,
+      initialCommentData,
+    ],
     queryFn: () =>
       isLeaf
         ? initialCommentData

@@ -46,21 +46,6 @@ function RecipePage(props: RecipePageProps) {
   )
   const faqExists = useMemo(() => recipe.faqs.length > 0, [recipe.faqs])
 
-  const mediumImageSet =
-    recipe.post.featuredImage?.node?.mediaDetails?.sizes?.filter(
-      (size) => size?.name === 'thumbnail'
-    )
-  const mediumImage =
-    mediumImageSet && mediumImageSet.length > 0
-      ? mediumImageSet[0]?.sourceUrl ?? ''
-      : ''
-
-  // const comments = useGetComments(
-  //   recipe.post.databaseId,
-  //   1,
-  //   recipe.post.comments?.nodes ?? []
-  // )
-
   return (
     <div id={`recipe ${recipeContainer}`}>
       <SEO

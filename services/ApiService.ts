@@ -34,7 +34,7 @@ export class ApiService {
   addComment = async (
     args: AddCommentArgs
   ): Promise<CommentCreatedResponse> => {
-    const addCommentURI = `${this.BASE_URL}/comments_add`
+    const addCommentURI = `${this.BASE_URL}/comments/add`
     try {
       const result = await axios.post<CommentCreatedResponse>(
         addCommentURI,
@@ -50,7 +50,7 @@ export class ApiService {
   getAllCommentsPerPost = async (
     args: GetCommentsInputs
   ): Promise<Comment[]> => {
-    const getAllCommentsPerPostUri = `${this.BASE_URL}/comments_all`
+    const getAllCommentsPerPostUri = `${this.BASE_URL}/comments/all`
     try {
       const result = await axios.post<Comment[]>(getAllCommentsPerPostUri, args)
 

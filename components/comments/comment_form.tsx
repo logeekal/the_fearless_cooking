@@ -33,10 +33,11 @@ export const TURNSTILE_SITE_KEY = {
 
 export interface CommentFormProps {
   onSubmit?: (data: CommentFormInputs) => void | Promise<void>
+  isReply?: boolean
 }
 
 export const CommentForm = (props: CommentFormProps) => {
-  const { onSubmit: onFormSubmit } = props
+  const { onSubmit: onFormSubmit, isReply } = props
 
   const [loading, setLoading] = useState(false)
 
@@ -62,6 +63,7 @@ export const CommentForm = (props: CommentFormProps) => {
 
   const nameInputClass = watch('name')?.length > 0 ? 'populated' : 'empty'
   const emailInputClass = watch('email')?.length > 0 ? 'populated' : 'empty'
+  const [formError, setFormError] = useState<string | null>(null)
 
   const commentEditorRef = useRef<CommentEditorRef>(null)
   const onSubmit: SubmitHandler<CommentFormInputs> = useCallback(
@@ -84,18 +86,24 @@ export const CommentForm = (props: CommentFormProps) => {
         setLoading(true)
         onFormSubmit?.(data)
           ?.then(() => setLoading(false))
-          ?.catch(() => setLoading(false))
+          ?.catch((err) => {
+            console.error(String(err))
+            setFormError(String(err))
+            setLoading(false)
+          })
           ?.finally(() => setLoading(false))
       }
     },
     [reset, errors, turnstile, onFormSubmit]
   )
 
+  const isRatingPopulated = isReply || watch('rating') !== 0
+
   const isSubmitButtonDisabled =
     (watch('name') ?? '').length === 0 ||
     striptags(watch('comment') ?? '').length === 0 ||
     watch('captcha') === false ||
-    watch('rating') === 0 ||
+    !isRatingPopulated ||
     loading
 
   const submitButton = useMemo(() => {
@@ -167,6 +175,12 @@ export const CommentForm = (props: CommentFormProps) => {
           void handleSubmit(onSubmit)(ev)
         }}
       >
+        {formError ? (
+          <div className={styles.errorContainer}>
+            <FaCircleExclamation />
+            <p>{formError}</p>
+          </div>
+        ) : null}
         <div className={styles.fieldSet}>
           <div className={styles.field}>
             <input
@@ -174,50 +188,48 @@ export const CommentForm = (props: CommentFormProps) => {
               id="comment_name"
               type="text"
               required
+              placeholder="Name"
               {...register('name', { required: true })}
             />
-            <label className={styles.label} htmlFor="comment_name">
-              Name*
-            </label>
           </div>
           <div className={styles.field}>
             <input
               className={`${emailInputClass} ${styles.input}`}
               id="comment_email"
               type="email"
+              placeholder="Email (will not be published)"
               {...register('email')}
             />
-            <label className={styles.label} htmlFor="comment_email">
-              Email
-            </label>
           </div>
         </div>
 
         <div className={styles.fieldSet}>
-          <div
-            className={`rating-fields__container ${styles.ratingFieldsContainer}`}
-          >
-            {/* <div className="rating-fields__label">Ratings</div> */}
+          {!isReply ? (
             <div
-              className={`${styles.ratingFieldsWidgetContainer} rating-fields__widget-container`}
+              className={`rating-fields__container ${styles.ratingFieldsContainer}`}
             >
+              {/* <div className="rating-fields__label">Ratings</div> */}
               <div
-                className={`rating-fields__widget ${styles.ratingFieldsWidget}`}
+                className={`${styles.ratingFieldsWidgetContainer} rating-fields__widget-container`}
               >
-                <Controller
-                  control={control}
-                  name="rating"
-                  rules={{ required: true }}
-                  render={ratingRenderController}
-                />
+                <div
+                  className={`rating-fields__widget ${styles.ratingFieldsWidget}`}
+                >
+                  <Controller
+                    control={control}
+                    name="rating"
+                    rules={{ required: true }}
+                    render={ratingRenderController}
+                  />
+                </div>
+                {/* <div */}
+                {/*   className={`${styles.ratingFieldsWidgetLabel} rating-fields__widget-label`} */}
+                {/* > */}
+                {/*   {ratingLabel} */}
+                {/* </div> */}
               </div>
-              {/* <div */}
-              {/*   className={`${styles.ratingFieldsWidgetLabel} rating-fields__widget-label`} */}
-              {/* > */}
-              {/*   {ratingLabel} */}
-              {/* </div> */}
             </div>
-          </div>
+          ) : null}
           <Controller
             control={control}
             name="captcha"

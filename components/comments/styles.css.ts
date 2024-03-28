@@ -9,6 +9,7 @@ export const form = style({
   gap: vars.space.s,
   marginBottom: vars.space.normal,
   marginTop: vars.space.l,
+  width: '100%',
 })
 
 export const fieldSet = style({
@@ -36,11 +37,17 @@ export const field = style({
 })
 
 export const input = style({
-  paddingBlock: vars.space.xs,
+  paddingBlock: vars.space.normal,
   paddingInline: vars.space.s,
+  borderRadius: '5px',
   width: '100%',
   // border: `1px solid ${vars.colors.brand}`,
   backgroundColor: vars.colors.greenLight,
+  selectors: {
+    '&::placeholder': {
+      color: 'darkgray',
+    },
+  },
 })
 
 export const label = style({
@@ -108,6 +115,7 @@ export const ratingFieldsWidgetContainer = style({
 
 export const ratingFieldsWidget = style({
   width: '100%',
+  paddingBlock: vars.space.normal,
 })
 
 export const ratingFieldsWidgetLabel = style({

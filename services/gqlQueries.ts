@@ -363,7 +363,7 @@ export const GET_COMMENT_DETAILS = (commentInternalId: string) => `
           name
         }
       }
-      replies(first: 100) {
+      replies(first: 100, where: {orderby: COMMENT_DATE_GMT, order: ASC}) {
         pageInfo {
           hasNextPage
           endCursor
@@ -373,6 +373,7 @@ export const GET_COMMENT_DETAILS = (commentInternalId: string) => `
         nodes {
             id
             content
+            dateGmt
             rating
             author {
               node {
@@ -389,7 +390,7 @@ export const GET_ALL_COMMENTS_PER_RECIPE = (recipeId:number, first: number = 100
 query GET_RECIPE_COMMENTS {
     recipe(id: ${recipeId}, idType: DATABASE_ID) {
                 commentCount
-                comments(first: ${first}, after: ${after}, where: {parent:0}) {
+                comments(first: ${first}, after: ${after}, where: {parent:0, orderby: COMMENT_DATE, order:ASC}) {
                   pageInfo {
                     endCursor
                     startCursor
@@ -419,7 +420,7 @@ export const GET_ALL_COMMENTS_PER_POST = (postId: number, first: number=100, aft
 query GET_POST_COMMENTS {
     post(id: ${postId}, idType: DATABASE_ID) {
                 commentCount
-                comments(first: ${first}, after: ${after}, where: {parent:0}) {
+                comments(first: ${first}, after: ${after}, where: {parent:0, orderby: COMMENT_DATE, order:ASC}) {
                   pageInfo {
                     endCursor
                     startCursor

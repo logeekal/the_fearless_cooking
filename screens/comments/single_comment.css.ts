@@ -6,23 +6,52 @@ import { colFlex, rowFlex } from '../../styles/vars.css'
 
 export const commentRepliesContainer = style({
   ...colFlex,
-  gap: vars.space.s,
+  // gap: vars.space.s,
+  maxWidth: '400px',
+  backgroundColor: vars.colors.card,
+  position: 'relative',
+  selectors: {
+    '&:not(:last-child)': {
+      // borderBottom: `1px solid ${vars.colors.brand}`,
+    },
+  },
 })
 
 export const singleCommentContainerStyle = style({
-  backgroundColor: vars.colors.card,
-  paddingBlock: calc.multiply(vars.space.s, 1),
-  paddingInline: vars.space.s,
+  paddingBlock: vars.space.l,
+  paddingInline: vars.space.l,
   ...colFlex,
   justifyContent: 'center',
   alignItems: 'flex-start',
-  gap: vars.space.s,
+  gap: vars.space.l,
+  // borderRadius: '10px',
+  position: 'relative',
+  selectors: {
+    '&.leaf': {
+      marginLeft: calc.multiply(vars.space.l, 1.5),
+      borderLeft: `1px solid ${vars.colors.greenLight}`,
+    },
+    '&.leaf::after': {
+      content: '',
+      position: 'absolute',
+      top: '50%',
+      left: vars.space.l,
+      width: vars.space.l,
+      borderLeft: `1px solid ${vars.colors.brand}`,
+      display: 'block',
+      zIndex: vars.zIndex.highest,
+    },
+
+    '&:not(:last-child)': {
+      // borderBottom: `1px solid ${vars.colors.brand}`,
+    },
+  },
 })
 
 export const commentHeader = style({
   ...rowFlex,
   justifyContent: 'space-between',
-  alignItems: 'flex-start',
+  alignItems: 'center',
   gap: vars.space.s,
   width: '100%',
   maxHeight: '10rem',
@@ -31,19 +60,35 @@ export const commentHeader = style({
 export const commentHeaderLeft = style({
   flex: '1 1 70%',
   ...colFlex,
-  justifyContent: 'flex-start',
+  justifyContent: 'center',
   alignItems: 'flex-start',
   height: '100%',
   paddingBlock: vars.space.xs,
 })
 
-export const commentHeaderRight = style({
+export const commentActions = style({
   flex: '1 1 30%',
   height: '100%',
-  ...colFlex,
-  justifyContent: 'flex-end',
-  alignItems: 'flex-end',
+  ...rowFlex,
+  justifyContent: 'space-between',
+  alignItems: 'center',
   gap: vars.space.xs,
+  width: '100%',
+})
+
+export const commentActionsLeft = style({
+  ...rowFlex,
+  justifyContent: 'center',
+  alignItems: 'center',
+  gap: vars.space.s,
+})
+
+export const commentActionsRight = style({
+  ...rowFlex,
+  flexDirection: 'row-reverse',
+  justifyContent: 'center',
+  alignItems: 'center',
+  gap: vars.space.s,
 })
 
 export const commentHeaderName = style({
@@ -65,19 +110,34 @@ export const commentHeaderReplies = style({
 })
 
 export const commentHeaderBody = style({
-  fontSize: vars.fontSize.para,
+  fontSize: vars.fontSize.subHeading,
   color: vars.colors.text,
-  fontWeight: 500,
+  fontWeight: 400,
+  width: '100%',
 })
 
 export const commentHeaderDate = style({
   fontSize: vars.fontSize.subText,
   color: 'darkgray',
-  fontWeight: 500,
+  fontWeight: 400,
+  whiteSpace: 'nowrap',
 })
 
 export const repliesContainer = style({
-  marginLeft: calc.multiply(vars.space.l, 3),
   ...colFlex,
   gap: vars.space.s,
+  position: 'relative',
+  selectors: {
+    /// comment hierarchy marker
+    '&::after': {
+      content: '',
+      position: 'absolute',
+      top: '0',
+      left: vars.space.xl,
+      height: '100%',
+      borderLeft: `0px solid ${vars.colors.greenLight}`,
+      display: 'block',
+      zIndex: vars.zIndex.highest,
+    },
+  },
 })

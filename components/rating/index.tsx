@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useState } from 'react'
+import React, { ReactElement, useCallback, useEffect, useState } from 'react'
 import { FaStar } from 'react-icons/fa'
 
 import * as styles from './styles.css'
@@ -14,8 +14,18 @@ interface RatingProps {
 const DEFAULT_RATING = 5
 
 export const Rating = (props: RatingProps) => {
-  const { value: initialValue, onChange, readonly = false, size= 'normal' } = props
-  const [rating, setRating] = useState(initialValue ?? 5)
+  const {
+    value: initialValue,
+    onChange,
+    readonly = false,
+    size = 'normal',
+  } = props
+  const [rating, setRating] = useState(initialValue ?? DEFAULT_RATING)
+
+  useEffect(() => {
+    setRating(initialValue ?? 0)
+  }, [initialValue])
+
   const handleRatingChange = useCallback(
     (value: number) => {
       if (readonly) return
@@ -35,13 +45,14 @@ export const Rating = (props: RatingProps) => {
               readonly ? 'readonly' : ''
             } `}
             key={`label-${i}`}
-            onMouseOver={handleRatingChange.bind(null, i)}
           >
             <input
               className={`${styles.starInput}`}
               type="radio"
               name="rating"
               value={i + 1}
+              checked={rating - 1 === i}
+              onChange={handleRatingChange.bind(null, i)}
               onClick={handleRatingChange.bind(null, i)}
             />
             <FaStar
@@ -49,9 +60,12 @@ export const Rating = (props: RatingProps) => {
                 rating - 1 === i ? 'selected' : ''
               }`}
               color={i <= rating - 1 ? '#fec400' : 'gray'}
-              size={size=="normal" ? 25: 15}
+              size={size == 'normal' ? 25 : 15}
             />
-            <FaStar color={i <= rating - 1 ? '#fec400' : 'gray'} size={size=="normal" ? 25: 15} />
+            <FaStar
+              color={i <= rating - 1 ? '#fec400' : 'gray'}
+              size={size == 'normal' ? 25 : 15}
+            />
           </label>
         )
       })}

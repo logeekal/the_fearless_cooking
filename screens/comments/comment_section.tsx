@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useRef } from 'react'
 
 import {
   CommentForm,
@@ -7,6 +7,7 @@ import {
 } from '../../components/comments/comment_form'
 import { useAddReply, useGetComments } from '../../components/hooks/comments'
 import { useFingerprint } from '../../components/safe_fingerprint/context'
+import { withIntersection } from '../../components/with-intersection'
 import { Comment, Maybe } from '../../types/wp-graphql.types'
 import { singleCommentContainer } from './index.css'
 import { SingleComment } from './single_comment'
@@ -16,11 +17,8 @@ type CommentSectionProps = {
   postId: number
 }
 
-export const CommentSection = ({
-  postId,
-  rootComments,
-}: CommentSectionProps) => {
-  const addReply = useAddReply()
+const CommentSectionComp = ({ postId, rootComments }: CommentSectionProps) => {
+  const { addReply, addReplyMutation } = useAddReply()
 
   const { ip, compiled_ua } = useFingerprint()
 
@@ -28,6 +26,8 @@ export const CommentSection = ({
     postId,
     initialData: rootComments ?? [],
   })
+
+  const addCommentsRef = useRef<HTMLDivElement>(null)
 
   const onCommentSubmit: CommentFormProps['onSubmit'] = useCallback(
     async (data: CommentFormInputs) => {
@@ -45,8 +45,11 @@ export const CommentSection = ({
         author_user_agent: compiled_ua,
         post: postId,
       })
+      if (addReplyMutation.isError) {
+        throw new Error(addReplyMutation.error.message)
+      }
     },
-    [addReply, postId, ip, compiled_ua]
+    [addReply, postId, ip, compiled_ua, addReplyMutation]
   )
 
   return (
@@ -61,7 +64,16 @@ export const CommentSection = ({
           </div>
         )
       })}
-      <CommentForm onSubmit={onCommentSubmit} />
+      <div id="add-comment" ref={addCommentsRef}>
+        <CommentForm onSubmit={onCommentSubmit} />
+      </div>
     </div>
   )
 }
+
+export const CommentSection = withIntersection<CommentSectionProps>(
+  CommentSectionComp,
+  {
+    rootMargin: '1200px',
+  }
+)

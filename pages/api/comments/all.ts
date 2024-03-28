@@ -1,9 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { getAllCommentsController } from '../../server/routes/controllers/comments'
-import { getIfExists } from '../../server/utils/func_utils'
-import { GetCommentsInputs } from '../../services/types'
-import { logger } from '../../utils/logger'
+import { getAllCommentsController } from '../../../server/routes/controllers/comments'
+import { getIfExists } from '../../../server/utils/func_utils'
+import { GetCommentsInputs } from '../../../services/types'
 
 export default async function handler(
   req: NextApiRequest,
@@ -22,8 +21,6 @@ export default async function handler(
     getIfExists(postId, 'postId')
 
     const output = await getAllCommentsController(parsedBody)
-
-    logger.debug({ output })
 
     res.status(200).json(output)
   } catch (err) {

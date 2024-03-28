@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { addCommentController } from '../../server/routes/controllers/comments'
-import { getIfExists } from '../../server/utils/func_utils'
-import { AddCommentArgs } from '../../services/types'
+import { addCommentController } from '../../../server/routes/controllers/comments'
+import { getIfExists } from '../../../server/utils/func_utils'
+import { AddCommentArgs } from '../../../services/types'
 
 export default async function handler(
   req: NextApiRequest,
@@ -21,10 +21,13 @@ export default async function handler(
       author_ip,
       author_user_agent,
       post,
+      parent,
     } = parsedBody
 
     getIfExists(content, 'content')
-    getIfExists(rating, 'rating')
+    if (parent === 0) {
+      getIfExists(rating, 'rating')
+    }
     getIfExists(author_ip, 'author_ip')
     getIfExists(author_user_agent, 'author_user_agent')
     getIfExists(post, 'post')
