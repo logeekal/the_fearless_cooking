@@ -1,7 +1,7 @@
 import { globalFontFace } from '@vanilla-extract/css'
 
 globalFontFace('inter', {
-  src: 'url(/fonts/Inter/Inter-variable.ttf)',
+  src: 'url(/fonts/Inter/Inter-variable.woff2) format("woff2")',
   fontStyle: 'normal',
   fontWeight: '100 900',
   fontDisplay: 'swap',
