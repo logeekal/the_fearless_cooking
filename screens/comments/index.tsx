@@ -1,1 +1,1 @@
-export { CommentSection } from './comment_section'
+export { LazyCommentSection as CommentSection } from './lazy_comment_section'

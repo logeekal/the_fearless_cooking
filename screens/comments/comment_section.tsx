@@ -7,17 +7,19 @@ import {
 } from '../../components/comments/comment_form'
 import { useAddReply, useGetComments } from '../../components/hooks/comments'
 import { useFingerprint } from '../../components/safe_fingerprint/context'
-import { withIntersection } from '../../components/with-intersection'
 import { Comment, Maybe } from '../../types/wp-graphql.types'
 import { singleCommentContainer } from './index.css'
 import { SingleComment } from './single_comment'
 
-type CommentSectionProps = {
+export type CommentSectionProps = {
   rootComments: Maybe<Array<Maybe<Comment>>>
   postId: number
 }
 
-const CommentSectionComp = ({ postId, rootComments }: CommentSectionProps) => {
+export const CommentSection = ({
+  postId,
+  rootComments,
+}: CommentSectionProps) => {
   const { addReply, addReplyMutation } = useAddReply()
 
   const { ip, compiled_ua } = useFingerprint()
@@ -70,10 +72,3 @@ const CommentSectionComp = ({ postId, rootComments }: CommentSectionProps) => {
     </div>
   )
 }
-
-export const CommentSection = withIntersection<CommentSectionProps>(
-  CommentSectionComp,
-  {
-    rootMargin: '1200px',
-  }
-)

@@ -170,7 +170,10 @@ function RecipePage(props: RecipePageProps) {
           <FAQs faqs={recipe.faqs} />
         </div>
       ) : null}
-      <section className={`comment-section-container ${commentSection}`}>
+      <section
+        id="comments"
+        className={`comment-section-container ${commentSection}`}
+      >
         <p className={'cursive heading'} style={{ marginBottom: '2rem' }}>
           Tell us what you think
         </p>

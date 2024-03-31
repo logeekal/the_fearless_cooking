@@ -7,7 +7,9 @@
 const { createVanillaExtractPlugin } = require('@vanilla-extract/next-plugin')
 const path = require('path')
 const { withPlausibleProxy } = require('next-plausible')
-
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
 const withVanillaExtract = createVanillaExtractPlugin({
   identifiers: process.env.NODE_ENV === 'development' ? 'debug' : 'short',
 })
@@ -89,5 +91,7 @@ const nextConfig = {
 
 /* eslint-disable-next-line unused-imports/no-unused-vars */
 module.exports = async function (phase, { defaultConfig }) {
-  return withVanillaExtract(withPlausibleCustomizations(nextConfig))
+  return withBundleAnalyzer(
+    withVanillaExtract(withPlausibleCustomizations(nextConfig))
+  )
 }

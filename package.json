@@ -20,13 +20,15 @@
     "load-env-dev": "dotenv -e .env.local",
     "ai-recipe-day": "npm run load-env-dev ansible-playbook deploys/publish-recipe-of-day.yml ",
     "ts": "ts-node",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "analyze": "ANALYZE=true yarn build"
   },
   "dependencies": {
+    "@next/bundle-analyzer": "^14.1.4",
     "@popperjs/core": "^2.11.6",
+    "@react-hooks-library/core": "^0.6.0",
     "@tanstack/react-query": "^5.8.4",
     "@types/escape-html": "^1.0.3",
-    "@react-hooks-library/core": "^0.6.0",
     "@types/jest": "^29.2.0",
     "@types/lunr": "^2.3.4",
     "@vanilla-extract/babel-plugin": "^1.1.7",
@@ -87,9 +89,9 @@
     "@types/isomorphic-fetch": "^0.0.36",
     "@types/node": "18.0.6",
     "@types/nodemailer": "^6.4.7",
-    "@types/react-draft-wysiwyg": "^1.13.6",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
+    "@types/react-draft-wysiwyg": "^1.13.6",
     "@types/react-helmet": "^6.1.5",
     "@types/ua-parser-js": "^0.7.39",
     "@typescript-eslint/eslint-plugin": "^5.33.0",

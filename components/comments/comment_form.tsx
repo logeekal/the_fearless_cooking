@@ -68,6 +68,7 @@ export const CommentForm = (props: CommentFormProps) => {
   const commentEditorRef = useRef<CommentEditorRef>(null)
   const onSubmit: SubmitHandler<CommentFormInputs> = useCallback(
     (data: CommentFormInputs) => {
+      setFormError(null)
       if (Object.keys(errors).length > 0) {
         return
       }
@@ -108,11 +109,7 @@ export const CommentForm = (props: CommentFormProps) => {
 
   const submitButton = useMemo(() => {
     return (
-      <button
-        type="submit"
-        className={`${styles.submitButton}`}
-        disabled={isSubmitButtonDisabled}
-      >
+      <button type="submit" className={`${styles.submitButton}`}>
         <p> {'Submit'} </p>
         {loading ? (
           <AiOutlineLoading3Quarters
@@ -218,7 +215,12 @@ export const CommentForm = (props: CommentFormProps) => {
                   <Controller
                     control={control}
                     name="rating"
-                    rules={{ required: true }}
+                    rules={{
+                      required: true,
+                      validate: (value) => {
+                        return value !== 0
+                      },
+                    }}
                     render={ratingRenderController}
                   />
                 </div>
