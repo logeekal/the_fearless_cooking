@@ -25,14 +25,15 @@ const PaginatedPostPage: NextPageWithLayout<PostPageProps> = (props) => {
     currTheme == light ? setCurrTheme(dark) : setCurrTheme(light)
   }
 
+  const title =
+    props.pageInfo.current === 1
+      ? 'Latest Blogs'
+      : `Latest Blogs - Page ${props.pageInfo.current}`
+
   return (
     <div className={`${currTheme} ${styleClass}`}>
-      <SEO isArticle={false} title="Blogs | The Fearless cooking" />
-      <Home
-        recipes={props.posts}
-        pageInfo={props.pageInfo}
-        title="Latest Blogs"
-      />
+      <SEO isArticle={false} title={title} />
+      <Home recipes={props.posts} pageInfo={props.pageInfo} title={title} />
       <button style={{ display: 'none' }} onClick={() => toggleTheme()}>
         Switch Theme
       </button>
