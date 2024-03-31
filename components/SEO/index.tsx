@@ -65,16 +65,32 @@ export function SEO({
         />
         <meta name="twitter:image" content={image || siteMetadata.image} />
         {schemas &&
-          schemas.map((schemaObj, index) => (
-            <script
-              key={index}
-              type="application/ld+json"
-              dangerouslySetInnerHTML={{
-                __html: JSON.stringify(schemaObj.schema),
-              }}
-              async
-            ></script>
-          ))}
+          schemas.map((schemaObj, index) => {
+            if (Array.isArray(schemaObj.schema)) {
+              return schemaObj.schema.map((schema, index) => {
+                return (
+                  <script
+                    key={index}
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                      __html: JSON.stringify(schema),
+                    }}
+                    async
+                  ></script>
+                )
+              })
+            } else
+              return (
+                <script
+                  key={index}
+                  type="application/ld+json"
+                  dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(schemaObj.schema),
+                  }}
+                  async
+                ></script>
+              )
+          })}
       </NextHead>
     </>
   )

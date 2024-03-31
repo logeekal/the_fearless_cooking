@@ -19,20 +19,31 @@ function Category(props: CategoryPageProps) {
   const tagLine = props.category.name
     ? `Latest ${props.category.name} Recipes`
     : 'Latest Recipes'
+
+  const title =
+    props.pageInfo.current === 1
+      ? tagLine
+      : `${tagLine} - Page ${props.pageInfo.current}`
+
+  const AITitle =
+    props.pageInfo.current === 1
+      ? 'Best AI Generated Recipes'
+      : `Best AI Generated Recipes - Page ${props.pageInfo.current}`
+
   return (
     <>
       <SEO
         title={
           props.isAI
-            ? `Best AI Generated Recipes | ${SiteMeta.title}`
-            : `${String(props.category.name)} recipes | ${SiteMeta.title}`
+            ? `${AITitle} | ${SiteMeta.title}`
+            : `${title} | ${SiteMeta.title}`
         }
         isArticle={false}
       />
       <Home
         recipes={props.category.recipes?.nodes as Recipe[]}
         pageInfo={props.pageInfo}
-        title={tagLine}
+        title={title}
       />
     </>
   )
