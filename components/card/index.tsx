@@ -98,7 +98,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
           </div>
           <div className={`card-footer ${footer}`}>
             <span className={`footer-left  ${footerLeft}`}>
-              {categories.map((cat, idx) => {
+              {categories.slice(0, 1).map((cat, idx) => {
                 return (
                   <React.Fragment key={cat.slug}>
                     <span

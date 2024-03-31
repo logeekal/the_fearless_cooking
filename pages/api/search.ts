@@ -84,7 +84,6 @@ export default function handler(
 
       return
     }
-
     res.status(200).send('Method not allowed')
     return
   } catch (err) {

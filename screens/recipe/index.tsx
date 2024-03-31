@@ -13,7 +13,9 @@ import { SEO } from '../../components/SEO'
 import { BREAKPOINTS } from '../../styles/vars.css'
 import { SiteMeta } from '../../utils/config'
 import { ICompleteRecipe } from '../../utils/types'
+import { CommentSection } from '../comments'
 import {
+  commentSection,
   FAQSection,
   featuredImageContainer,
   featuredImageSquareContainer,
@@ -44,15 +46,6 @@ function RecipePage(props: RecipePageProps) {
   )
   const faqExists = useMemo(() => recipe.faqs.length > 0, [recipe.faqs])
 
-  const mediumImageSet =
-    recipe.post.featuredImage?.node?.mediaDetails?.sizes?.filter(
-      (size) => size?.name === 'thumbnail'
-    )
-  const mediumImage =
-    mediumImageSet && mediumImageSet.length > 0
-      ? mediumImageSet[0]?.sourceUrl ?? ''
-      : ''
-
   return (
     <div id={`recipe ${recipeContainer}`}>
       <SEO
@@ -72,6 +65,7 @@ function RecipePage(props: RecipePageProps) {
           },
         ]}
       />
+
       <div id="recipe-post" className={`recipe-post ${recipePost}`}>
         <div className={`recipe__postHeader ${recipePostHeader}`}>
           <h1
@@ -176,6 +170,18 @@ function RecipePage(props: RecipePageProps) {
           <FAQs faqs={recipe.faqs} />
         </div>
       ) : null}
+      <section
+        id="comments"
+        className={`comment-section-container ${commentSection}`}
+      >
+        <p className={'cursive heading'} style={{ marginBottom: '2rem' }}>
+          Tell us what you think
+        </p>
+        <CommentSection
+          rootComments={recipe.post.comments?.nodes ?? []}
+          postId={recipe.post.recipeId}
+        />
+      </section>
 
       {width < BREAKPOINTS.mobile.max ? (
         <BottomBar recipe={recipeExists} faq={faqExists} />

@@ -1,0 +1,41 @@
+/* eslint-disable */
+import { GetServerSideProps } from 'next'
+import React, { FormEventHandler } from 'react'
+
+const WSIET = () => {
+  const onSubmit: FormEventHandler = (e) => {
+    console.log({ e })
+  }
+
+  return (
+    <form
+      action="/what-should-i-eat-tonight"
+      onSubmit={onSubmit}
+      method={'GET'}
+    >
+      <label htmlFor="someInput">Input </label>
+      <input id="someInput" name="main" />
+      <button type="submit">Submit</button>
+    </form>
+  )
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const {
+    req: { method },
+    params,
+    query,
+  } = context
+
+  console.log({
+    params,
+    query,
+    method,
+  })
+
+  return {
+    props: {},
+  }
+}
+
+export default WSIET

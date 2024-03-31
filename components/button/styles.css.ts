@@ -1,4 +1,4 @@
-import { keyframes, style } from '@vanilla-extract/css'
+import { keyframes, style, styleVariants } from '@vanilla-extract/css'
 
 import { vars } from '../../styles/themes.css'
 
@@ -12,13 +12,16 @@ const buttonShine = keyframes({
   },
 })
 
-export const button = style({
+export const base = style({
   width: '100%',
   cursor: 'pointer',
   padding: vars.space.s,
-  transition: '0.4s ease-in-out',
-  transform: 'rotate(0deg)',
   fontWeight: 'bolder',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  flexDirection: 'row',
+  gap: vars.space.xs,
   position: 'relative',
   overflow: 'hidden',
   selectors: {
@@ -34,22 +37,6 @@ export const button = style({
       transform: 'rotate(45deg)',
       opacity: '0.3',
     },
-    '&.primary': {
-      color: vars.colors.card,
-      border: `1px solid ${vars.colors.card}`,
-      backgroundColor: vars.colors.brand,
-    },
-    '&.primary:after': {
-      backgroundColor: vars.colors.card,
-    },
-    '&.ghost': {
-      color: vars.colors.brand,
-      border: `1px solid ${vars.colors.brand}`,
-      backgroundColor: vars.colors.card,
-    },
-    '&.ghost:after': {
-      backgroundColor: vars.colors.brand,
-    },
     '&:hover:after': {
       animationName: buttonShine,
       animationDuration: '0.15s',
@@ -61,4 +48,47 @@ export const button = style({
       backgroundColor: vars.colors.lightgray,
     },
   },
+})
+
+export const buttonVariants = styleVariants({
+  text: [
+    base,
+    {
+      border: '0px',
+      padding: '0px',
+      fontWeight: '400',
+      '&::after': {
+        display: 'none',
+      },
+      '&:hover': {
+        textDecoration: 'underline',
+      },
+    },
+  ],
+  primary: [
+    base,
+    {
+      color: vars.colors.card,
+      border: `1px solid ${vars.colors.card}`,
+      backgroundColor: vars.colors.brand,
+      selectors: {
+        '&:after': {
+          backgroundColor: vars.colors.card,
+        },
+      },
+    },
+  ],
+  ghost: [
+    base,
+    {
+      color: vars.colors.brand,
+      border: `1px solid ${vars.colors.brand}`,
+      backgroundColor: vars.colors.card,
+      selectors: {
+        '&:after': {
+          backgroundColor: vars.colors.brand,
+        },
+      },
+    },
+  ],
 })
