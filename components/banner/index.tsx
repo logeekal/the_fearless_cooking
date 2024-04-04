@@ -6,6 +6,7 @@ import React, {
   useRef,
   useState,
 } from 'react'
+import { TfiClose } from 'react-icons/tfi'
 import { Duration } from 'tinyduration'
 
 import { getMilliSecondsFromDuration } from '../../utils/time_utils'
@@ -103,7 +104,7 @@ export function Banner({
                 className={`rootBanner__content-close ${rootBannerContentCloseBtn}`}
                 onClick={handleClose}
               >
-                {'x'}
+                <TfiClose size={35} />
               </div>
             </div>
             {children}

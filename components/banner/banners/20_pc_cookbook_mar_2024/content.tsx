@@ -42,25 +42,26 @@ export const FreeCookbookBannerContent = () => {
         <img
           className={`${styles.artworkImg}`}
           alt="Get Free cookbook artwork"
-          src="https://wp-backend.thefearlesscooking.com/wp-content/uploads/2024/02/book_mockup_blue_white.jpg"
+          src="https://i1.wp.com/wp-backend.thefearlesscooking.com/wp-content/uploads/2024/04/20-OFF-Square.jpg?resize=500%2C500&ssl=1"
           width={'100%'}
           height={'100%'}
         />
       </div>
       <div className={`${stylePrefix}__content} ${styles.content}`}>
-        <div className="content__heading cursive bold heading text_center">
-          Finally, it is here! ✌🏽
+        <div
+          className={`content__heading bold heading text_center 
+            stylePrefix__content-heading ${styles.contentHeader}
+          `}
+        >
+          20% OFF 🤘🏼
         </div>
-        <div className="content__heading cursive bold heading text_center">
-          Book Launch 🍾 3rd March.
-        </div>
-        <div className={'content__text text_center'} style={{ width: '95%' }}>
-          <p>
-            Get a copy of my new book{' '}
-            <b>&quot;Fall in Love with Salads&quot;</b> and start your 30-day
-            salad challenge with some exciting salad recipe every day.
-          </p>
-        </div>
+        {formSubmitStatus === 'idle' ? (
+          <div className={'content__text text_center'} style={{ width: '95%' }}>
+            <p>
+              Sign up below to avail this exclusive offer. Valid only for today.
+            </p>
+          </div>
+        ) : null}
         <div className={`content__footer ${styles.contentFooter} text_center `}>
           <form
             className={`subscription-form ${styles.subscriptionForm}`}
@@ -68,6 +69,7 @@ export const FreeCookbookBannerContent = () => {
           >
             {formSubmitStatus !== 'idle' ? (
               <Loader
+                size="60px"
                 status={formSubmitStatus === 'pending' ? 'loading' : 'success'}
               />
             ) : null}
@@ -86,7 +88,13 @@ export const FreeCookbookBannerContent = () => {
               ? 'Yayyy 🥳. Please check your inbox.'
               : null}
             {formSubmitStatus === 'idle' ? (
-              <Button type="submit">{'Send me the free E-book'}</Button>
+              <Button
+                className={styles.submitButton}
+                variant="ghost"
+                type="submit"
+              >
+                {'Sign me up'}
+              </Button>
             ) : null}
           </form>
         </div>

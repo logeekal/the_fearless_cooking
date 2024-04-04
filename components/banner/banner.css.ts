@@ -38,7 +38,6 @@ export const rootBannerBackground = style({
 export const rootBannerContentCloseBtnContainer = style({
   cursor: 'pointer',
   position: 'absolute',
-  right: '-38px',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'flex-end',
@@ -46,16 +45,16 @@ export const rootBannerContentCloseBtnContainer = style({
   width: calc.multiply(1, vars.space.xl),
   height: calc.multiply(1, vars.space.xl),
   padding: vars.space.xs,
-  backgroundColor: vars.colors.card,
+  backgroundColor: 'transparent',
   transform: 'translateX(-50%)',
-  fontWeight: 800,
-  borderRadius: vars.border.circular,
   '@media': {
     [breakPoints.tablet]: {
-      top: '-30px',
+      top: '-34px',
+      left: '50%',
     },
     [breakPoints.desktop]: {
-      top: '-30px',
+      top: '-32px',
+      right: '-10px',
     },
   },
 })
@@ -65,11 +64,31 @@ export const rootBannerContentCloseBtn = style({
   color: vars.colors.brand,
 })
 
+const bgGradiant = {
+  background:
+    'radial-gradient(circle, hsla(0, 0%, 100%, 1) 1%, hsla(195, 21%, 93%, 1) 100%)',
+
+  // background: 'hsla(0, 0%, 100%, 1)',
+  //
+  // background:
+  //   '-moz-radial-gradient(circle, hsla(0, 0%, 100%, 1) 1%, hsla(195, 21%, 93%, 1) 100%)',
+  //
+  // background:
+  //   '-webkit-radial-gradient(circle, hsla(0, 0%, 100%, 1) 1%, hsla(195, 21%, 93%, 1) 100%)',
+}
+
 export const rootBannerContent = style({
-  backgroundColor: 'white',
+  ...bgGradiant,
   position: 'absolute',
   left: '50%',
   top: '50%',
   transform: 'translate(-50%, -50%)',
   padding: vars.space.l,
+  paddingTop: calc.multiply(vars.space.xl, 2),
+  '@media': {
+    [breakPoints.tablet]: {
+      height: '100%',
+      width: '100%',
+    },
+  },
 })
