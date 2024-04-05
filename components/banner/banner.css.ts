@@ -85,6 +85,7 @@ export const rootBannerContent = style({
   transform: 'translate(-50%, -50%)',
   padding: vars.space.l,
   paddingTop: calc.multiply(vars.space.xl, 2),
+  overflow: 'auto',
   '@media': {
     [breakPoints.tablet]: {
       height: '100%',
