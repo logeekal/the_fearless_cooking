@@ -27,7 +27,6 @@ const buttonRotateAnimation = keyframes({
 
 export const freeCookbookBannerContainer = style({
   position: 'relative',
-  backgroundColor: vars.colors.card,
 })
 
 export const container = style({
@@ -51,6 +50,7 @@ export const container = style({
 })
 
 export const artworkContainer = style({
+  position: 'relative',
   flex: '0.5 0 50%',
   '@media': {
     [breakPoints.tablet]: {
@@ -68,6 +68,16 @@ export const artworkImg = style({
   width: '100% !important',
   height: '100% !important',
   objectFit: 'cover',
+  '@media': {
+    [breakPoints.desktop]: {
+      width: '140% !important',
+      height: '140% !important',
+      position: 'absolute',
+      left: '-121px',
+      top: '-79px',
+      boxShadow: '1px 1px 20px rgba(0,0,0,0.5)',
+    },
+  },
 })
 
 export const artworkContent = style({
@@ -81,6 +91,7 @@ export const content = style({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
+  gap: vars.space.l,
   alignItems: 'center',
   '@media': {
     [breakPoints.tablet]: {
@@ -92,12 +103,27 @@ export const content = style({
   },
 })
 
+export const contentHeader = style({
+  fontSize: '5rem',
+  fontWeight: '400',
+  marginBlock: vars.space.xl,
+  color: vars.colors.textSecondary,
+})
+
 export const subscriptionForm = style({
   display: 'flex',
   flexDirection: 'column',
   gap: vars.space.s,
   justifyContent: 'center',
   alignItems: 'center',
+  '@media': {
+    [breakPoints.tablet]: {
+      marginTop: vars.space.xl,
+    },
+    [breakPoints.desktop]: {
+      marginTop: 'none',
+    },
+  },
 })
 
 export const contentFooter = style({
@@ -118,4 +144,8 @@ export const emailInput = style({
       border: '2px solid red',
     },
   },
+})
+
+export const submitButton = style({
+  fontWeight: 400,
 })

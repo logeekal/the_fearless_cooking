@@ -78,6 +78,7 @@ export const loader = style({
   maxWidth: '50px',
   maxHeight: '50px',
   position: 'relative',
+  overflow: 'hidden',
   selectors: {
     '&.loading': {
       animationName: loadingAnimation,
@@ -92,7 +93,7 @@ export const loader = style({
     },
     '&.success::before': {
       height: '4px',
-      width: '2.5rem',
+      width: '100%',
       position: 'absolute',
       top: '65%',
       left: '44%',
@@ -105,7 +106,7 @@ export const loader = style({
     },
     '&.success::after': {
       height: '4px',
-      width: '1rem',
+      width: '35%',
       position: 'absolute',
       top: '65%',
       left: '50%',
