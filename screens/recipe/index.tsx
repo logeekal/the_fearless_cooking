@@ -76,11 +76,13 @@ function RecipePage(props: RecipePageProps) {
           ></h1>
           <div className={`recipe__postMeta ${recipeMeta}`}>
             {/* Badge with author name*/}
-            <a href="#comments">
-              <Badge icon={<MdOutlineComment size={'1.2rem'} />} negative>
-                {recipe.post.commentCount}
-              </Badge>
-            </a>
+            {(recipe.post?.commentCount ?? 0) > 0 && (
+              <a href="#comments">
+                <Badge icon={<MdOutlineComment size={'1.2rem'} />} negative>
+                  {recipe.post.commentCount}
+                </Badge>
+              </a>
+            )}
             <a
               href={'https://instagram.com/thefearlesscooking'}
               target="_blank"

@@ -84,11 +84,13 @@ const RecipeCard = forwardRef<HTMLDivElement, RecipeCardProps>(
           <div className={`${recipeCardContentHeader}`}>
             <h2 className={`${recipeCardTitle}`}>{recipePost.title}</h2>
             <p className={`${recipeCardSubTitle}`}>{recipe.recipeSubtitle}</p>
-            <a style={{ alignSelf: 'flex-start' }} href="#comments">
-              <Badge icon={<MdOutlineComment size={'1.2rem'} />} negative>
-                {recipePost.commentCount} Comments
-              </Badge>
-            </a>
+            {(recipePost?.commentCount ?? 0) > 0 && (
+              <a style={{ alignSelf: 'flex-start' }} href="#comments">
+                <Badge icon={<MdOutlineComment size={'1.2rem'} />} negative>
+                  {recipePost.commentCount} Comments
+                </Badge>
+              </a>
+            )}
 
             <div
               dangerouslySetInnerHTML={getInnerHTML(recipe.recipeDescription)}
