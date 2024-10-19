@@ -30,6 +30,7 @@ export const Badge: React.FC<PropsWithChildren<BadgeProps>> = (props) => {
         color: !negative ? color : vars.colors.card,
         fontSize: compact ? '1rem' : '1.3rem',
         lineHeight: compact ? '1rem' : '2rem',
+        display: 'flex',
       }}
       className={`badge ${badgeContainer}`}
     >
