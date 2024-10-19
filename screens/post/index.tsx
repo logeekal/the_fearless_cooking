@@ -89,7 +89,10 @@ export default function PostPage(props: PostProps) {
             __html: post.post.content as string,
           }}
         ></article>
-        <section className={`comment-section-container ${commentSection}`}>
+        <section
+          id="comments"
+          className={`comment-section-container ${commentSection}`}
+        >
           <p className={'cursive heading'} style={{ marginBottom: '2rem' }}>
             Tell us what you think
           </p>

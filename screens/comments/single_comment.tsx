@@ -145,7 +145,7 @@ export const SingleComment = (props: Props) => {
           <div className="comment__header--avatar">
             <Avatar
               src={`https://robohash.org/${
-                commentWithReplies.data?.author?.node?.email ?? 'Dev'
+                commentWithReplies.data?.author?.node?.name ?? 'Dev'
               }`}
               alt={
                 commentWithReplies.data?.author?.node?.name
