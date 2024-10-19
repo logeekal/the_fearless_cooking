@@ -1,5 +1,5 @@
 import React, { forwardRef, Fragment, useMemo } from 'react'
-import { MdOutlineComment } from 'react-icons/md'
+import { MdOutlineAddComment, MdOutlineComment } from 'react-icons/md'
 import striptags from 'striptags'
 import { Duration } from 'tinyduration'
 
@@ -84,10 +84,16 @@ const RecipeCard = forwardRef<HTMLDivElement, RecipeCardProps>(
           <div className={`${recipeCardContentHeader}`}>
             <h2 className={`${recipeCardTitle}`}>{recipePost.title}</h2>
             <p className={`${recipeCardSubTitle}`}>{recipe.recipeSubtitle}</p>
-            {(recipePost?.commentCount ?? 0) > 0 && (
+            {(recipePost?.commentCount ?? 0) > 0 ? (
               <a style={{ alignSelf: 'flex-start' }} href="#comments">
                 <Badge icon={<MdOutlineComment size={'1.2rem'} />} negative>
                   {recipePost.commentCount} Comments
+                </Badge>
+              </a>
+            ) : (
+              <a style={{ alignSelf: 'flex-start' }} href="#comments">
+                <Badge icon={<MdOutlineAddComment size={'1.2rem'} />} negative>
+                  {'Tell us what you think'}
                 </Badge>
               </a>
             )}
