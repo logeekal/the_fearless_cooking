@@ -8,6 +8,7 @@ import { Badge } from '../../components/badge'
 import BottomBar from '../../components/bottom_bar'
 import { cardCategory } from '../../components/card/card.css'
 import FAQs from '../../components/faq'
+import { useGetComments } from '../../components/hooks/comments'
 import { useWindowSize } from '../../components/hooks/use_window_size'
 import RecipeCard from '../../components/recipe_card'
 import { SEO } from '../../components/SEO'
@@ -40,6 +41,11 @@ function RecipePage(props: RecipePageProps) {
     ...(recipe.post.recipeCuisines?.nodes ?? []),
     ...(recipe.post.recipeCourses?.nodes ?? []),
   ]
+
+  const allComments = useGetComments({
+    postId: recipe.post.recipeId,
+    initialData: recipe.post.comments?.nodes,
+  })
 
   const recipeExists = useMemo(
     () => (recipe.content ? true : false),
@@ -76,10 +82,10 @@ function RecipePage(props: RecipePageProps) {
           ></h1>
           <div className={`recipe__postMeta ${recipeMeta}`}>
             {/* Badge with author name*/}
-            {(recipe.post?.commentCount ?? 0) > 0 ? (
+            {(allComments?.length ?? 0) > 0 ? (
               <a href="#comments">
                 <Badge icon={<MdOutlineComment size={'1.2rem'} />} negative>
-                  {recipe.post.commentCount}
+                  {allComments?.length}
                 </Badge>
               </a>
             ) : null}
