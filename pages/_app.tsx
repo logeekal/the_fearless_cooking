@@ -3,6 +3,7 @@ import '../styles/global.css'
 import '../styles/globals/index.scss'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { NextPage } from 'next'
 import type { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
@@ -81,6 +82,7 @@ const withQueryClient = (WrappedComponent: ComponentType) => {
   const WithQueryClient = (props: ComponentProps<typeof WrappedComponent>) => {
     return (
       <QueryClientProvider client={reactQueryClient}>
+        <ReactQueryDevtools initialIsOpen={false} />
         <WrappedComponent {...props} />
       </QueryClientProvider>
     )

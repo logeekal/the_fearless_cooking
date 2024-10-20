@@ -7,6 +7,7 @@ import { Recipe } from '../../types/wp-graphql.types'
 import { ICompleteRecipe } from '../../utils/types'
 import { Badge } from '../badge'
 import Checkbox from '../checkbox'
+import { useGetComments } from '../hooks/comments'
 import { getStepURL } from '../utils'
 import {
   recipeCard,
@@ -60,6 +61,11 @@ const RecipeCard = forwardRef<HTMLDivElement, RecipeCardProps>(
       }
     }
 
+    const allComments = useGetComments({
+      postId: recipePost.databaseId,
+      initialData: recipePost.comments?.nodes,
+    })
+
     const recipeCuisines = useMemo(() => {
       const cuisines = recipePost.recipeCuisines?.nodes
         ?.slice(0, 2)
@@ -84,10 +90,12 @@ const RecipeCard = forwardRef<HTMLDivElement, RecipeCardProps>(
           <div className={`${recipeCardContentHeader}`}>
             <h2 className={`${recipeCardTitle}`}>{recipePost.title}</h2>
             <p className={`${recipeCardSubTitle}`}>{recipe.recipeSubtitle}</p>
-            {(recipePost?.commentCount ?? 0) > 0 ? (
+            {(allComments?.length ?? 0) > 0 ? (
               <a style={{ alignSelf: 'flex-start' }} href="#comments">
                 <Badge icon={<MdOutlineComment size={'1.2rem'} />} negative>
-                  {recipePost.commentCount} Comments
+                  {`${allComments?.length ?? 0} ${
+                    allComments?.length === 1 ? 'Comment' : 'Comments'
+                  }`}
                 </Badge>
               </a>
             ) : (
@@ -160,7 +168,7 @@ const RecipeCard = forwardRef<HTMLDivElement, RecipeCardProps>(
                     <div
                       className={`category___detail ${recipeCardCatDetails}`}
                     >
-                      {recipeCourses.map((course, idx) => (
+                      {recipeCourses.map((course) => (
                         <React.Fragment key={course?.id}>
                           <a href={course?.uri}>
                             <Badge> {course?.name} </Badge>
@@ -180,7 +188,7 @@ const RecipeCard = forwardRef<HTMLDivElement, RecipeCardProps>(
                     <div
                       className={`category___detail ${recipeCardCatDetails}`}
                     >
-                      {recipeCuisines.map((cuisine, idx) => (
+                      {recipeCuisines.map((cuisine) => (
                         <React.Fragment key={cuisine?.id}>
                           <a href={cuisine?.uri}>
                             <Badge>{cuisine?.name} </Badge>

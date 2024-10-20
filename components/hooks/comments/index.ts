@@ -38,6 +38,9 @@ interface UseGetCommentsArgs {
   initialData?: Maybe<Array<Maybe<Comment>>>
 }
 
+/*
+ * Get all comments for the post
+ * */
 export const useGetComments = ({
   postId,
   page,
