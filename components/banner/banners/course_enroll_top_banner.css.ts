@@ -25,8 +25,53 @@ export const courseEnrollTopBannerContainer = style({
 export const recipePageCourseEnrollContainer = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: vars.space.normal,
   justifyContent: 'center',
   alignItems: 'center',
   paddingBottom: vars.space.xl,
+})
+
+export const recipePageFreeProductContainer = style({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  paddingBottom: vars.space.xl,
+})
+
+export const recipePageCourseFreeProductBannerTextContainer = style({
+  border: '1px solid #7c6b59',
+  padding: vars.space.normal,
+  width: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: vars.space.normal,
+  borderBottomLeftRadius: vars.border.normal,
+  borderBottomRightRadius: vars.border.normal,
+  backgroundColor: vars.colors.card,
+  justifyContent: 'center',
+  alignItems: 'center',
+})
+
+export const recipePageCourseEnrollBannerTextContainer = style({
+  border: `1px solid ${vars.colors.brand}`,
+  padding: vars.space.normal,
+  width: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: vars.space.normal,
+  borderBottomLeftRadius: vars.border.normal,
+  borderBottomRightRadius: vars.border.normal,
+  backgroundColor: vars.colors.bgPrimary,
+  justifyContent: 'center',
+  alignItems: 'center',
+  borderTopWidth: '0px',
+})
+
+export const recipePageCourseEnrollBannerImg = style({
+  border: `1px solid ${vars.colors.brand}`,
+  borderBottom: '0px',
+  width: '100%',
+  height: '100%',
+  objectFit: 'cover',
+  backgroundColor: 'white',
 })

@@ -1,14 +1,12 @@
-import { usePlausible } from 'next-plausible'
-import React, { Fragment, useCallback, useMemo } from 'react'
+import React, { Fragment, useMemo } from 'react'
 import { BsFillCalendar2DateFill } from 'react-icons/bs'
 import { ImPencil2 } from 'react-icons/im'
 import { MdOutlineComment } from 'react-icons/md'
 import striptags from 'striptags'
 
 import { Badge } from '../../components/badge'
-import { recipePageCourseEnrollContainer } from '../../components/banner/banners/course_enroll_top_banner.css'
+import { InPageCourseFreeProductBanner } from '../../components/banner/banners/in_page_free_product_banner'
 import BottomBar from '../../components/bottom_bar'
-import { Button } from '../../components/button'
 import { cardCategory } from '../../components/card/card.css'
 import FAQs from '../../components/faq'
 import { useGetComments } from '../../components/hooks/comments'
@@ -24,6 +22,7 @@ import {
   FAQSection,
   featuredImageContainer,
   featuredImageSquareContainer,
+  recipeCardContainer,
   recipeCategories,
   recipeContainer,
   recipeMeta,
@@ -55,12 +54,6 @@ function RecipePage(props: RecipePageProps) {
     [recipe.content]
   )
   const faqExists = useMemo(() => recipe.faqs.length > 0, [recipe.faqs])
-
-  const plausible = usePlausible()
-
-  const handleButtonClick = useCallback(() => {
-    plausible('courseEnrollClick')
-  }, [plausible])
 
   return (
     <div id={`recipe ${recipeContainer}`}>
@@ -182,34 +175,12 @@ function RecipePage(props: RecipePageProps) {
         ) : (
           <div style={{ height: '3rem' }}></div>
         )}
-        <div className={`${recipePageCourseEnrollContainer} "banner-course"`}>
-          <img
-            src="https://wp-backend.thefearlesscooking.com/wp-content/uploads/2024/11/freedom_from_deficiency-e1730592131278.jpg"
-            alt="freedom from deficiency"
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              backgroundColor: 'white',
-            }}
-          />
-          <p style={{ width: '80%' }}>
-            Reach vibrant health, stable energy levels, hormonal balance, and
-            beauty with a scientifically proven systematic approach to nutrition
-            and extra delicious, easy-to-implement recipes.
-          </p>
-          <Button
-            target="_blank"
-            href="https://school.thefearlesscooking.com"
-            variant="ghost"
-            style={{ width: '80%' }}
-            onClick={handleButtonClick}
-          >
-            <p>Help! I want in 🤩 </p>
-          </Button>
-        </div>
+        <InPageCourseFreeProductBanner />
         {recipeExists ? (
-          <div id="recipe-card" className="recipe__card">
+          <div
+            id="recipe-card"
+            className={`${recipeCardContainer} recipe__card`}
+          >
             <RecipeCard recipe={recipe.content} recipePost={recipe.post} />
           </div>
         ) : null}

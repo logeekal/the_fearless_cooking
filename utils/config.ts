@@ -20,6 +20,15 @@ export const SiteMeta = {
     youtube: 'thefearlesscooking',
     insta: 'thefearlesscooking',
   },
+  targets: {
+    freedomFromDeficiency: {
+      course: 'https://school.thefearlesscooking.com',
+      freeProduct:
+        'https://school.thefearlesscooking.com/free-product-3-reasons-why-deficiencies-occur',
+      preRegister:
+        'https://docs.google.com/forms/d/18dWFy9-jE63VYOPgKdjnYSP-2jGXXfGwENIXPTqczU8',
+    },
+  },
   books: {
     loveSalad: {
       amazonIndia:
