@@ -1,5 +1,6 @@
 import { ComponentProps, ComponentType } from 'react'
 
+import { ABTestingTrafficSplitterProvider } from '../ABSplitter'
 import { SafeFingerprintProvider } from './provider'
 
 export function withFingerprint(Component: ComponentType) {
@@ -12,7 +13,9 @@ export function withFingerprint(Component: ComponentType) {
             : undefined
         }
       >
-        <Component {...props} />
+        <ABTestingTrafficSplitterProvider>
+          <Component {...props} />
+        </ABTestingTrafficSplitterProvider>
       </SafeFingerprintProvider>
     )
   }

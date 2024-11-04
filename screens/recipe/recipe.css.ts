@@ -77,3 +77,7 @@ export const pageFreeCookbookContainer = style({
   justifyContent: 'center',
   alignItems: 'center',
 })
+
+export const recipeCardContainer = style({
+  scrollMarginTop: '400px',
+})
