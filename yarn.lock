@@ -2148,6 +2148,11 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.8.tgz#6b79032e760a0899cd4204710beede972a3a185f"
   integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
 
+"@rajesh896/broprint.js@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@rajesh896/broprint.js/-/broprint.js-2.1.1.tgz#f38870f62539035f318ebb9b6ba01fcc7ed76605"
+  integrity sha512-34L0SFrOLHWAhF4ZU7QS32zItGOKdu3BY0DmMwoW6zekLuJWSuCIK07Xzgyy2AqCCUByd2VHMr2wbHousid+qg==
+
 "@react-hooks-library/core@^0.6.0":
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/@react-hooks-library/core/-/core-0.6.2.tgz#1898d32e0dc174ec3b0af82a6edeb4dcd7150ede"

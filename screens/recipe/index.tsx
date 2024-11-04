@@ -4,7 +4,9 @@ import { ImPencil2 } from 'react-icons/im'
 import { MdOutlineComment } from 'react-icons/md'
 import striptags from 'striptags'
 
+import { useABTestingTrafficSplitter } from '../../components/ABSplitter'
 import { Badge } from '../../components/badge'
+import { InPageCourseEnrollBanner } from '../../components/banner/banners/in_page_course_enroll'
 import { InPageCourseFreeProductBanner } from '../../components/banner/banners/in_page_free_product_banner'
 import BottomBar from '../../components/bottom_bar'
 import { cardCategory } from '../../components/card/card.css'
@@ -54,6 +56,8 @@ function RecipePage(props: RecipePageProps) {
     [recipe.content]
   )
   const faqExists = useMemo(() => recipe.faqs.length > 0, [recipe.faqs])
+
+  const { variant: trafficVariant } = useABTestingTrafficSplitter()
 
   return (
     <div id={`recipe ${recipeContainer}`}>
@@ -175,7 +179,12 @@ function RecipePage(props: RecipePageProps) {
         ) : (
           <div style={{ height: '3rem' }}></div>
         )}
-        <InPageCourseFreeProductBanner />
+        {trafficVariant === 'A' ? (
+          <InPageCourseEnrollBanner />
+        ) : (
+          <InPageCourseFreeProductBanner />
+        )}
+
         {recipeExists ? (
           <div
             id="recipe-card"
