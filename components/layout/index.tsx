@@ -13,8 +13,6 @@ import { getWindow } from 'ssr-window'
 
 import { dark, light } from '../../styles/themes.css'
 import { RecipeCourse, RecipeCuisine } from '../../types/wp-graphql.types'
-import { CourseEnrollTopBannerContent } from '../banner/banners/course_enroll_top_banner'
-import { TopBanner } from '../banner/top'
 import CategoryBar from '../category_bar'
 import Modal from '../modal'
 import Search from '../search'
@@ -122,9 +120,6 @@ const Layout: FC<PropsWithChildren<LayoutProps>> = (props) => {
       <Script src="/lib/lazysizes.min.js" async />
       <Script src="/lib/ls.attrchange.js" async />
       <div className={`${currTheme} ${layoutClass} layout`}>
-        <TopBanner>
-          <CourseEnrollTopBannerContent />
-        </TopBanner>
         <header className="body-width">
           <Navbar
             courseSummary={props.courseSummary}
